@@ -1,5 +1,6 @@
 const homeScreen = document.getElementById("homeScreen");
 const gameScreen = document.getElementById("gameScreen");
+const puzzleScreen = document.getElementById("puzzleScreen");
 
 const startButton = document.getElementById("startButton");
 
@@ -11,6 +12,13 @@ const crystalText = document.getElementById("crystal");
 
 const message = document.getElementById("message");
 
+const ancientGate = document.getElementById("ancientGate");
+
+
+// ========================================
+// GAME VARIABLES
+// ========================================
+
 let playerX = 10;
 let playerY = 55;
 
@@ -18,14 +26,22 @@ let health = 100;
 let coins = 0;
 let crystal = 0;
 
+
+// IMPORTANT:
+// This is global so puzzle.js can unlock
+// the Ancient Gate.
+
+window.gateUnlocked = false;
+
+
 const speed = 0.45;
 
 const keys = {};
 
 
-// ============================
+// ========================================
 // START GAME
-// ============================
+// ========================================
 
 startButton.addEventListener("click", () => {
 
@@ -34,19 +50,20 @@ startButton.addEventListener("click", () => {
   gameScreen.classList.remove("hidden");
 
   showMessage(
-    "🌲 Welcome to the Dark Forest. Find the Crystal Fragment!"
+    "🌲 Welcome to the Dark Forest! Find the Ancient Gate."
   );
 
 });
 
 
-// ============================
-// KEYBOARD
-// ============================
+// ========================================
+// KEYBOARD CONTROLS
+// ========================================
 
 window.addEventListener("keydown", (event) => {
 
   keys[event.code] = true;
+
 
   if (
     event.code === "ArrowUp" ||
@@ -59,6 +76,9 @@ window.addEventListener("keydown", (event) => {
     event.preventDefault();
 
   }
+
+
+  // Space = Sword attack
 
   if (event.code === "Space") {
 
@@ -76,53 +96,86 @@ window.addEventListener("keyup", (event) => {
 });
 
 
-// ============================
+// ========================================
 // MOBILE CONTROLS
-// ============================
+// ========================================
 
-document.querySelectorAll(".controls button").forEach((button) => {
+document
+  .querySelectorAll(".controls button")
+  .forEach((button) => {
 
-  const key = button.dataset.key;
+    const key = button.dataset.key;
 
 
-  button.addEventListener("pointerdown", (event) => {
+    button.addEventListener(
+      "pointerdown",
+      (event) => {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    keys[key] = true;
+        keys[key] = true;
 
-    if (key === "Space") {
 
-      attack();
+        if (key === "Space") {
 
-    }
+          attack();
+
+        }
+
+      }
+    );
+
+
+    button.addEventListener(
+      "pointerup",
+      () => {
+
+        keys[key] = false;
+
+      }
+    );
+
+
+    button.addEventListener(
+      "pointercancel",
+      () => {
+
+        keys[key] = false;
+
+      }
+    );
+
+
+    button.addEventListener(
+      "pointerleave",
+      () => {
+
+        keys[key] = false;
+
+      }
+    );
 
   });
 
 
-  button.addEventListener("pointerup", () => {
-
-    keys[key] = false;
-
-  });
-
-
-  button.addEventListener("pointerleave", () => {
-
-    keys[key] = false;
-
-  });
-
-});
-
-
-// ============================
+// ========================================
 // GAME LOOP
-// ============================
+// ========================================
 
 function gameLoop() {
 
-  if (!gameScreen.classList.contains("hidden")) {
+  if (
+    !gameScreen.classList.contains("hidden") &&
+    !puzzleScreen.classList.contains("hidden")
+  ) {
+
+    // Puzzle is open.
+    // Pause movement and enemies.
+
+  }
+  else if (
+    !gameScreen.classList.contains("hidden")
+  ) {
 
     movePlayer();
 
@@ -130,7 +183,10 @@ function gameLoop() {
 
     checkEnemies();
 
+    checkGate();
+
   }
+
 
   requestAnimationFrame(gameLoop);
 
@@ -139,9 +195,9 @@ function gameLoop() {
 gameLoop();
 
 
-// ============================
+// ========================================
 // PLAYER MOVEMENT
-// ============================
+// ========================================
 
 function movePlayer() {
 
@@ -151,17 +207,20 @@ function movePlayer() {
 
   }
 
+
   if (keys.ArrowRight) {
 
     playerX += speed;
 
   }
 
+
   if (keys.ArrowUp) {
 
     playerY -= speed;
 
   }
+
 
   if (keys.ArrowDown) {
 
@@ -172,37 +231,58 @@ function movePlayer() {
 
   // Keep player inside forest
 
-  playerX = Math.max(2, Math.min(94, playerX));
+  playerX =
+    Math.max(
+      2,
+      Math.min(94, playerX)
+    );
 
-  playerY = Math.max(12, Math.min(84, playerY));
+
+  playerY =
+    Math.max(
+      12,
+      Math.min(84, playerY)
+    );
 
 
-  player.style.left = playerX + "%";
+  player.style.left =
+    playerX + "%";
 
-  player.style.top = playerY + "%";
+  player.style.top =
+    playerY + "%";
 
 }
 
 
-// ============================
-// DISTANCE CHECK
-// ============================
+// ========================================
+// DISTANCE CALCULATION
+// ========================================
 
 function distance(element1, element2) {
 
-  const rect1 = element1.getBoundingClientRect();
+  const rect1 =
+    element1.getBoundingClientRect();
 
-  const rect2 = element2.getBoundingClientRect();
-
-
-  const x1 = rect1.left + rect1.width / 2;
-
-  const y1 = rect1.top + rect1.height / 2;
+  const rect2 =
+    element2.getBoundingClientRect();
 
 
-  const x2 = rect2.left + rect2.width / 2;
+  const x1 =
+    rect1.left +
+    rect1.width / 2;
 
-  const y2 = rect2.top + rect2.height / 2;
+  const y1 =
+    rect1.top +
+    rect1.height / 2;
+
+
+  const x2 =
+    rect2.left +
+    rect2.width / 2;
+
+  const y2 =
+    rect2.top +
+    rect2.height / 2;
 
 
   return Math.sqrt(
@@ -216,72 +296,82 @@ function distance(element1, element2) {
 }
 
 
-// ============================
-// COLLECT ITEMS
-// ============================
+// ========================================
+// COLLECT COINS / KEY / CRYSTAL
+// ========================================
 
 function collectItems() {
 
-  document.querySelectorAll(".coin").forEach((coin) => {
 
-    if (
+  // COINS
 
-      coin.style.display !== "none" &&
+  document
+    .querySelectorAll(".coin")
+    .forEach((coin) => {
 
-      distance(player, coin) < 55
+      if (
+        coin.style.display !== "none" &&
+        distance(player, coin) < 55
+      ) {
 
-    ) {
+        coin.style.display = "none";
 
-      coin.style.display = "none";
+        coins++;
 
-      coins++;
+        coinsText.textContent = coins;
 
-      coinsText.textContent = coins;
+        showMessage(
+          "🪙 Coin collected!"
+        );
 
-      showMessage("🪙 Coin collected!");
+      }
 
-    }
-
-  });
+    });
 
 
-  const key = document.getElementById("key");
+  // KEY
+
+  const key =
+    document.getElementById("key");
 
 
   if (
-
+    key &&
     key.style.display !== "none" &&
-
     distance(player, key) < 55
-
   ) {
 
     key.style.display = "none";
 
-    showMessage("🗝️ Ancient Key found!");
+    showMessage(
+      "🗝️ Ancient Key found!"
+    );
 
   }
 
 
+  // CRYSTAL
+
   const crystalItem =
-    document.getElementById("crystalItem");
+    document.getElementById(
+      "crystalItem"
+    );
 
 
   if (
-
+    crystalItem &&
     crystal === 0 &&
-
     crystalItem.style.display !== "none" &&
-
     distance(player, crystalItem) < 65
-
   ) {
 
     crystal = 1;
 
-    crystalText.textContent = crystal;
+    crystalText.textContent =
+      crystal;
 
-    crystalItem.style.display = "none";
+    crystalItem.style.display =
+      "none";
 
     showMessage(
       "💎 Crystal Fragment #1 recovered!"
@@ -292,118 +382,217 @@ function collectItems() {
 }
 
 
-// ============================
-// ENEMY DAMAGE
-// ============================
+// ========================================
+// ANCIENT GATE
+// ========================================
 
-function checkEnemies() {
+function checkGate() {
 
-  document.querySelectorAll(".enemy").forEach((enemy) => {
+  // Already unlocked
 
-    if (
+  if (window.gateUnlocked) {
 
-      enemy.style.opacity !== "0" &&
+    return;
 
-      distance(player, enemy) < 45
-
-    ) {
-
-      health -= 0.25;
-
-      health = Math.max(0, health);
-
-      healthText.textContent =
-        Math.ceil(health);
+  }
 
 
-      player.classList.add("damage");
+  if (
+    ancientGate &&
+    distance(player, ancientGate) < 85
+  ) {
 
+    openPuzzle();
 
-      setTimeout(() => {
-
-        player.classList.remove("damage");
-
-      }, 200);
-
-
-      if (health <= 0) {
-
-        gameOver();
-
-      }
-
-    }
-
-  });
+  }
 
 }
 
 
-// ============================
-// SWORD ATTACK
-// ============================
+// ========================================
+// OPEN PUZZLE
+// ========================================
 
-function attack() {
+function openPuzzle() {
 
-  player.classList.remove("attack");
+  if (!puzzleScreen) {
 
-  void player.offsetWidth;
+    return;
 
-  player.classList.add("attack");
-
-
-  document.querySelectorAll(".enemy").forEach((enemy) => {
-
-    if (
-
-      enemy.style.opacity !== "0" &&
-
-      distance(player, enemy) < 110
-
-    ) {
-
-      enemy.style.opacity = "0";
-
-      showMessage("⚔️ Enemy defeated!");
-
-    }
-
-  });
-
-}
+  }
 
 
-// ============================
-// GAME OVER
-// ============================
-
-function gameOver() {
-
-  showMessage(
-    "💀 Badri has fallen! Refresh the page to try again."
+  puzzleScreen.classList.remove(
+    "hidden"
   );
 
 }
 
 
-// ============================
-// MESSAGE
-// ============================
+// ========================================
+// ENEMY DAMAGE
+// ========================================
+
+function checkEnemies() {
+
+  document
+    .querySelectorAll(".enemy")
+    .forEach((enemy) => {
+
+      if (
+        enemy.style.opacity !== "0" &&
+        distance(player, enemy) < 45
+      ) {
+
+        health -= 0.25;
+
+        health =
+          Math.max(
+            0,
+            health
+          );
+
+
+        healthText.textContent =
+          Math.ceil(health);
+
+
+        player.classList.add(
+          "damage"
+        );
+
+
+        setTimeout(() => {
+
+          player.classList.remove(
+            "damage"
+          );
+
+        }, 200);
+
+
+        if (health <= 0) {
+
+          gameOver();
+
+        }
+
+      }
+
+    });
+
+}
+
+
+// ========================================
+// SWORD ATTACK
+// ========================================
+
+function attack() {
+
+  // Don't attack while puzzle is open
+
+  if (
+    puzzleScreen &&
+    !puzzleScreen.classList.contains("hidden")
+  ) {
+
+    return;
+
+  }
+
+
+  player.classList.remove(
+    "attack"
+  );
+
+
+  // Restart animation
+
+  void player.offsetWidth;
+
+
+  player.classList.add(
+    "attack"
+  );
+
+
+  // Check enemies
+
+  document
+    .querySelectorAll(".enemy")
+    .forEach((enemy) => {
+
+      if (
+        enemy.style.opacity !== "0" &&
+        distance(player, enemy) < 110
+      ) {
+
+        enemy.style.opacity =
+          "0";
+
+        showMessage(
+          "⚔️ Enemy defeated!"
+        );
+
+      }
+
+    });
+
+}
+
+
+// ========================================
+// GAME OVER
+// ========================================
+
+function gameOver() {
+
+  keys.ArrowUp = false;
+  keys.ArrowDown = false;
+  keys.ArrowLeft = false;
+  keys.ArrowRight = false;
+
+
+  showMessage(
+    "💀 Badri has fallen! Refresh the page to restart."
+  );
+
+}
+
+
+// ========================================
+// MESSAGE SYSTEM
+// ========================================
 
 function showMessage(text) {
 
-  message.textContent = text;
+  if (!message) {
 
-  message.style.display = "block";
+    return;
+
+  }
 
 
-  clearTimeout(window.messageTimer);
+  message.textContent =
+    text;
 
 
-  window.messageTimer = setTimeout(() => {
+  message.style.display =
+    "block";
 
-    message.style.display = "none";
 
-  }, 2500);
+  clearTimeout(
+    window.messageTimer
+  );
+
+
+  window.messageTimer =
+    setTimeout(() => {
+
+      message.style.display =
+        "none";
+
+    }, 2500);
 
 }
