@@ -3,16 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Lost Kingdom: Badri's Quest</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1>🏰 THE LOST KINGDOM</h1>
-  <h2>⚔️ BADRI'S QUEST</h2>
+  <main id="game">
 
-  <p>King Manu has disappeared...</p>
+    <!-- HOME SCREEN -->
+    <section id="homeScreen" class="screen">
+      <div class="title-screen">
 
-  <button>START ADVENTURE</button>
+        <div class="kingdom">ELDORIA KINGDOM</div>
+
+        <h1>THE LOST KINGDOM</h1>
+
+        <h2>⚔️ BADRI'S QUEST</h2>
+
+        <p class="story">
+          King Manu has disappeared.
+          A mysterious darkness has surrounded Eldoria.
+          Only Badri can uncover the truth.
+        </p>
+
+        <button id="startButton" class="start-button">
+          START ADVENTURE
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- GAME SCREEN -->
+    <section id="gameScreen" class="hidden">
+
+      <div class="hud">
+        <span>⚔️ BADRI</span>
+        <span>❤️ <b id="health">100</b></span>
+        <span>🪙 <b id="coins">0</b></span>
+        <span>💎 <b id="crystal">0</b>/1</span>
+      </div>
+
+      <div id="forest">
+
+        <div class="chapter-title">
+          CHAPTER 1 — THE DARK FOREST
+        </div>
+
+        <!-- PLAYER -->
+        <div id="player">🧙</div>
+
+        <!-- ENEMIES -->
+        <div class="enemy enemy-one">👹</div>
+        <div class="enemy enemy-two">🐺</div>
+
+        <!-- ITEMS -->
+        <div class="coin coin-one">🪙</div>
+        <div class="coin coin-two">🪙</div>
+
+        <div id="key">🗝️</div>
+
+        <div id="crystalItem">💎</div>
+
+        <div id="message"></div>
+
+      </div>
+
+
+      <!-- MOBILE CONTROLS -->
+      <div class="controls">
+
+        <div></div>
+
+        <button data-key="ArrowUp">▲</button>
+
+        <div></div>
+
+        <button data-key="ArrowLeft">◀</button>
+
+        <button data-key="Space">⚔️</button>
+
+        <button data-key="ArrowRight">▶</button>
+
+        <div></div>
+
+        <button data-key="ArrowDown">▼</button>
+
+        <div></div>
+
+      </div>
+
+      <p class="keyboard-help">
+        PC: Arrow Keys = Move | Space = Attack
+      </p>
+
+    </section>
+
+  </main>
+
   <script src="game.js"></script>
 
 </body>
