@@ -2,133 +2,237 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  background: #050b07;
-  color: white;
-  font-family: Georgia, serif;
+  padding: 0;
+
+  width: 100%;
+  height: 100%;
+
   overflow: hidden;
+
+  background: #030705;
+
+  color: white;
+
+  font-family: Georgia, serif;
 }
+
+
+/* =========================
+   GENERAL
+========================= */
 
 .hidden {
   display: none !important;
 }
 
-.screen {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+button {
+  font-family: inherit;
+  cursor: pointer;
 }
+
+
+/* =========================
+   HOME
+========================= */
+
+.screen {
+
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+}
+
 
 #homeScreen {
+
   background:
-    radial-gradient(circle at center, #315c3a 0%, #0d2115 45%, #020604 100%);
+
+    radial-gradient(
+      circle at center,
+      #315c3a 0%,
+      #102519 45%,
+      #020604 100%
+    );
+
 }
 
+
 .title-screen {
+
   width: 92%;
+
   max-width: 850px;
+
   padding: 45px 25px;
+
   text-align: center;
 
-  background: rgba(5, 13, 8, 0.9);
+  background:
 
-  border: 2px solid #b4933d;
+    rgba(5, 13, 8, 0.92);
+
+  border:
+
+    2px solid #b4933d;
+
   border-radius: 22px;
 
   box-shadow:
+
     0 0 50px rgba(0, 0, 0, 0.9),
-    inset 0 0 30px rgba(180, 147, 61, 0.08);
+
+    inset 0 0 30px
+    rgba(180, 147, 61, 0.08);
+
 }
+
 
 .kingdom {
+
   color: #d9bd63;
+
   font-size: 16px;
+
   letter-spacing: 6px;
+
   font-weight: bold;
+
 }
 
+
 h1 {
+
   margin: 18px 0 5px;
 
-  font-size: clamp(40px, 8vw, 78px);
+  font-size:
+    clamp(40px, 8vw, 78px);
 
   color: #f1d477;
 
   text-shadow:
+
     0 0 12px #8c681b,
+
     0 5px 15px black;
+
 }
+
 
 h2 {
+
   margin: 0 0 25px;
 
-  font-size: clamp(22px, 5vw, 42px);
+  font-size:
+    clamp(22px, 5vw, 42px);
 
   color: #eeeeee;
+
 }
 
+
 .story {
+
   max-width: 650px;
+
   margin: 0 auto 30px;
 
   color: #c8d4ca;
 
   font-size: 18px;
+
   line-height: 1.7;
+
 }
 
+
 .start-button {
+
   padding: 16px 32px;
 
-  border: 2px solid #e4c85e;
+  border:
+
+    2px solid #e4c85e;
+
   border-radius: 12px;
 
-  background: linear-gradient(#8d7229, #49370e);
+  background:
+
+    linear-gradient(
+      #8d7229,
+      #49370e
+    );
 
   color: white;
 
   font-size: 17px;
+
   font-weight: bold;
 
-  cursor: pointer;
-
   transition: 0.25s;
+
 }
 
+
 .start-button:hover {
+
   transform: scale(1.06);
 
   box-shadow:
+
     0 0 25px #c5a33e;
+
 }
 
 
 /* =========================
-   GAME HUD
+   GAME
 ========================= */
 
 #gameScreen {
+
+  width: 100%;
+
   height: 100vh;
+
   background: #07120c;
+
 }
 
+
+/* =========================
+   HUD
+========================= */
+
 .hud {
+
   height: 58px;
 
   display: flex;
+
   justify-content: space-around;
+
   align-items: center;
 
   background: #101b14;
 
-  border-bottom: 2px solid #39513f;
+  border-bottom:
+
+    2px solid #39513f;
 
   font-family: Arial, sans-serif;
+
   font-weight: bold;
 
   z-index: 20;
+
 }
 
 
@@ -137,22 +241,30 @@ h2 {
 ========================= */
 
 #forest {
+
   position: relative;
 
-  height: calc(100vh - 178px);
+  height:
+    calc(100vh - 178px);
 
   min-height: 400px;
 
   overflow: hidden;
 
   background:
-    radial-gradient(circle at 50% 35%, #426d45 0%, #1d3b26 35%, #09170d 80%);
+
+    radial-gradient(
+      circle at 50% 35%,
+      #426d45 0%,
+      #1d3b26 35%,
+      #09170d 80%
+    );
+
 }
 
 
-/* Forest texture */
-
 #forest::before {
+
   content: "";
 
   position: absolute;
@@ -162,25 +274,39 @@ h2 {
   opacity: 0.35;
 
   background-image:
-    radial-gradient(circle, #66855d 2px, transparent 3px),
-    radial-gradient(circle, #183c23 3px, transparent 4px);
+
+    radial-gradient(
+      circle,
+      #66855d 2px,
+      transparent 3px
+    ),
+
+    radial-gradient(
+      circle,
+      #183c23 3px,
+      transparent 4px
+    );
 
   background-size:
+
     70px 70px,
+
     110px 110px;
 
   pointer-events: none;
+
 }
 
 
-/* Trees */
-
 #forest::after {
-  content: "🌲   🌳    🌲      🌳    🌲      🌲    🌳      🌲";
+
+  content:
+    "🌲   🌳    🌲      🌳    🌲      🌲    🌳      🌲";
 
   position: absolute;
 
   top: 5px;
+
   left: 0;
 
   width: 100%;
@@ -192,22 +318,27 @@ h2 {
   white-space: nowrap;
 
   pointer-events: none;
+
 }
 
 
 .chapter-title {
+
   position: absolute;
 
   top: 15px;
+
   left: 50%;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   color: #d8eab8;
 
   font-family: Arial, sans-serif;
 
   font-size: 13px;
+
   font-weight: bold;
 
   letter-spacing: 2px;
@@ -215,6 +346,7 @@ h2 {
   z-index: 5;
 
   white-space: nowrap;
+
 }
 
 
@@ -223,20 +355,25 @@ h2 {
 ========================= */
 
 #player {
+
   position: absolute;
 
   left: 10%;
+
   top: 55%;
 
   font-size: 48px;
 
   z-index: 10;
 
-  filter: drop-shadow(0 6px 5px black);
+  filter:
+    drop-shadow(0 6px 5px black);
 
   user-select: none;
 
-  transition: transform 0.08s;
+  transition:
+    transform 0.08s;
+
 }
 
 
@@ -245,25 +382,37 @@ h2 {
 ========================= */
 
 .enemy {
+
   position: absolute;
 
   font-size: 45px;
 
   z-index: 8;
 
-  filter: drop-shadow(0 5px 5px black);
+  filter:
+    drop-shadow(0 5px 5px black);
 
-  transition: opacity 0.25s;
+  transition:
+    opacity 0.25s;
+
 }
+
 
 .enemy-one {
+
   left: 45%;
+
   top: 40%;
+
 }
 
+
 .enemy-two {
+
   left: 68%;
+
   top: 63%;
+
 }
 
 
@@ -273,50 +422,104 @@ h2 {
 
 .coin,
 #key,
-#crystalItem {
-  position: absolute;
+#crystalItem,
+#ancientGate {
 
-  font-size: 38px;
+  position: absolute;
 
   z-index: 7;
 
-  filter: drop-shadow(0 4px 5px black);
+  filter:
+    drop-shadow(0 4px 5px black);
+
 }
+
+
+.coin {
+
+  font-size: 38px;
+
+}
+
 
 .coin-one {
+
   left: 30%;
+
   top: 70%;
+
 }
+
 
 .coin-two {
+
   left: 75%;
+
   top: 30%;
+
 }
+
 
 #key {
+
   left: 53%;
+
   top: 72%;
+
+  font-size: 38px;
+
 }
 
+
+#ancientGate {
+
+  left: 76%;
+
+  top: 70%;
+
+  font-size: 65px;
+
+  cursor: pointer;
+
+}
+
+
 #crystalItem {
-  left: 87%;
+
+  left: 88%;
+
   top: 45%;
 
   font-size: 55px;
 
-  animation: crystalGlow 1.5s infinite alternate;
+  animation:
+    crystalGlow 1.5s infinite alternate;
+
 }
+
 
 @keyframes crystalGlow {
 
   from {
+
     transform: scale(1);
-    filter: drop-shadow(0 0 5px #6ff);
+
+    filter:
+      drop-shadow(
+        0 0 5px #6ff
+      );
+
   }
 
   to {
+
     transform: scale(1.15);
-    filter: drop-shadow(0 0 25px #6ff);
+
+    filter:
+      drop-shadow(
+        0 0 25px #6ff
+      );
+
   }
 
 }
@@ -327,22 +530,27 @@ h2 {
 ========================= */
 
 #message {
+
   display: none;
 
   position: absolute;
 
   left: 50%;
+
   bottom: 20px;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   max-width: 85%;
 
   padding: 12px 18px;
 
-  background: rgba(5, 10, 7, 0.92);
+  background:
+    rgba(5, 10, 7, 0.92);
 
-  border: 1px solid #7c966e;
+  border:
+    1px solid #7c966e;
 
   border-radius: 12px;
 
@@ -351,20 +559,25 @@ h2 {
   text-align: center;
 
   z-index: 30;
+
 }
 
 
 /* =========================
-   MOBILE CONTROLS
+   CONTROLS
 ========================= */
 
 .controls {
+
   height: 100px;
 
   display: grid;
 
-  grid-template-columns: repeat(3, 62px);
-  grid-template-rows: repeat(2, 45px);
+  grid-template-columns:
+    repeat(3, 62px);
+
+  grid-template-rows:
+    repeat(2, 45px);
 
   justify-content: center;
 
@@ -373,10 +586,14 @@ h2 {
   padding-top: 5px;
 
   background: #0b1710;
+
 }
 
+
 .controls button {
-  border: 1px solid #526b55;
+
+  border:
+    1px solid #526b55;
 
   border-radius: 10px;
 
@@ -389,15 +606,21 @@ h2 {
   font-weight: bold;
 
   touch-action: none;
+
 }
 
+
 .controls button:active {
+
   background: #536e4f;
 
   transform: scale(0.93);
+
 }
 
+
 .keyboard-help {
+
   height: 20px;
 
   margin: 0;
@@ -411,63 +634,355 @@ h2 {
   font-family: Arial, sans-serif;
 
   font-size: 11px;
+
 }
 
 
 /* =========================
-   ATTACK EFFECT
+   ATTACK
 ========================= */
 
 .attack {
-  animation: swordAttack 0.25s;
+
+  animation:
+    swordAttack 0.25s;
+
 }
+
 
 @keyframes swordAttack {
 
   50% {
-    transform: scale(1.5) rotate(-20deg);
-  }
 
-}
+    transform:
+      scale(1.5)
+      rotate(-20deg);
 
-
-/* DAMAGE */
-
-.damage {
-  animation: damageFlash 0.25s;
-}
-
-@keyframes damageFlash {
-
-  50% {
-    filter:
-      brightness(2)
-      drop-shadow(0 0 15px red);
   }
 
 }
 
 
 /* =========================
-   SMALL SCREENS
+   DAMAGE
+========================= */
+
+.damage {
+
+  animation:
+    damageFlash 0.25s;
+
+}
+
+
+@keyframes damageFlash {
+
+  50% {
+
+    filter:
+
+      brightness(2)
+
+      drop-shadow(
+        0 0 15px red
+      );
+
+  }
+
+}
+
+
+/* =========================
+   PUZZLE SCREEN
+========================= */
+
+.puzzle-screen {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 100;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 20px;
+
+  background:
+
+    radial-gradient(
+      circle,
+      #39482f,
+      #10190f 55%,
+      #020403
+    );
+
+}
+
+
+.puzzle-box {
+
+  width: 95%;
+
+  max-width: 650px;
+
+  padding: 35px 25px;
+
+  text-align: center;
+
+  background:
+    rgba(7, 12, 8, 0.96);
+
+  border:
+    2px solid #b4933d;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 0 50px black;
+
+}
+
+
+.puzzle-label {
+
+  color: #d8bc61;
+
+  font-size: 13px;
+
+  letter-spacing: 4px;
+
+  font-weight: bold;
+
+}
+
+
+.puzzle-box h1 {
+
+  font-size:
+    clamp(30px, 7vw, 55px);
+
+  margin: 15px 0;
+
+}
+
+
+.puzzle-description {
+
+  color: #c8d4ca;
+
+  line-height: 1.6;
+
+}
+
+
+/* =========================
+   SEQUENCE
+========================= */
+
+.sequence-display {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin: 25px 0;
+
+}
+
+
+.sequence-display span {
+
+  width: 58px;
+
+  height: 58px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: #18251b;
+
+  border:
+    2px solid #526b55;
+
+  border-radius: 10px;
+
+  font-size: 30px;
+
+}
+
+
+/* =========================
+   SYMBOL BUTTONS
+========================= */
+
+.symbol-buttons {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 10px;
+
+  max-width: 450px;
+
+  margin: auto;
+
+}
+
+
+.symbol-buttons button {
+
+  min-height: 65px;
+
+  border:
+    2px solid #526b55;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      #29402d,
+      #132116
+    );
+
+  font-size: 32px;
+
+  transition: 0.2s;
+
+}
+
+
+.symbol-buttons button:hover {
+
+  transform: scale(1.08);
+
+  border-color:
+    #d5b84f;
+
+}
+
+
+.puzzle-actions {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 20px;
+
+}
+
+
+.puzzle-actions button {
+
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  border:
+    1px solid #877437;
+
+  background: #332a13;
+
+  color: white;
+
+  font-weight: bold;
+
+}
+
+
+#puzzleMessage {
+
+  min-height: 25px;
+
+  margin-top: 18px;
+
+  color: #f2d56b;
+
+  font-weight: bold;
+
+}
+
+
+.close-puzzle {
+
+  margin-top: 20px;
+
+  padding: 10px 18px;
+
+  background: transparent;
+
+  color: #9faf9d;
+
+  border:
+    1px solid #4e614f;
+
+  border-radius: 8px;
+
+}
+
+
+/* =========================
+   MOBILE
 ========================= */
 
 @media (max-width: 600px) {
 
   .story {
+
     font-size: 16px;
+
   }
+
 
   .title-screen {
+
     padding: 35px 18px;
+
   }
+
 
   .start-button {
+
     width: 100%;
+
   }
 
-  .forest-title {
-    font-size: 11px;
+
+  .symbol-buttons {
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+  }
+
+
+  .sequence-display {
+
+    gap: 6px;
+
+  }
+
+
+  .sequence-display span {
+
+    width: 50px;
+
+    height: 50px;
+
   }
 
 }
