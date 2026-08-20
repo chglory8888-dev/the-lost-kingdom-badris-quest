@@ -3,106 +3,289 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>The Lost Kingdom: Badri's Quest</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <main id="game">
+<main id="game">
 
-    <!-- HOME SCREEN -->
-    <section id="homeScreen" class="screen">
-      <div class="title-screen">
+  <!-- =========================
+       HOME SCREEN
+  ========================== -->
 
-        <div class="kingdom">ELDORIA KINGDOM</div>
+  <section id="homeScreen" class="screen">
 
-        <h1>THE LOST KINGDOM</h1>
+    <div class="title-screen">
 
-        <h2>⚔️ BADRI'S QUEST</h2>
+      <div class="kingdom">
+        ELDORIA KINGDOM
+      </div>
 
-        <p class="story">
-          King Manu has disappeared.
-          A mysterious darkness has surrounded Eldoria.
-          Only Badri can uncover the truth.
-        </p>
+      <h1>THE LOST KINGDOM</h1>
 
-        <button id="startButton" class="start-button">
-          START ADVENTURE
+      <h2>⚔️ BADRI'S QUEST</h2>
+
+      <p class="story">
+
+        👑 King Manu has disappeared.
+
+        A mysterious darkness has surrounded Eldoria.
+
+        Brave warrior Badri must enter the Dark Forest,
+
+        discover the hidden secrets,
+
+        solve ancient puzzles,
+
+        and recover the lost Crystal.
+
+      </p>
+
+      <button id="startButton" class="start-button">
+        START ADVENTURE
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       GAME SCREEN
+  ========================== -->
+
+  <section id="gameScreen" class="hidden">
+
+    <!-- HUD -->
+
+    <div class="hud">
+
+      <span>⚔️ BADRI</span>
+
+      <span>
+        ❤️ <b id="health">100</b>
+      </span>
+
+      <span>
+        🪙 <b id="coins">0</b>
+      </span>
+
+      <span>
+        💎 <b id="crystal">0</b>/1
+      </span>
+
+    </div>
+
+
+    <!-- FOREST WORLD -->
+
+    <div id="forest">
+
+      <div class="chapter-title">
+        CHAPTER 1 — THE DARK FOREST
+      </div>
+
+
+      <!-- PLAYER -->
+
+      <div id="player">
+        🧙
+      </div>
+
+
+      <!-- ENEMIES -->
+
+      <div class="enemy enemy-one">
+        👹
+      </div>
+
+      <div class="enemy enemy-two">
+        🐺
+      </div>
+
+
+      <!-- COINS -->
+
+      <div class="coin coin-one">
+        🪙
+      </div>
+
+      <div class="coin coin-two">
+        🪙
+      </div>
+
+
+      <!-- KEY -->
+
+      <div id="key">
+        🗝️
+      </div>
+
+
+      <!-- ANCIENT GATE -->
+
+      <div id="ancientGate">
+        🏛️
+      </div>
+
+
+      <!-- CRYSTAL -->
+
+      <div id="crystalItem">
+        💎
+      </div>
+
+
+      <!-- GAME MESSAGE -->
+
+      <div id="message"></div>
+
+    </div>
+
+
+    <!-- MOBILE CONTROLS -->
+
+    <div class="controls">
+
+      <div></div>
+
+      <button data-key="ArrowUp">
+        ▲
+      </button>
+
+      <div></div>
+
+
+      <button data-key="ArrowLeft">
+        ◀
+      </button>
+
+      <button data-key="Space">
+        ⚔️
+      </button>
+
+      <button data-key="ArrowRight">
+        ▶
+      </button>
+
+
+      <div></div>
+
+      <button data-key="ArrowDown">
+        ▼
+      </button>
+
+      <div></div>
+
+    </div>
+
+
+    <p class="keyboard-help">
+      PC: Arrow Keys = Move | Space = Attack
+    </p>
+
+  </section>
+
+
+  <!-- =========================
+       PUZZLE SCREEN
+  ========================== -->
+
+  <section id="puzzleScreen" class="puzzle-screen hidden">
+
+    <div class="puzzle-box">
+
+      <div class="puzzle-label">
+        ANCIENT STONE GATE
+      </div>
+
+      <h1>
+        🧩 Ancient Symbols
+      </h1>
+
+      <p class="puzzle-description">
+
+        The ancient gate is sealed.
+
+        Arrange the four symbols in the correct order
+
+        to unlock the secret path.
+
+      </p>
+
+
+      <!-- SELECTED SEQUENCE -->
+
+      <div id="sequenceDisplay" class="sequence-display">
+
+        <span>?</span>
+        <span>?</span>
+        <span>?</span>
+        <span>?</span>
+
+      </div>
+
+
+      <!-- SYMBOLS -->
+
+      <div class="symbol-buttons">
+
+        <button data-symbol="🌙">
+          🌙
+        </button>
+
+        <button data-symbol="🔥">
+          🔥
+        </button>
+
+        <button data-symbol="🌿">
+          🌿
+        </button>
+
+        <button data-symbol="⭐">
+          ⭐
         </button>
 
       </div>
-    </section>
 
 
-    <!-- GAME SCREEN -->
-    <section id="gameScreen" class="hidden">
+      <!-- ACTIONS -->
 
-      <div class="hud">
-        <span>⚔️ BADRI</span>
-        <span>❤️ <b id="health">100</b></span>
-        <span>🪙 <b id="coins">0</b></span>
-        <span>💎 <b id="crystal">0</b>/1</span>
-      </div>
+      <div class="puzzle-actions">
 
-      <div id="forest">
+        <button id="hintButton">
+          💡 HINT
+        </button>
 
-        <div class="chapter-title">
-          CHAPTER 1 — THE DARK FOREST
-        </div>
-
-        <!-- PLAYER -->
-        <div id="player">🧙</div>
-
-        <!-- ENEMIES -->
-        <div class="enemy enemy-one">👹</div>
-        <div class="enemy enemy-two">🐺</div>
-
-        <!-- ITEMS -->
-        <div class="coin coin-one">🪙</div>
-        <div class="coin coin-two">🪙</div>
-
-        <div id="key">🗝️</div>
-
-        <div id="crystalItem">💎</div>
-
-        <div id="message"></div>
+        <button id="resetPuzzle">
+          🔄 RESET
+        </button>
 
       </div>
 
 
-      <!-- MOBILE CONTROLS -->
-      <div class="controls">
+      <p id="puzzleMessage"></p>
 
-        <div></div>
 
-        <button data-key="ArrowUp">▲</button>
+      <button id="closePuzzle" class="close-puzzle">
+        ← RETURN TO FOREST
+      </button>
 
-        <div></div>
+    </div>
 
-        <button data-key="ArrowLeft">◀</button>
+  </section>
 
-        <button data-key="Space">⚔️</button>
+</main>
 
-        <button data-key="ArrowRight">▶</button>
 
-        <div></div>
+<!-- JAVASCRIPT -->
 
-        <button data-key="ArrowDown">▼</button>
-
-        <div></div>
-
-      </div>
-
-      <p class="keyboard-help">
-        PC: Arrow Keys = Move | Space = Attack
-      </p>
-
-    </section>
-
-  </main>
-
-  <script src="game.js"></script>
+<script src="game.js"></script>
+<script src="puzzle.js"></script>
 
 </body>
 </html>
