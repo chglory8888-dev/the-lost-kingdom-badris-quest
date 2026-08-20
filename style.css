@@ -4,93 +4,470 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background:
-    radial-gradient(circle at center, #263f2b 0%, #0b1510 45%, #030705 100%);
+  background: #050b07;
   color: white;
   font-family: Georgia, serif;
-  text-align: center;
+  overflow: hidden;
 }
 
-.game-container {
-  width: 100%;
-  max-width: 900px;
+.hidden {
+  display: none !important;
+}
+
+.screen {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 25px;
+}
+
+#homeScreen {
+  background:
+    radial-gradient(circle at center, #315c3a 0%, #0d2115 45%, #020604 100%);
 }
 
 .title-screen {
-  width: 100%;
+  width: 92%;
+  max-width: 850px;
   padding: 45px 25px;
-  border: 2px solid #8f7a3a;
-  border-radius: 20px;
-  background: rgba(5, 12, 8, 0.82);
-  box-shadow: 0 0 45px rgba(0, 0, 0, 0.8);
+  text-align: center;
+
+  background: rgba(5, 13, 8, 0.9);
+
+  border: 2px solid #b4933d;
+  border-radius: 22px;
+
+  box-shadow:
+    0 0 50px rgba(0, 0, 0, 0.9),
+    inset 0 0 30px rgba(180, 147, 61, 0.08);
 }
 
 .kingdom {
-  color: #d7bd64;
-  font-size: 18px;
+  color: #d9bd63;
+  font-size: 16px;
   letter-spacing: 6px;
   font-weight: bold;
 }
 
 h1 {
-  margin: 15px 0 5px;
-  font-size: clamp(38px, 8vw, 75px);
+  margin: 18px 0 5px;
+
+  font-size: clamp(40px, 8vw, 78px);
+
   color: #f1d477;
+
   text-shadow:
-    0 0 10px #8f6b19,
-    0 4px 12px #000;
+    0 0 12px #8c681b,
+    0 5px 15px black;
 }
 
 h2 {
   margin: 0 0 25px;
-  color: #e8e8e8;
+
   font-size: clamp(22px, 5vw, 42px);
+
+  color: #eeeeee;
 }
 
 .story {
   max-width: 650px;
   margin: 0 auto 30px;
-  color: #c9d2c8;
+
+  color: #c8d4ca;
+
   font-size: 18px;
   line-height: 1.7;
 }
 
 .start-button {
-  padding: 16px 35px;
-  border: 2px solid #e5c85d;
+  padding: 16px 32px;
+
+  border: 2px solid #e4c85e;
   border-radius: 12px;
-  background: linear-gradient(#8e7428, #4d3b12);
+
+  background: linear-gradient(#8d7229, #49370e);
+
   color: white;
-  font-size: 18px;
+
+  font-size: 17px;
   font-weight: bold;
+
   cursor: pointer;
+
   transition: 0.25s;
 }
 
 .start-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px #c8a83c;
+  transform: scale(1.06);
+
+  box-shadow:
+    0 0 25px #c5a33e;
 }
 
-@media (max-width: 600px) {
-  .title-screen {
-    padding: 35px 18px;
+
+/* =========================
+   GAME HUD
+========================= */
+
+#gameScreen {
+  height: 100vh;
+  background: #07120c;
+}
+
+.hud {
+  height: 58px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  background: #101b14;
+
+  border-bottom: 2px solid #39513f;
+
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+
+  z-index: 20;
+}
+
+
+/* =========================
+   FOREST
+========================= */
+
+#forest {
+  position: relative;
+
+  height: calc(100vh - 178px);
+
+  min-height: 400px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 50% 35%, #426d45 0%, #1d3b26 35%, #09170d 80%);
+}
+
+
+/* Forest texture */
+
+#forest::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.35;
+
+  background-image:
+    radial-gradient(circle, #66855d 2px, transparent 3px),
+    radial-gradient(circle, #183c23 3px, transparent 4px);
+
+  background-size:
+    70px 70px,
+    110px 110px;
+
+  pointer-events: none;
+}
+
+
+/* Trees */
+
+#forest::after {
+  content: "🌲   🌳    🌲      🌳    🌲      🌲    🌳      🌲";
+
+  position: absolute;
+
+  top: 5px;
+  left: 0;
+
+  width: 100%;
+
+  font-size: 55px;
+
+  opacity: 0.7;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+}
+
+
+.chapter-title {
+  position: absolute;
+
+  top: 15px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  color: #d8eab8;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 13px;
+  font-weight: bold;
+
+  letter-spacing: 2px;
+
+  z-index: 5;
+
+  white-space: nowrap;
+}
+
+
+/* =========================
+   PLAYER
+========================= */
+
+#player {
+  position: absolute;
+
+  left: 10%;
+  top: 55%;
+
+  font-size: 48px;
+
+  z-index: 10;
+
+  filter: drop-shadow(0 6px 5px black);
+
+  user-select: none;
+
+  transition: transform 0.08s;
+}
+
+
+/* =========================
+   ENEMIES
+========================= */
+
+.enemy {
+  position: absolute;
+
+  font-size: 45px;
+
+  z-index: 8;
+
+  filter: drop-shadow(0 5px 5px black);
+
+  transition: opacity 0.25s;
+}
+
+.enemy-one {
+  left: 45%;
+  top: 40%;
+}
+
+.enemy-two {
+  left: 68%;
+  top: 63%;
+}
+
+
+/* =========================
+   ITEMS
+========================= */
+
+.coin,
+#key,
+#crystalItem {
+  position: absolute;
+
+  font-size: 38px;
+
+  z-index: 7;
+
+  filter: drop-shadow(0 4px 5px black);
+}
+
+.coin-one {
+  left: 30%;
+  top: 70%;
+}
+
+.coin-two {
+  left: 75%;
+  top: 30%;
+}
+
+#key {
+  left: 53%;
+  top: 72%;
+}
+
+#crystalItem {
+  left: 87%;
+  top: 45%;
+
+  font-size: 55px;
+
+  animation: crystalGlow 1.5s infinite alternate;
+}
+
+@keyframes crystalGlow {
+
+  from {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px #6ff);
   }
+
+  to {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 25px #6ff);
+  }
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+#message {
+  display: none;
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 20px;
+
+  transform: translateX(-50%);
+
+  max-width: 85%;
+
+  padding: 12px 18px;
+
+  background: rgba(5, 10, 7, 0.92);
+
+  border: 1px solid #7c966e;
+
+  border-radius: 12px;
+
+  font-family: Arial, sans-serif;
+
+  text-align: center;
+
+  z-index: 30;
+}
+
+
+/* =========================
+   MOBILE CONTROLS
+========================= */
+
+.controls {
+  height: 100px;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 62px);
+  grid-template-rows: repeat(2, 45px);
+
+  justify-content: center;
+
+  gap: 5px;
+
+  padding-top: 5px;
+
+  background: #0b1710;
+}
+
+.controls button {
+  border: 1px solid #526b55;
+
+  border-radius: 10px;
+
+  background: #1b3021;
+
+  color: white;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+  touch-action: none;
+}
+
+.controls button:active {
+  background: #536e4f;
+
+  transform: scale(0.93);
+}
+
+.keyboard-help {
+  height: 20px;
+
+  margin: 0;
+
+  background: #0b1710;
+
+  color: #879a8a;
+
+  text-align: center;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 11px;
+}
+
+
+/* =========================
+   ATTACK EFFECT
+========================= */
+
+.attack {
+  animation: swordAttack 0.25s;
+}
+
+@keyframes swordAttack {
+
+  50% {
+    transform: scale(1.5) rotate(-20deg);
+  }
+
+}
+
+
+/* DAMAGE */
+
+.damage {
+  animation: damageFlash 0.25s;
+}
+
+@keyframes damageFlash {
+
+  50% {
+    filter:
+      brightness(2)
+      drop-shadow(0 0 15px red);
+  }
+
+}
+
+
+/* =========================
+   SMALL SCREENS
+========================= */
+
+@media (max-width: 600px) {
 
   .story {
     font-size: 16px;
   }
 
+  .title-screen {
+    padding: 35px 18px;
+  }
+
   .start-button {
     width: 100%;
   }
+
+  .forest-title {
+    font-size: 11px;
+  }
+
 }
