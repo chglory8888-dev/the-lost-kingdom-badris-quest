@@ -129,6 +129,11 @@ function checkQuestCompletion() {
 
   questTitle.textContent =
     "🎉 CHAPTER 1 COMPLETE";
+  if (
+  typeof window.openVillage === "function"
+) {
+  window.openVillage();
+  }
 
 
   if (
