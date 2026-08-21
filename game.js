@@ -1,40 +1,17 @@
-const homeScreen =
-  document.getElementById("homeScreen");
+const homeScreen = document.getElementById("homeScreen");
+const gameScreen = document.getElementById("gameScreen");
+const puzzleScreen = document.getElementById("puzzleScreen");
+const inventoryScreen = document.getElementById("inventoryScreen");
 
-const gameScreen =
-  document.getElementById("gameScreen");
+const startButton = document.getElementById("startButton");
+const player = document.getElementById("player");
 
-const puzzleScreen =
-  document.getElementById("puzzleScreen");
+const healthText = document.getElementById("health");
+const coinsText = document.getElementById("coins");
+const crystalText = document.getElementById("crystal");
 
-const inventoryScreen =
-  document.getElementById("inventoryScreen");
-
-const startButton =
-  document.getElementById("startButton");
-
-const player =
-  document.getElementById("player");
-
-const healthText =
-  document.getElementById("health");
-
-const coinsText =
-  document.getElementById("coins");
-
-const crystalText =
-  document.getElementById("crystal");
-
-const message =
-  document.getElementById("message");
-
-const ancientGate =
-  document.getElementById("ancientGate");
-
-
-/* =========================
-   GAME VARIABLES
-========================= */
+const message = document.getElementById("message");
+const ancientGate = document.getElementById("ancientGate");
 
 let playerX = 10;
 let playerY = 55;
@@ -42,32 +19,37 @@ let playerY = 55;
 let health = 100;
 let coins = 0;
 let crystal = 0;
-
 let keysCollected = 0;
 let potions = 0;
 let scrolls = 0;
 
+let guardianDefeated = false;
+
 window.gateUnlocked = false;
 
 const speed = 0.45;
-
 const keys = {};
 
-let gateCooldown = false;
+let forestQuestStarted = false;
 
 
 /* =========================
-   START GAME
+   START
 ========================= */
 
 startButton.addEventListener("click", () => {
 
   homeScreen.classList.add("hidden");
-
   gameScreen.classList.remove("hidden");
 
+  forestQuestStarted = true;
+
+  if (typeof window.completeQuest === "function") {
+    window.completeQuest("forest");
+  }
+
   showMessage(
-    "🌲 Welcome to the Dark Forest!"
+    "🌲 Quest started: Find the Lost King Manu!"
   );
 
 });
@@ -88,25 +70,18 @@ window.addEventListener("keydown", (event) => {
     event.code === "ArrowRight" ||
     event.code === "Space"
   ) {
-
     event.preventDefault();
-
   }
-
 
   if (event.code === "Space") {
-
     attack();
-
   }
 
+  if (event.code === "KeyI" && !event.repeat) {
 
-  if (
-    event.code === "KeyI" &&
-    !event.repeat
-  ) {
-
-    toggleInventory();
+    if (typeof window.toggleInventory === "function") {
+      window.toggleInventory();
+    }
 
   }
 
@@ -114,9 +89,7 @@ window.addEventListener("keydown", (event) => {
 
 
 window.addEventListener("keyup", (event) => {
-
   keys[event.code] = false;
-
 });
 
 
@@ -130,52 +103,29 @@ document
 
     const key = button.dataset.key;
 
-    button.addEventListener(
-      "pointerdown",
-      (event) => {
+    button.addEventListener("pointerdown", (event) => {
 
-        event.preventDefault();
+      event.preventDefault();
 
-        keys[key] = true;
+      keys[key] = true;
 
-        if (key === "Space") {
-
-          attack();
-
-        }
-
+      if (key === "Space") {
+        attack();
       }
-    );
 
+    });
 
-    button.addEventListener(
-      "pointerup",
-      () => {
+    button.addEventListener("pointerup", () => {
+      keys[key] = false;
+    });
 
-        keys[key] = false;
+    button.addEventListener("pointercancel", () => {
+      keys[key] = false;
+    });
 
-      }
-    );
-
-
-    button.addEventListener(
-      "pointercancel",
-      () => {
-
-        keys[key] = false;
-
-      }
-    );
-
-
-    button.addEventListener(
-      "pointerleave",
-      () => {
-
-        keys[key] = false;
-
-      }
-    );
+    button.addEventListener("pointerleave", () => {
+      keys[key] = false;
+    });
 
   });
 
@@ -188,35 +138,25 @@ function gameLoop() {
 
   const puzzleOpen =
     puzzleScreen &&
-    !puzzleScreen.classList.contains(
-      "hidden"
-    );
+    !puzzleScreen.classList.contains("hidden");
 
   const inventoryOpen =
     inventoryScreen &&
-    !inventoryScreen.classList.contains(
-      "hidden"
-    );
+    !inventoryScreen.classList.contains("hidden");
 
 
   if (
-    !gameScreen.classList.contains(
-      "hidden"
-    ) &&
+    !gameScreen.classList.contains("hidden") &&
     !puzzleOpen &&
     !inventoryOpen
   ) {
 
     movePlayer();
-
     collectItems();
-
     checkEnemies();
-
     checkGate();
 
   }
-
 
   requestAnimationFrame(gameLoop);
 
@@ -232,48 +172,35 @@ gameLoop();
 function movePlayer() {
 
   if (keys.ArrowLeft) {
-
     playerX -= speed;
-
   }
 
   if (keys.ArrowRight) {
-
     playerX += speed;
-
   }
 
   if (keys.ArrowUp) {
-
     playerY -= speed;
-
   }
 
   if (keys.ArrowDown) {
-
     playerY += speed;
-
   }
 
 
-  playerX =
-    Math.max(
-      2,
-      Math.min(94, playerX)
-    );
+  playerX = Math.max(
+    2,
+    Math.min(94, playerX)
+  );
 
-  playerY =
-    Math.max(
-      12,
-      Math.min(84, playerY)
-    );
+  playerY = Math.max(
+    12,
+    Math.min(84, playerY)
+  );
 
 
-  player.style.left =
-    playerX + "%";
-
-  player.style.top =
-    playerY + "%";
+  player.style.left = playerX + "%";
+  player.style.top = playerY + "%";
 
 }
 
@@ -282,49 +209,38 @@ function movePlayer() {
    DISTANCE
 ========================= */
 
-function distance(
-  element1,
-  element2
-) {
+function distance(element1, element2) {
 
   if (!element1 || !element2) {
-
     return Infinity;
-
   }
 
+  const a = element1.getBoundingClientRect();
+  const b = element2.getBoundingClientRect();
 
-  const rect1 =
-    element1.getBoundingClientRect();
+  const x1 = a.left + a.width / 2;
+  const y1 = a.top + a.height / 2;
 
-  const rect2 =
-    element2.getBoundingClientRect();
-
-
-  const x1 =
-    rect1.left +
-    rect1.width / 2;
-
-  const y1 =
-    rect1.top +
-    rect1.height / 2;
-
-
-  const x2 =
-    rect2.left +
-    rect2.width / 2;
-
-  const y2 =
-    rect2.top +
-    rect2.height / 2;
-
+  const x2 = b.left + b.width / 2;
+  const y2 = b.top + b.height / 2;
 
   return Math.sqrt(
-
     Math.pow(x1 - x2, 2) +
     Math.pow(y1 - y2, 2)
-
   );
+
+}
+
+
+/* =========================
+   QUEST HELPER
+========================= */
+
+function quest(id) {
+
+  if (typeof window.completeQuest === "function") {
+    window.completeQuest(id);
+  }
 
 }
 
@@ -351,14 +267,20 @@ function collectItems() {
 
         coins++;
 
-        coinsText.textContent =
-          coins;
+        coinsText.textContent = coins;
 
-        updateInventoryUI();
+        if (typeof window.updateInventoryUI === "function") {
+          window.updateInventoryUI();
+        }
 
         showMessage(
-          "🪙 Gold coin collected!"
+          `🪙 Ancient Coin collected! ${coins}/3`
         );
+
+
+        if (coins >= 3) {
+          quest("coins");
+        }
 
       }
 
@@ -381,10 +303,14 @@ function collectItems() {
 
     keysCollected = 1;
 
-    updateInventoryUI();
+    if (typeof window.updateInventoryUI === "function") {
+      window.updateInventoryUI();
+    }
+
+    quest("key");
 
     showMessage(
-      "🗝️ Ancient Key added to inventory!"
+      "🗝️ Ancient Key discovered!"
     );
 
   }
@@ -406,7 +332,9 @@ function collectItems() {
 
     potions++;
 
-    updateInventoryUI();
+    if (typeof window.updateInventoryUI === "function") {
+      window.updateInventoryUI();
+    }
 
     showMessage(
       "🧪 Health Potion collected!"
@@ -431,10 +359,12 @@ function collectItems() {
 
     scrolls++;
 
-    updateInventoryUI();
+    if (typeof window.updateInventoryUI === "function") {
+      window.updateInventoryUI();
+    }
 
     showMessage(
-      "📜 Ancient Scroll collected!"
+      "📜 Ancient Scroll discovered!"
     );
 
   }
@@ -443,9 +373,7 @@ function collectItems() {
   /* CRYSTAL */
 
   const crystalItem =
-    document.getElementById(
-      "crystalItem"
-    );
+    document.getElementById("crystalItem");
 
 
   if (
@@ -457,16 +385,18 @@ function collectItems() {
 
     crystal = 1;
 
-    crystalText.textContent =
-      crystal;
+    crystalText.textContent = crystal;
 
-    crystalItem.style.display =
-      "none";
+    crystalItem.style.display = "none";
 
-    updateInventoryUI();
+    if (typeof window.updateInventoryUI === "function") {
+      window.updateInventoryUI();
+    }
+
+    quest("crystal");
 
     showMessage(
-      "💎 Crystal Fragment added!"
+      "💎 Crystal Fragment recovered!"
     );
 
   }
@@ -475,21 +405,13 @@ function collectItems() {
 
 
 /* =========================
-   ANCIENT GATE
+   GATE
 ========================= */
 
 function checkGate() {
 
   if (window.gateUnlocked) {
-
     return;
-
-  }
-
-  if (gateCooldown) {
-
-    return;
-
   }
 
 
@@ -508,14 +430,10 @@ function checkGate() {
 function openPuzzle() {
 
   if (!puzzleScreen) {
-
     return;
-
   }
 
-  puzzleScreen.classList.remove(
-    "hidden"
-  );
+  puzzleScreen.classList.remove("hidden");
 
 }
 
@@ -537,34 +455,20 @@ function checkEnemies() {
 
         health -= 0.25;
 
-        health =
-          Math.max(
-            0,
-            health
-          );
+        health = Math.max(0, health);
 
         healthText.textContent =
           Math.ceil(health);
 
-
-        player.classList.add(
-          "damage"
-        );
-
+        player.classList.add("damage");
 
         setTimeout(() => {
-
-          player.classList.remove(
-            "damage"
-          );
-
+          player.classList.remove("damage");
         }, 200);
 
 
         if (health <= 0) {
-
           gameOver();
-
         }
 
       }
@@ -582,37 +486,24 @@ function attack() {
 
   if (
     puzzleScreen &&
-    !puzzleScreen.classList.contains(
-      "hidden"
-    )
+    !puzzleScreen.classList.contains("hidden")
   ) {
-
     return;
-
   }
-
 
   if (
     inventoryScreen &&
-    !inventoryScreen.classList.contains(
-      "hidden"
-    )
+    !inventoryScreen.classList.contains("hidden")
   ) {
-
     return;
-
   }
 
 
-  player.classList.remove(
-    "attack"
-  );
+  player.classList.remove("attack");
 
   void player.offsetWidth;
 
-  player.classList.add(
-    "attack"
-  );
+  player.classList.add("attack");
 
 
   document
@@ -624,11 +515,14 @@ function attack() {
         distance(player, enemy) < 110
       ) {
 
-        enemy.style.opacity =
-          "0";
+        enemy.style.opacity = "0";
+
+        guardianDefeated = true;
+
+        quest("guardian");
 
         showMessage(
-          "⚔️ Enemy defeated!"
+          "⚔️ Forest Guardian defeated!"
         );
 
       }
@@ -639,161 +533,58 @@ function attack() {
 
 
 /* =========================
-   USE HEALTH POTION
+   POTION
 ========================= */
 
-window.useHealthPotion =
-  function () {
+window.useHealthPotion = function () {
 
-    if (potions <= 0) {
+  if (potions <= 0) {
 
-      showInventoryMessage(
-        "❌ No health potion available."
+    if (typeof window.showInventoryMessage === "function") {
+      window.showInventoryMessage(
+        "❌ No potion available."
       );
-
-      return;
-
     }
-
-
-    if (health >= 100) {
-
-      showInventoryMessage(
-        "❤️ Your health is already full."
-      );
-
-      return;
-
-    }
-
-
-    potions--;
-
-    health =
-      Math.min(
-        100,
-        health + 30
-      );
-
-    healthText.textContent =
-      Math.ceil(health);
-
-    updateInventoryUI();
-
-    showInventoryMessage(
-      "🧪 Health restored!"
-    );
-
-  };
-
-
-/* =========================
-   INVENTORY
-========================= */
-
-function toggleInventory() {
-
-  if (!inventoryScreen) {
 
     return;
-
   }
 
 
-  inventoryScreen.classList.toggle(
-    "hidden"
+  if (health >= 100) {
+
+    if (typeof window.showInventoryMessage === "function") {
+      window.showInventoryMessage(
+        "❤️ Health is already full."
+      );
+    }
+
+    return;
+  }
+
+
+  potions--;
+
+  health = Math.min(
+    100,
+    health + 30
   );
 
+  healthText.textContent =
+    Math.ceil(health);
 
-  if (
-    !inventoryScreen.classList.contains(
-      "hidden"
-    )
-  ) {
 
-    updateInventoryUI();
-
+  if (typeof window.updateInventoryUI === "function") {
+    window.updateInventoryUI();
   }
 
-}
 
-
-window.toggleInventory =
-  toggleInventory;
-
-
-/* =========================
-   INVENTORY UI
-========================= */
-
-function updateInventoryUI() {
-
-  const keyCount =
-    document.getElementById(
-      "keyCount"
+  if (typeof window.showInventoryMessage === "function") {
+    window.showInventoryMessage(
+      "🧪 Health restored!"
     );
-
-  const inventoryCoins =
-    document.getElementById(
-      "inventoryCoins"
-    );
-
-  const inventoryCrystal =
-    document.getElementById(
-      "inventoryCrystal"
-    );
-
-  const potionCount =
-    document.getElementById(
-      "potionCount"
-    );
-
-  const scrollCount =
-    document.getElementById(
-      "scrollCount"
-    );
-
-
-  if (keyCount) {
-
-    keyCount.textContent =
-      keysCollected;
-
   }
 
-
-  if (inventoryCoins) {
-
-    inventoryCoins.textContent =
-      coins;
-
-  }
-
-
-  if (inventoryCrystal) {
-
-    inventoryCrystal.textContent =
-      crystal;
-
-  }
-
-
-  if (potionCount) {
-
-    potionCount.textContent =
-      potions;
-
-  }
-
-
-  if (scrollCount) {
-
-    scrollCount.textContent =
-      scrolls;
-
-  }
-
-}
+};
 
 
 /* =========================
@@ -806,7 +597,6 @@ function gameOver() {
   keys.ArrowDown = false;
   keys.ArrowLeft = false;
   keys.ArrowRight = false;
-
 
   showMessage(
     "💀 Badri has fallen! Refresh to restart."
@@ -822,34 +612,25 @@ function gameOver() {
 function showMessage(text) {
 
   if (!message) {
-
     return;
-
   }
 
+  message.textContent = text;
 
-  message.textContent =
-    text;
+  message.style.display = "block";
 
-  message.style.display =
-    "block";
-
-
-  clearTimeout(
-    window.messageTimer
-  );
-
+  clearTimeout(window.messageTimer);
 
   window.messageTimer =
     setTimeout(() => {
 
-      message.style.display =
-        "none";
+      message.style.display = "none";
 
     }, 2500);
 
 }
 
 
-window.showMessage =
-  showMessage;
+window.showMessage = showMessage;
+window.updateInventoryUI =
+  window.updateInventoryUI || function () {};
