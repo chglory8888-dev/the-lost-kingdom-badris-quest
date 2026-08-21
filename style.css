@@ -986,3 +986,231 @@ h2 {
   }
 
 }
+/* =========================
+   INVENTORY
+========================= */
+
+.inventory-button {
+
+  border: 1px solid #6d805e;
+
+  border-radius: 9px;
+
+  background: #1b3021;
+
+  color: white;
+
+  padding: 7px 12px;
+
+  font-size: 20px;
+
+}
+
+
+.inventory-screen {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 200;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 20px;
+
+  background:
+
+    radial-gradient(
+      circle,
+      #344b36,
+      #101910 55%,
+      #020403
+    );
+
+}
+
+
+.inventory-box {
+
+  width: 95%;
+
+  max-width: 650px;
+
+  padding: 30px 22px;
+
+  background:
+    rgba(7, 12, 8, 0.97);
+
+  border:
+    2px solid #b4933d;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 0 50px black;
+
+  text-align: center;
+
+}
+
+
+.inventory-title {
+
+  color: #f1d477;
+
+  font-size:
+    clamp(28px, 6vw, 48px);
+
+  font-weight: bold;
+
+}
+
+
+.inventory-subtitle {
+
+  color: #aebbad;
+
+}
+
+
+.inventory-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 12px;
+
+  margin-top: 25px;
+
+}
+
+
+.inventory-item {
+
+  min-height: 85px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 12px;
+
+  background:
+    linear-gradient(
+      #243727,
+      #122017
+    );
+
+  border:
+    1px solid #526b55;
+
+  border-radius: 12px;
+
+  text-align: left;
+
+}
+
+
+.inventory-item.usable {
+
+  cursor: pointer;
+
+}
+
+
+.inventory-item.usable:hover {
+
+  border-color: #e4c85e;
+
+  transform: scale(1.02);
+
+}
+
+
+.inventory-icon {
+
+  font-size: 38px;
+
+}
+
+
+.inventory-item strong {
+
+  display: block;
+
+  color: #e9e9e9;
+
+}
+
+
+.inventory-item span {
+
+  display: block;
+
+  margin-top: 5px;
+
+  color: #d8bc61;
+
+  font-weight: bold;
+
+}
+
+
+#inventoryMessage {
+
+  min-height: 25px;
+
+  margin: 18px 0;
+
+  color: #f2d56b;
+
+  font-weight: bold;
+
+}
+
+
+.close-inventory {
+
+  padding: 12px 22px;
+
+  border:
+    1px solid #877437;
+
+  border-radius: 10px;
+
+  background: #332a13;
+
+  color: white;
+
+  font-weight: bold;
+
+}
+
+
+@media (max-width: 600px) {
+
+  .inventory-grid {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+  .inventory-box {
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+  }
+
+  }
