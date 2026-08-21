@@ -1,23 +1,40 @@
-const homeScreen = document.getElementById("homeScreen");
-const gameScreen = document.getElementById("gameScreen");
-const puzzleScreen = document.getElementById("puzzleScreen");
+const homeScreen =
+  document.getElementById("homeScreen");
 
-const startButton = document.getElementById("startButton");
+const gameScreen =
+  document.getElementById("gameScreen");
 
-const player = document.getElementById("player");
+const puzzleScreen =
+  document.getElementById("puzzleScreen");
 
-const healthText = document.getElementById("health");
-const coinsText = document.getElementById("coins");
-const crystalText = document.getElementById("crystal");
+const inventoryScreen =
+  document.getElementById("inventoryScreen");
 
-const message = document.getElementById("message");
+const startButton =
+  document.getElementById("startButton");
 
-const ancientGate = document.getElementById("ancientGate");
+const player =
+  document.getElementById("player");
+
+const healthText =
+  document.getElementById("health");
+
+const coinsText =
+  document.getElementById("coins");
+
+const crystalText =
+  document.getElementById("crystal");
+
+const message =
+  document.getElementById("message");
+
+const ancientGate =
+  document.getElementById("ancientGate");
 
 
-// ========================================
-// GAME VARIABLES
-// ========================================
+/* =========================
+   GAME VARIABLES
+========================= */
 
 let playerX = 10;
 let playerY = 55;
@@ -26,22 +43,22 @@ let health = 100;
 let coins = 0;
 let crystal = 0;
 
-
-// IMPORTANT:
-// This is global so puzzle.js can unlock
-// the Ancient Gate.
+let keysCollected = 0;
+let potions = 0;
+let scrolls = 0;
 
 window.gateUnlocked = false;
-
 
 const speed = 0.45;
 
 const keys = {};
 
+let gateCooldown = false;
 
-// ========================================
-// START GAME
-// ========================================
+
+/* =========================
+   START GAME
+========================= */
 
 startButton.addEventListener("click", () => {
 
@@ -50,20 +67,19 @@ startButton.addEventListener("click", () => {
   gameScreen.classList.remove("hidden");
 
   showMessage(
-    "🌲 Welcome to the Dark Forest! Find the Ancient Gate."
+    "🌲 Welcome to the Dark Forest!"
   );
 
 });
 
 
-// ========================================
-// KEYBOARD CONTROLS
-// ========================================
+/* =========================
+   KEYBOARD
+========================= */
 
 window.addEventListener("keydown", (event) => {
 
   keys[event.code] = true;
-
 
   if (
     event.code === "ArrowUp" ||
@@ -78,11 +94,19 @@ window.addEventListener("keydown", (event) => {
   }
 
 
-  // Space = Sword attack
-
   if (event.code === "Space") {
 
     attack();
+
+  }
+
+
+  if (
+    event.code === "KeyI" &&
+    !event.repeat
+  ) {
+
+    toggleInventory();
 
   }
 
@@ -96,16 +120,15 @@ window.addEventListener("keyup", (event) => {
 });
 
 
-// ========================================
-// MOBILE CONTROLS
-// ========================================
+/* =========================
+   MOBILE CONTROLS
+========================= */
 
 document
   .querySelectorAll(".controls button")
   .forEach((button) => {
 
     const key = button.dataset.key;
-
 
     button.addEventListener(
       "pointerdown",
@@ -114,7 +137,6 @@ document
         event.preventDefault();
 
         keys[key] = true;
-
 
         if (key === "Space") {
 
@@ -158,23 +180,31 @@ document
   });
 
 
-// ========================================
-// GAME LOOP
-// ========================================
+/* =========================
+   GAME LOOP
+========================= */
 
 function gameLoop() {
 
+  const puzzleOpen =
+    puzzleScreen &&
+    !puzzleScreen.classList.contains(
+      "hidden"
+    );
+
+  const inventoryOpen =
+    inventoryScreen &&
+    !inventoryScreen.classList.contains(
+      "hidden"
+    );
+
+
   if (
-    !gameScreen.classList.contains("hidden") &&
-    !puzzleScreen.classList.contains("hidden")
-  ) {
-
-    // Puzzle is open.
-    // Pause movement and enemies.
-
-  }
-  else if (
-    !gameScreen.classList.contains("hidden")
+    !gameScreen.classList.contains(
+      "hidden"
+    ) &&
+    !puzzleOpen &&
+    !inventoryOpen
   ) {
 
     movePlayer();
@@ -195,9 +225,9 @@ function gameLoop() {
 gameLoop();
 
 
-// ========================================
-// PLAYER MOVEMENT
-// ========================================
+/* =========================
+   MOVEMENT
+========================= */
 
 function movePlayer() {
 
@@ -207,20 +237,17 @@ function movePlayer() {
 
   }
 
-
   if (keys.ArrowRight) {
 
     playerX += speed;
 
   }
 
-
   if (keys.ArrowUp) {
 
     playerY -= speed;
 
   }
-
 
   if (keys.ArrowDown) {
 
@@ -229,14 +256,11 @@ function movePlayer() {
   }
 
 
-  // Keep player inside forest
-
   playerX =
     Math.max(
       2,
       Math.min(94, playerX)
     );
-
 
   playerY =
     Math.max(
@@ -254,11 +278,21 @@ function movePlayer() {
 }
 
 
-// ========================================
-// DISTANCE CALCULATION
-// ========================================
+/* =========================
+   DISTANCE
+========================= */
 
-function distance(element1, element2) {
+function distance(
+  element1,
+  element2
+) {
+
+  if (!element1 || !element2) {
+
+    return Infinity;
+
+  }
+
 
   const rect1 =
     element1.getBoundingClientRect();
@@ -288,7 +322,6 @@ function distance(element1, element2) {
   return Math.sqrt(
 
     Math.pow(x1 - x2, 2) +
-
     Math.pow(y1 - y2, 2)
 
   );
@@ -296,14 +329,14 @@ function distance(element1, element2) {
 }
 
 
-// ========================================
-// COLLECT COINS / KEY / CRYSTAL
-// ========================================
+/* =========================
+   COLLECT ITEMS
+========================= */
 
 function collectItems() {
 
 
-  // COINS
+  /* COINS */
 
   document
     .querySelectorAll(".coin")
@@ -318,10 +351,13 @@ function collectItems() {
 
         coins++;
 
-        coinsText.textContent = coins;
+        coinsText.textContent =
+          coins;
+
+        updateInventoryUI();
 
         showMessage(
-          "🪙 Coin collected!"
+          "🪙 Gold coin collected!"
         );
 
       }
@@ -329,7 +365,7 @@ function collectItems() {
     });
 
 
-  // KEY
+  /* KEY */
 
   const key =
     document.getElementById("key");
@@ -343,14 +379,68 @@ function collectItems() {
 
     key.style.display = "none";
 
+    keysCollected = 1;
+
+    updateInventoryUI();
+
     showMessage(
-      "🗝️ Ancient Key found!"
+      "🗝️ Ancient Key added to inventory!"
     );
 
   }
 
 
-  // CRYSTAL
+  /* POTION */
+
+  const potion =
+    document.getElementById("potion");
+
+
+  if (
+    potion &&
+    potion.style.display !== "none" &&
+    distance(player, potion) < 55
+  ) {
+
+    potion.style.display = "none";
+
+    potions++;
+
+    updateInventoryUI();
+
+    showMessage(
+      "🧪 Health Potion collected!"
+    );
+
+  }
+
+
+  /* SCROLL */
+
+  const scroll =
+    document.getElementById("scroll");
+
+
+  if (
+    scroll &&
+    scroll.style.display !== "none" &&
+    distance(player, scroll) < 55
+  ) {
+
+    scroll.style.display = "none";
+
+    scrolls++;
+
+    updateInventoryUI();
+
+    showMessage(
+      "📜 Ancient Scroll collected!"
+    );
+
+  }
+
+
+  /* CRYSTAL */
 
   const crystalItem =
     document.getElementById(
@@ -373,8 +463,10 @@ function collectItems() {
     crystalItem.style.display =
       "none";
 
+    updateInventoryUI();
+
     showMessage(
-      "💎 Crystal Fragment #1 recovered!"
+      "💎 Crystal Fragment added!"
     );
 
   }
@@ -382,15 +474,19 @@ function collectItems() {
 }
 
 
-// ========================================
-// ANCIENT GATE
-// ========================================
+/* =========================
+   ANCIENT GATE
+========================= */
 
 function checkGate() {
 
-  // Already unlocked
-
   if (window.gateUnlocked) {
+
+    return;
+
+  }
+
+  if (gateCooldown) {
 
     return;
 
@@ -409,10 +505,6 @@ function checkGate() {
 }
 
 
-// ========================================
-// OPEN PUZZLE
-// ========================================
-
 function openPuzzle() {
 
   if (!puzzleScreen) {
@@ -421,7 +513,6 @@ function openPuzzle() {
 
   }
 
-
   puzzleScreen.classList.remove(
     "hidden"
   );
@@ -429,9 +520,9 @@ function openPuzzle() {
 }
 
 
-// ========================================
-// ENEMY DAMAGE
-// ========================================
+/* =========================
+   ENEMIES
+========================= */
 
 function checkEnemies() {
 
@@ -451,7 +542,6 @@ function checkEnemies() {
             0,
             health
           );
-
 
         healthText.textContent =
           Math.ceil(health);
@@ -484,17 +574,29 @@ function checkEnemies() {
 }
 
 
-// ========================================
-// SWORD ATTACK
-// ========================================
+/* =========================
+   ATTACK
+========================= */
 
 function attack() {
 
-  // Don't attack while puzzle is open
-
   if (
     puzzleScreen &&
-    !puzzleScreen.classList.contains("hidden")
+    !puzzleScreen.classList.contains(
+      "hidden"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    inventoryScreen &&
+    !inventoryScreen.classList.contains(
+      "hidden"
+    )
   ) {
 
     return;
@@ -506,18 +608,12 @@ function attack() {
     "attack"
   );
 
-
-  // Restart animation
-
   void player.offsetWidth;
-
 
   player.classList.add(
     "attack"
   );
 
-
-  // Check enemies
 
   document
     .querySelectorAll(".enemy")
@@ -542,9 +638,167 @@ function attack() {
 }
 
 
-// ========================================
-// GAME OVER
-// ========================================
+/* =========================
+   USE HEALTH POTION
+========================= */
+
+window.useHealthPotion =
+  function () {
+
+    if (potions <= 0) {
+
+      showInventoryMessage(
+        "❌ No health potion available."
+      );
+
+      return;
+
+    }
+
+
+    if (health >= 100) {
+
+      showInventoryMessage(
+        "❤️ Your health is already full."
+      );
+
+      return;
+
+    }
+
+
+    potions--;
+
+    health =
+      Math.min(
+        100,
+        health + 30
+      );
+
+    healthText.textContent =
+      Math.ceil(health);
+
+    updateInventoryUI();
+
+    showInventoryMessage(
+      "🧪 Health restored!"
+    );
+
+  };
+
+
+/* =========================
+   INVENTORY
+========================= */
+
+function toggleInventory() {
+
+  if (!inventoryScreen) {
+
+    return;
+
+  }
+
+
+  inventoryScreen.classList.toggle(
+    "hidden"
+  );
+
+
+  if (
+    !inventoryScreen.classList.contains(
+      "hidden"
+    )
+  ) {
+
+    updateInventoryUI();
+
+  }
+
+}
+
+
+window.toggleInventory =
+  toggleInventory;
+
+
+/* =========================
+   INVENTORY UI
+========================= */
+
+function updateInventoryUI() {
+
+  const keyCount =
+    document.getElementById(
+      "keyCount"
+    );
+
+  const inventoryCoins =
+    document.getElementById(
+      "inventoryCoins"
+    );
+
+  const inventoryCrystal =
+    document.getElementById(
+      "inventoryCrystal"
+    );
+
+  const potionCount =
+    document.getElementById(
+      "potionCount"
+    );
+
+  const scrollCount =
+    document.getElementById(
+      "scrollCount"
+    );
+
+
+  if (keyCount) {
+
+    keyCount.textContent =
+      keysCollected;
+
+  }
+
+
+  if (inventoryCoins) {
+
+    inventoryCoins.textContent =
+      coins;
+
+  }
+
+
+  if (inventoryCrystal) {
+
+    inventoryCrystal.textContent =
+      crystal;
+
+  }
+
+
+  if (potionCount) {
+
+    potionCount.textContent =
+      potions;
+
+  }
+
+
+  if (scrollCount) {
+
+    scrollCount.textContent =
+      scrolls;
+
+  }
+
+}
+
+
+/* =========================
+   GAME OVER
+========================= */
 
 function gameOver() {
 
@@ -555,15 +809,15 @@ function gameOver() {
 
 
   showMessage(
-    "💀 Badri has fallen! Refresh the page to restart."
+    "💀 Badri has fallen! Refresh to restart."
   );
 
 }
 
 
-// ========================================
-// MESSAGE SYSTEM
-// ========================================
+/* =========================
+   MESSAGE
+========================= */
 
 function showMessage(text) {
 
@@ -576,7 +830,6 @@ function showMessage(text) {
 
   message.textContent =
     text;
-
 
   message.style.display =
     "block";
@@ -596,3 +849,7 @@ function showMessage(text) {
     }, 2500);
 
 }
+
+
+window.showMessage =
+  showMessage;
