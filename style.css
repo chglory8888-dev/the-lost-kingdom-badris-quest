@@ -1311,3 +1311,367 @@ h2 {
   }
 
 }
+/* =========================
+   FORGOTTEN VILLAGE
+========================= */
+
+.village-screen {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 300;
+
+  background:
+    linear-gradient(
+      #162b22,
+      #07100b
+    );
+
+  overflow: hidden;
+
+}
+
+
+.village-title {
+
+  position: absolute;
+
+  top: 18px;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  z-index: 20;
+
+  padding: 12px 25px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(0,0,0,.75);
+
+  border:
+    1px solid #b99a43;
+
+  color: #f1d477;
+
+  font-size: 25px;
+
+  font-weight: bold;
+
+}
+
+
+.village-world {
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #3d5637,
+      #152417 55%,
+      #050806
+    );
+
+}
+
+
+.village-house {
+
+  position: absolute;
+
+  font-size: 75px;
+
+  filter:
+    drop-shadow(
+      0 8px 5px
+      rgba(0,0,0,.5)
+    );
+
+}
+
+
+.house-one {
+
+  left: 12%;
+
+  top: 35%;
+
+}
+
+
+.house-two {
+
+  right: 12%;
+
+  top: 32%;
+
+}
+
+
+.village-npc {
+
+  position: absolute;
+
+  left: 50%;
+
+  top: 47%;
+
+  transform:
+    translate(-50%, -50%);
+
+  font-size: 65px;
+
+  cursor: pointer;
+
+  animation:
+    npcFloat 2s infinite;
+
+}
+
+
+.npc-label {
+
+  position: absolute;
+
+  left: 50%;
+
+  top: 56%;
+
+  transform:
+    translateX(-50%);
+
+  color: white;
+
+  background:
+    rgba(0,0,0,.7);
+
+  padding: 5px 10px;
+
+  border-radius: 7px;
+
+}
+
+
+.village-well {
+
+  position: absolute;
+
+  left: 43%;
+
+  bottom: 18%;
+
+  font-size: 55px;
+
+}
+
+
+.village-tree {
+
+  position: absolute;
+
+  left: 5%;
+
+  bottom: 10%;
+
+  font-size: 80px;
+
+}
+
+
+.tree-two {
+
+  left: auto;
+
+  right: 4%;
+
+}
+
+
+.village-quest-box {
+
+  position: absolute;
+
+  top: 90px;
+
+  left: 15px;
+
+  width: 230px;
+
+  padding: 15px;
+
+  background:
+    rgba(5,10,6,.9);
+
+  border:
+    1px solid #9d843f;
+
+  border-radius: 12px;
+
+  color: #d5ddd4;
+
+}
+
+
+.village-quest-box strong {
+
+  color: #f0d36b;
+
+}
+
+
+.village-quest-box p {
+
+  margin: 8px 0;
+
+  font-size: 13px;
+
+}
+
+
+.village-quest-box
+.completed {
+
+  color: #7dff9c;
+
+}
+
+
+.dialogue-box {
+
+  position: absolute;
+
+  left: 50%;
+
+  bottom: 35px;
+
+  transform:
+    translateX(-50%);
+
+  width: min(700px, 90%);
+
+  padding: 20px;
+
+  background:
+    rgba(5,8,5,.96);
+
+  border:
+    2px solid #b99a43;
+
+  border-radius: 15px;
+
+  z-index: 50;
+
+}
+
+
+.dialogue-text {
+
+  min-height: 55px;
+
+  color: white;
+
+  font-size: 18px;
+
+  line-height: 1.5;
+
+}
+
+
+#dialogueNext {
+
+  margin-top: 12px;
+
+  padding: 10px 20px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background: #705b24;
+
+  color: white;
+
+  font-weight: bold;
+
+}
+
+
+.village-back {
+
+  position: absolute;
+
+  right: 18px;
+
+  bottom: 18px;
+
+  z-index: 60;
+
+  padding: 10px 18px;
+
+  border-radius: 9px;
+
+  border: 1px solid #8e793c;
+
+  background: #1d291e;
+
+  color: white;
+
+}
+
+
+@keyframes npcFloat {
+
+  0%, 100% {
+    transform:
+      translate(-50%, -50%);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -57%);
+  }
+
+}
+
+
+@media(max-width:600px) {
+
+  .village-title {
+
+    font-size: 18px;
+
+    padding: 9px 15px;
+
+  }
+
+  .village-quest-box {
+
+    width: 180px;
+
+    top: 65px;
+
+    left: 8px;
+
+  }
+
+  .village-house {
+
+    font-size: 55px;
+
+  }
+
+  .dialogue-text {
+
+    font-size: 15px;
+
+  }
+
+}
