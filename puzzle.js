@@ -1,28 +1,36 @@
-const symbolButtons = document.querySelectorAll(
-  ".symbol-buttons button"
-);
+const symbolButtons =
+  document.querySelectorAll(
+    ".symbol-buttons button"
+  );
 
-const sequenceSlots = document.querySelectorAll(
-  "#sequenceDisplay span"
-);
+const sequenceSlots =
+  document.querySelectorAll(
+    "#sequenceDisplay span"
+  );
 
-const puzzleMessage = document.getElementById(
-  "puzzleMessage"
-);
+const puzzleMessage =
+  document.getElementById(
+    "puzzleMessage"
+  );
 
-const resetPuzzle = document.getElementById(
-  "resetPuzzle"
-);
+const resetPuzzle =
+  document.getElementById(
+    "resetPuzzle"
+  );
 
-const hintButton = document.getElementById(
-  "hintButton"
-);
+const hintButton =
+  document.getElementById(
+    "hintButton"
+  );
 
-const closePuzzle = document.getElementById(
-  "closePuzzle"
-);
+const closePuzzle =
+  document.getElementById(
+    "closePuzzle"
+  );
+
 
 let selectedSequence = [];
+
 
 const correctSequence = [
   "🌙",
@@ -32,26 +40,32 @@ const correctSequence = [
 ];
 
 
-// ==============================
-// SYMBOL BUTTONS
-// ==============================
-
 symbolButtons.forEach((button) => {
 
   button.addEventListener("click", () => {
 
-    if (selectedSequence.length >= 4) {
+    if (
+      selectedSequence.length >= 4
+    ) {
       return;
     }
 
-    const symbol = button.dataset.symbol;
+
+    const symbol =
+      button.dataset.symbol;
+
 
     selectedSequence.push(symbol);
 
     updateSequence();
 
-    if (selectedSequence.length === 4) {
+
+    if (
+      selectedSequence.length === 4
+    ) {
+
       checkPuzzle();
+
     }
 
   });
@@ -59,29 +73,23 @@ symbolButtons.forEach((button) => {
 });
 
 
-// ==============================
-// UPDATE SEQUENCE
-// ==============================
-
 function updateSequence() {
 
-  sequenceSlots.forEach((slot, index) => {
+  sequenceSlots.forEach(
+    (slot, index) => {
 
-    slot.textContent =
-      selectedSequence[index] || "?";
+      slot.textContent =
+        selectedSequence[index] || "?";
 
-  });
+    }
+  );
 
 }
 
 
-// ==============================
-// CHECK PUZZLE
-// ==============================
-
 function checkPuzzle() {
 
-  const isCorrect =
+  const correct =
     selectedSequence.length ===
       correctSequence.length &&
     selectedSequence.every(
@@ -90,58 +98,7 @@ function checkPuzzle() {
     );
 
 
-  if (isCorrect) {
-
-    puzzleMessage.textContent =
-      "🔓 CORRECT! The Ancient Gate is unlocked!";
-
-    puzzleMessage.style.color =
-      "#7dff9c";
-
-
-    // Unlock the gate
-
-    window.gateUnlocked = true;
-
-
-    const gate =
-      document.getElementById("ancientGate");
-
-
-    if (gate) {
-
-      gate.textContent = "🚪";
-
-    }
-
-
-    // Show success message
-
-    setTimeout(() => {
-
-      puzzleMessage.textContent =
-        "🎉 Secret path discovered!";
-
-    }, 700);
-
-
-    // Close puzzle
-
-    setTimeout(() => {
-
-      const puzzleScreen =
-        document.getElementById("puzzleScreen");
-
-      if (puzzleScreen) {
-
-        puzzleScreen.classList.add("hidden");
-
-      }
-
-    }, 1800);
-
-
-  } else {
+  if (!correct) {
 
     puzzleMessage.textContent =
       "❌ Wrong sequence! Try again.";
@@ -149,54 +106,124 @@ function checkPuzzle() {
     puzzleMessage.style.color =
       "#ff7777";
 
+    return;
+
   }
+
+
+  puzzleMessage.textContent =
+    "🔓 CORRECT! Ancient Gate unlocked!";
+
+  puzzleMessage.style.color =
+    "#7dff9c";
+
+
+  window.gateUnlocked = true;
+
+
+  if (
+    typeof window.completeQuest ===
+    "function"
+  ) {
+
+    window.completeQuest("gate");
+
+  }
+
+
+  const gate =
+    document.getElementById(
+      "ancientGate"
+    );
+
+
+  if (gate) {
+
+    gate.textContent = "🚪";
+
+    gate.classList.add(
+      "gate-unlocked"
+    );
+
+  }
+
+
+  if (
+    typeof window.showMessage ===
+    "function"
+  ) {
+
+    window.showMessage(
+      "🔓 The Ancient Gate has opened!"
+    );
+
+  }
+
+
+  setTimeout(() => {
+
+    const screen =
+      document.getElementById(
+        "puzzleScreen"
+      );
+
+    if (screen) {
+
+      screen.classList.add(
+        "hidden"
+      );
+
+    }
+
+  }, 1800);
 
 }
 
 
-// ==============================
-// RESET PUZZLE
-// ==============================
+resetPuzzle.addEventListener(
+  "click",
+  () => {
 
-resetPuzzle.addEventListener("click", () => {
+    selectedSequence = [];
 
-  selectedSequence = [];
+    updateSequence();
 
-  updateSequence();
-
-  puzzleMessage.textContent = "";
-
-});
-
-
-// ==============================
-// HINT
-// ==============================
-
-hintButton.addEventListener("click", () => {
-
-  puzzleMessage.textContent =
-    "💡 Hint: The Moon comes first. Then follow the elements of the ancient story.";
-
-  puzzleMessage.style.color =
-    "#f2d56b";
-
-});
-
-
-// ==============================
-// CLOSE PUZZLE
-// ==============================
-
-closePuzzle.addEventListener("click", () => {
-
-  const puzzleScreen =
-    document.getElementById("puzzleScreen");
-
-  if (puzzleScreen) {
-
-    puzzleScreen.classList.add("hidden");
+    puzzleMessage.textContent = "";
 
   }
+);
 
-});
+
+hintButton.addEventListener(
+  "click",
+  () => {
+
+    puzzleMessage.textContent =
+      "💡 Hint: Moon → Fire → Nature → Star";
+
+    puzzleMessage.style.color =
+      "#f2d56b";
+
+  }
+);
+
+
+closePuzzle.addEventListener(
+  "click",
+  () => {
+
+    const screen =
+      document.getElementById(
+        "puzzleScreen"
+      );
+
+    if (screen) {
+
+      screen.classList.add(
+        "hidden"
+      );
+
+    }
+
+  }
+);
