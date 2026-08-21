@@ -13,9 +13,7 @@
 
 <main id="game">
 
-  <!-- =========================
-       HOME SCREEN
-  ========================== -->
+  <!-- HOME -->
 
   <section id="homeScreen" class="screen">
 
@@ -30,19 +28,10 @@
       <h2>⚔️ BADRI'S QUEST</h2>
 
       <p class="story">
-
         👑 King Manu has disappeared.
-
         A mysterious darkness has surrounded Eldoria.
-
-        Brave warrior Badri must enter the Dark Forest,
-
-        discover the hidden secrets,
-
-        solve ancient puzzles,
-
-        and recover the lost Crystal.
-
+        Badri must enter the Dark Forest,
+        solve ancient puzzles and discover the truth.
       </p>
 
       <button id="startButton" class="start-button">
@@ -54,9 +43,7 @@
   </section>
 
 
-  <!-- =========================
-       GAME SCREEN
-  ========================== -->
+  <!-- GAME -->
 
   <section id="gameScreen" class="hidden">
 
@@ -78,10 +65,17 @@
         💎 <b id="crystal">0</b>/1
       </span>
 
+      <button
+        id="inventoryButton"
+        class="inventory-button"
+      >
+        🎒
+      </button>
+
     </div>
 
 
-    <!-- FOREST WORLD -->
+    <!-- WORLD -->
 
     <div id="forest">
 
@@ -126,6 +120,20 @@
       </div>
 
 
+      <!-- POTION -->
+
+      <div id="potion">
+        🧪
+      </div>
+
+
+      <!-- SCROLL -->
+
+      <div id="scroll">
+        📜
+      </div>
+
+
       <!-- ANCIENT GATE -->
 
       <div id="ancientGate">
@@ -140,8 +148,6 @@
       </div>
 
 
-      <!-- GAME MESSAGE -->
-
       <div id="message"></div>
 
     </div>
@@ -153,31 +159,19 @@
 
       <div></div>
 
-      <button data-key="ArrowUp">
-        ▲
-      </button>
+      <button data-key="ArrowUp">▲</button>
 
       <div></div>
 
+      <button data-key="ArrowLeft">◀</button>
 
-      <button data-key="ArrowLeft">
-        ◀
-      </button>
+      <button data-key="Space">⚔️</button>
 
-      <button data-key="Space">
-        ⚔️
-      </button>
-
-      <button data-key="ArrowRight">
-        ▶
-      </button>
-
+      <button data-key="ArrowRight">▶</button>
 
       <div></div>
 
-      <button data-key="ArrowDown">
-        ▼
-      </button>
+      <button data-key="ArrowDown">▼</button>
 
       <div></div>
 
@@ -185,17 +179,18 @@
 
 
     <p class="keyboard-help">
-      PC: Arrow Keys = Move | Space = Attack
+      PC: Arrow Keys = Move | Space = Attack | I = Inventory
     </p>
 
   </section>
 
 
-  <!-- =========================
-       PUZZLE SCREEN
-  ========================== -->
+  <!-- PUZZLE -->
 
-  <section id="puzzleScreen" class="puzzle-screen hidden">
+  <section
+    id="puzzleScreen"
+    class="puzzle-screen hidden"
+  >
 
     <div class="puzzle-box">
 
@@ -203,57 +198,34 @@
         ANCIENT STONE GATE
       </div>
 
-      <h1>
-        🧩 Ancient Symbols
-      </h1>
+      <h1>🧩 Ancient Symbols</h1>
 
       <p class="puzzle-description">
-
-        The ancient gate is sealed.
-
         Arrange the four symbols in the correct order
-
         to unlock the secret path.
-
       </p>
 
-
-      <!-- SELECTED SEQUENCE -->
-
-      <div id="sequenceDisplay" class="sequence-display">
-
+      <div
+        id="sequenceDisplay"
+        class="sequence-display"
+      >
         <span>?</span>
         <span>?</span>
         <span>?</span>
         <span>?</span>
-
       </div>
-
-
-      <!-- SYMBOLS -->
 
       <div class="symbol-buttons">
 
-        <button data-symbol="🌙">
-          🌙
-        </button>
+        <button data-symbol="🌙">🌙</button>
 
-        <button data-symbol="🔥">
-          🔥
-        </button>
+        <button data-symbol="🔥">🔥</button>
 
-        <button data-symbol="🌿">
-          🌿
-        </button>
+        <button data-symbol="🌿">🌿</button>
 
-        <button data-symbol="⭐">
-          ⭐
-        </button>
+        <button data-symbol="⭐">⭐</button>
 
       </div>
-
-
-      <!-- ACTIONS -->
 
       <div class="puzzle-actions">
 
@@ -267,12 +239,134 @@
 
       </div>
 
-
       <p id="puzzleMessage"></p>
 
-
-      <button id="closePuzzle" class="close-puzzle">
+      <button
+        id="closePuzzle"
+        class="close-puzzle"
+      >
         ← RETURN TO FOREST
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- INVENTORY -->
+
+  <section
+    id="inventoryScreen"
+    class="inventory-screen hidden"
+  >
+
+    <div class="inventory-box">
+
+      <div class="inventory-title">
+        🎒 BADRI'S INVENTORY
+      </div>
+
+      <p class="inventory-subtitle">
+        Items collected during the adventure
+      </p>
+
+
+      <div class="inventory-grid">
+
+
+        <div class="inventory-item">
+
+          <div class="inventory-icon">
+            🗝️
+          </div>
+
+          <div>
+            <strong>Ancient Key</strong>
+            <span id="keyCount">
+              0
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="inventory-item">
+
+          <div class="inventory-icon">
+            🪙
+          </div>
+
+          <div>
+            <strong>Gold Coins</strong>
+            <span id="inventoryCoins">
+              0
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="inventory-item">
+
+          <div class="inventory-icon">
+            💎
+          </div>
+
+          <div>
+            <strong>Crystal Fragment</strong>
+            <span id="inventoryCrystal">
+              0
+            </span>
+          </div>
+
+        </div>
+
+
+        <div
+          class="inventory-item usable"
+          id="potionInventory"
+        >
+
+          <div class="inventory-icon">
+            🧪
+          </div>
+
+          <div>
+            <strong>Health Potion</strong>
+            <span id="potionCount">
+              0
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="inventory-item">
+
+          <div class="inventory-icon">
+            📜
+          </div>
+
+          <div>
+            <strong>Ancient Scroll</strong>
+            <span id="scrollCount">
+              0
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <p id="inventoryMessage"></p>
+
+
+      <button
+        id="closeInventory"
+        class="close-inventory"
+      >
+        ← BACK TO GAME
       </button>
 
     </div>
@@ -282,10 +376,9 @@
 </main>
 
 
-<!-- JAVASCRIPT -->
-
 <script src="game.js"></script>
 <script src="puzzle.js"></script>
+<script src="inventory.js"></script>
 
 </body>
 </html>
