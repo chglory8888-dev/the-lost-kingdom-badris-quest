@@ -268,6 +268,103 @@
     </div>
 
   </section>
+  <section
+  id="villageScreen"
+  class="village-screen hidden"
+>
+
+  <div class="village-title">
+
+    🏘️ FORGOTTEN VILLAGE
+
+  </div>
+
+
+  <div class="village-world">
+
+    <div class="village-house house-one">
+      🏠
+    </div>
+
+    <div class="village-house house-two">
+      🏚️
+    </div>
+
+    <div
+      id="villageNpc"
+      class="village-npc"
+    >
+      👴
+    </div>
+
+    <div class="npc-label">
+      Old Villager
+    </div>
+
+
+    <div class="village-well">
+      🪣
+    </div>
+
+    <div class="village-tree">
+      🌳
+    </div>
+
+    <div class="village-tree tree-two">
+      🌳
+    </div>
+
+
+    <div class="village-quest-box">
+
+      <strong>📜 CHAPTER 2 QUEST</strong>
+
+      <p id="villageQuest">
+        ☐ Talk to the Old Villager
+      </p>
+
+      <p>
+        ☐ Find the Village Key
+      </p>
+
+      <p>
+        ☐ Search the Abandoned House
+      </p>
+
+      <p>
+        ☐ Discover King Manu's Secret
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="dialogueBox"
+    class="dialogue-box hidden"
+  >
+
+    <div
+      id="dialogueText"
+      class="dialogue-text"
+    ></div>
+
+    <button id="dialogueNext">
+      NEXT →
+    </button>
+
+  </div>
+
+
+  <button
+    class="village-back"
+    onclick="closeVillage()"
+  >
+    ← Return
+  </button>
+
+  </section>
 
 
   <!-- INVENTORY -->
@@ -403,3 +500,4 @@
 <script src="puzzle.js"></script>
 <script src="inventory.js"></script>
 <script src="quest.js"></script>
+<script src="village.js"></script>
