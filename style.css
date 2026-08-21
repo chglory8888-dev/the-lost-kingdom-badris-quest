@@ -1214,3 +1214,100 @@ h2 {
   }
 
   }
+/* =========================
+   QUEST PANEL
+========================= */
+
+#questPanel {
+
+  position: absolute;
+
+  top: 75px;
+
+  left: 15px;
+
+  width: 250px;
+
+  padding: 14px;
+
+  background:
+    rgba(8, 15, 9, 0.92);
+
+  border:
+    1px solid #9b8038;
+
+  border-radius: 12px;
+
+  color: white;
+
+  z-index: 20;
+
+  box-shadow:
+    0 5px 20px rgba(0,0,0,0.5);
+
+}
+
+
+#questTitle {
+
+  color: #f0d36b;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  margin-bottom: 8px;
+
+}
+
+
+.quest-main {
+
+  color: #ffffff;
+
+  font-weight: bold;
+
+  margin-bottom: 10px;
+
+}
+
+
+.quest-item {
+
+  padding: 5px 0;
+
+  color: #c9d0c9;
+
+  font-size: 14px;
+
+}
+
+
+.quest-item.completed {
+
+  color: #7dff9c;
+
+}
+
+
+@media (max-width: 600px) {
+
+  #questPanel {
+
+    top: 65px;
+
+    left: 8px;
+
+    width: 190px;
+
+    padding: 10px;
+
+  }
+
+  .quest-item {
+
+    font-size: 12px;
+
+  }
+
+}
