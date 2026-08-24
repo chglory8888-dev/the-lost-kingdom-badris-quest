@@ -442,50 +442,163 @@ button {
   }
 }
 
-
-/* =========================================================
-   QUEST PANEL
-========================================================= */
+/* =========================================
+   COMPACT QUEST PANEL
+========================================= */
 
 #questPanel {
   position: absolute;
-  top: 72px;
-  left: 12px;
-  z-index: 80;
-  width: 215px;
-  padding: 10px;
-  background: rgba(5, 10, 6, .86);
-  border: 1px solid #90783d;
-  border-radius: 10px;
-  box-shadow: 0 5px 18px rgba(0,0,0,.45);
-  pointer-events: none;
+  top: 68px;
+  left: 10px;
+
+  width: 175px;
+  max-width: 175px;
+
+  padding: 8px 10px;
+
+  background: rgba(5, 10, 6, 0.88);
+
+  border: 1px solid #806a32;
+  border-radius: 8px;
+
+  color: white;
+
+  z-index: 20;
+
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.45);
+
+  font-family: Arial, sans-serif;
+
+  transform: scale(0.9);
+  transform-origin: top left;
 }
+
+
+/* QUEST TITLE */
 
 #questTitle {
-  margin-bottom: 5px;
-  color: #efd16b;
-  font-size: 14px;
+  color: #e6c85d;
+
+  font-size: 12px;
+
   font-weight: bold;
+
+  margin-bottom: 4px;
 }
 
+
+/* MAIN QUEST */
+
 .quest-main {
-  margin-bottom: 5px;
-  color: #fff;
-  font-size: 12px;
+  color: #ffffff;
+
+  font-size: 11px;
+
   font-weight: bold;
+
+  line-height: 1.25;
+
+  margin-bottom: 5px;
 }
+
+
+/* QUEST ITEMS */
 
 .quest-item {
   padding: 2px 0;
-  color: #b9c2b8;
-  font-family: Arial, sans-serif;
-  font-size: 11px;
+
+  color: #bfc8bf;
+
+  font-size: 10px;
+
+  line-height: 1.25;
 }
+
+
+/* COMPLETED QUEST */
 
 .quest-item.completed {
-  color: #7dff9c;
+  color: #72e891;
 }
 
+
+/* =========================================
+   MOBILE QUEST
+========================================= */
+
+@media (max-width: 768px) {
+
+  #questPanel {
+    top: 64px;
+    left: 7px;
+
+    width: 145px;
+    max-width: 145px;
+
+    padding: 6px 8px;
+
+    border-radius: 7px;
+
+    transform: scale(0.82);
+    transform-origin: top left;
+  }
+
+
+  #questTitle {
+    font-size: 10px;
+  }
+
+
+  .quest-main {
+    font-size: 9px;
+  }
+
+
+  .quest-item {
+    font-size: 8.5px;
+
+    padding: 1px 0;
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+
+  #questPanel {
+    top: 62px;
+    left: 5px;
+
+    width: 130px;
+    max-width: 130px;
+
+    padding: 5px 7px;
+
+    transform: scale(0.78);
+  }
+
+
+  #questTitle {
+    font-size: 9px;
+  }
+
+
+  .quest-main {
+    font-size: 8px;
+  }
+
+
+  .quest-item {
+    font-size: 7.5px;
+  }
+
+}
+ 
 
 /* =========================================================
    GAME MESSAGE
