@@ -1,433 +1,566 @@
-/* =====================================================
-   THE LOST KINGDOM: BADRI'S QUEST
-   ADVANCED CLUE / INVESTIGATION SYSTEM
-===================================================== */
+// Clue.js
+// THE LOST KINGDOM: BADRI'S QUEST
+// Complete Clue & Mystery System
 
-let cluesFound = 0;
+// ==========================================
+// CLUE DATA
+// ==========================================
 
-const clues = {
+export const clues = [
+  // ========================================
+  // CHAPTER 1
+  // ========================================
 
-  forestSymbol: false,
+  {
+    id: "clue_ch1_torn_paper",
+    chapter: 1,
+    title: "Torn Paper",
+    description:
+      "A piece of an old document found inside the abandoned house.",
+    type: "document",
+    discovered: false,
+    important: true
+  },
 
-  ancientScroll: false,
+  {
+    id: "clue_ch1_three_symbols",
+    chapter: 1,
+    title: "Three Ancient Symbols",
+    description:
+      "A Sun, a Snake and a Crown are carved into the old wooden box.",
+    type: "symbol",
+    discovered: false,
+    important: true
+  },
 
-  crystalClue: false,
+  {
+    id: "clue_ch1_ancient_coin",
+    chapter: 1,
+    title: "Ancient Coin",
+    description:
+      "An unusual coin bearing the symbol of a forgotten kingdom.",
+    type: "object",
+    discovered: false,
+    important: false
+  },
 
-  villageClue: false
+  {
+    id: "clue_ch1_mysterious_letter",
+    chapter: 1,
+    title: "Mysterious Letter",
+    description:
+      "The letter suggests that the Lost Kingdom may not have disappeared forever.",
+    type: "document",
+    discovered: false,
+    important: true
+  },
 
+  {
+    id: "clue_ch1_blue_crystal",
+    chapter: 1,
+    title: "Blue Crystal",
+    description:
+      "A strange blue crystal found inside the ancient wooden box.",
+    type: "artifact",
+    discovered: false,
+    important: true
+  },
+
+  {
+    id: "clue_ch1_kingdom_symbol",
+    chapter: 1,
+    title: "Kingdom Symbol",
+    description:
+      "An ancient symbol discovered inside the hidden passage.",
+    type: "symbol",
+    discovered: false,
+    important: true
+  },
+
+  // ========================================
+  // CHAPTER 2
+  // ========================================
+
+  {
+    id: "clue_ch2_broken_statue",
+    chapter: 2,
+    title: "Broken Statue",
+    description:
+      "A damaged statue with the same symbol seen in the old letter.",
+    type: "object",
+    discovered: false,
+    important: true
+  },
+
+  {
+    id: "clue_ch2_forest_mark",
+    chapter: 2,
+    title: "Forest Mark",
+    description:
+      "A mysterious mark carved into an ancient tree.",
+    type: "symbol",
+    discovered: false,
+    important: true
+  }
+];
+
+
+// ==========================================
+// CLUE STATE
+// ==========================================
+
+let clueState = {
+  discoveredClues: [],
+  combinedClues: [],
+  solvedMysteries: []
 };
 
 
-let currentClue = null;
+// ==========================================
+// GET ALL CLUES
+// ==========================================
+
+export function getAllClues() {
+  return clues;
+}
 
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+// ==========================================
+// GET CLUE BY ID
+// ==========================================
 
-const investigatePanel =
-  document.getElementById(
-    "investigatePanel"
+export function getClueById(id) {
+  return clues.find(
+    (clue) => clue.id === id
   );
-
-const investigateTitle =
-  document.getElementById(
-    "investigateTitle"
-  );
-
-const investigateText =
-  document.getElementById(
-    "investigateText"
-  );
-
-const investigateButton =
-  document.getElementById(
-    "investigateButton"
-  );
-
-const closeInvestigate =
-  document.getElementById(
-    "closeInvestigate"
-  );
+}
 
 
-/* =====================================================
-   CLUE DATA
-===================================================== */
+// ==========================================
+// DISCOVER CLUE
+// ==========================================
 
-const clueData = {
+export function discoverClue(id) {
+  const clue = getClueById(id);
 
-  forestSymbol: {
-
-    title:
-      "🪨 Mysterious Stone",
-
-    text:
-      "An ancient symbol is carved into the stone. It looks like the same symbol seen near the Lost Kingdom gate.",
-
-    reward:
-      "You discovered an ancient symbol."
-
-  },
-
-
-  ancientScroll: {
-
-    title:
-      "📜 Ancient Scroll",
-
-    text:
-      "The old scroll speaks about four symbols: Moon, Fire, Nature and Star. Their order may open the Ancient Gate.",
-
-    reward:
-      "You discovered the Ancient Gate sequence."
-
-  },
-
-
-  crystalClue: {
-
-    title:
-      "🔮 Mysterious Crystal",
-
-    text:
-      "Inside the crystal you see a strange vision... King Manu is standing before a dark castle.",
-
-    reward:
-      "You discovered a vision of King Manu."
-
-  },
-
-
-  villageClue: {
-
-    title:
-      "🏘️ Village Secret",
-
-    text:
-      "The mark on this object belongs to the Forgotten Village. Someone there may know what happened to King Manu.",
-
-    reward:
-      "You discovered a clue leading to the village."
-
+  if (!clue) {
+    console.warn("Clue not found:", id);
+    return false;
   }
 
-};
+  if (
+    !clueState.discoveredClues.includes(id)
+  ) {
+    clueState.discoveredClues.push(id);
+  }
+
+  return true;
+}
 
 
-/* =====================================================
-   OPEN INVESTIGATION
-===================================================== */
+// ==========================================
+// CHECK CLUE DISCOVERED
+// ==========================================
 
-function openInvestigation(
-  clueId
+export function isClueDiscovered(id) {
+  return clueState.discoveredClues.includes(
+    id
+  );
+}
+
+
+// ==========================================
+// GET DISCOVERED CLUES
+// ==========================================
+
+export function getDiscoveredClues() {
+  return clues.filter((clue) =>
+    clueState.discoveredClues.includes(
+      clue.id
+    )
+  );
+}
+
+
+// ==========================================
+// GET CHAPTER CLUES
+// ==========================================
+
+export function getChapterClues(
+  chapterNumber
 ) {
-
-  if (
-    !clueData[clueId]
-  ) {
-
-    return;
-
-  }
-
-
-  currentClue =
-    clueId;
-
-
-  if (investigateTitle) {
-
-    investigateTitle.textContent =
-      clueData[clueId].title;
-
-  }
-
-
-  if (investigateText) {
-
-    investigateText.textContent =
-      clueData[clueId].text;
-
-  }
-
-
-  if (investigateButton) {
-
-    investigateButton.textContent =
-      clues[clueId]
-        ? "✓ ALREADY INVESTIGATED"
-        : "🔎 INVESTIGATE";
-
-  }
-
-
-  if (investigatePanel) {
-
-    investigatePanel.classList.remove(
-      "hidden"
-    );
-
-  }
-
+  return clues.filter(
+    (clue) =>
+      clue.chapter === chapterNumber
+  );
 }
 
 
-/* =====================================================
-   INVESTIGATE
-===================================================== */
+// ==========================================
+// GET DISCOVERED CHAPTER CLUES
+// ==========================================
 
-function investigateCurrentClue() {
-
-  if (
-    !currentClue
-  ) {
-
-    return;
-
-  }
-
-
-  if (
-    clues[currentClue]
-  ) {
-
-    if (
-      typeof window.showMessage ===
-      "function"
-    ) {
-
-      window.showMessage(
-        "🔎 You already investigated this clue."
-      );
-
-    }
-
-    return;
-
-  }
-
-
-  clues[currentClue] =
-    true;
-
-
-  cluesFound++;
-
-
-  if (investigateButton) {
-
-    investigateButton.textContent =
-      "✓ INVESTIGATED";
-
-  }
-
-
-  if (
-    typeof window.showMessage ===
-    "function"
-  ) {
-
-    window.showMessage(
-      "🔎 Clue discovered!"
-    );
-
-  }
-
-
-  /* =========================================
-     SPECIAL CLUE REWARDS
-  ========================================= */
-
-
-  if (
-    currentClue ===
-    "ancientScroll"
-  ) {
-
-    if (
-      typeof window.completeQuest ===
-      "function"
-    ) {
-
-      window.completeQuest(
-        "scroll"
-      );
-
-    }
-
-  }
-
-
-  if (
-    currentClue ===
-    "forestSymbol"
-  ) {
-
-    if (
-      typeof window.completeQuest ===
-      "function"
-    ) {
-
-      window.completeQuest(
-        "clue"
-      );
-
-    }
-
-  }
-
-
-  if (
-    currentClue ===
-    "crystalClue"
-  ) {
-
-    if (
-      typeof window.completeQuest ===
-      "function"
-    ) {
-
-      window.completeQuest(
-        "vision"
-      );
-
-    }
-
-  }
-
+export function getDiscoveredChapterClues(
+  chapterNumber
+) {
+  return getChapterClues(
+    chapterNumber
+  ).filter((clue) =>
+    clueState.discoveredClues.includes(
+      clue.id
+    )
+  );
 }
 
 
-/* =====================================================
-   CLOSE
-===================================================== */
+// ==========================================
+// COMBINATION RECIPES
+// ==========================================
 
-function closeInvestigationPanel() {
+const clueCombinations = [
+  {
+    id: "combination_001",
 
-  currentClue =
-    null;
+    clues: [
+      "clue_ch1_torn_paper",
+      "clue_ch1_three_symbols"
+    ],
+
+    result: {
+      id: "clue_ch1_symbol_message",
+
+      title: "Hidden Symbol Message",
+
+      description:
+        "The torn paper and the three symbols reveal a hidden message.",
+
+      type: "combined",
+
+      chapter: 1
+    }
+  },
+
+  {
+    id: "combination_002",
+
+    clues: [
+      "clue_ch1_mysterious_letter",
+      "clue_ch1_ancient_coin"
+    ],
+
+    result: {
+      id: "clue_ch1_kingdom_connection",
+
+      title: "Kingdom Connection",
+
+      description:
+        "The symbol on the coin matches the description in the mysterious letter.",
+
+      type: "combined",
+
+      chapter: 1
+    }
+  }
+];
 
 
-  if (investigatePanel) {
+// ==========================================
+// CHECK POSSIBLE COMBINATION
+// ==========================================
 
-    investigatePanel.classList.add(
-      "hidden"
-    );
+export function canCombine(
+  clueId1,
+  clueId2
+) {
+  const combination =
+    clueCombinations.find((combo) => {
+      const required =
+        combo.clues;
 
+      return (
+        required.includes(clueId1) &&
+        required.includes(clueId2)
+      );
+    });
+
+  if (!combination) {
+    return false;
   }
 
+  return combination.clues.every(
+    (id) =>
+      clueState.discoveredClues.includes(
+        id
+      )
+  );
 }
 
 
-/* =====================================================
-   CLUE CLICK SYSTEM
-===================================================== */
+// ==========================================
+// COMBINE CLUES
+// ==========================================
 
-document
-  .querySelectorAll(
-    ".adventure-clue"
-  )
-  .forEach(
-    function (clue) {
+export function combineClues(
+  clueId1,
+  clueId2
+) {
+  const combination =
+    clueCombinations.find((combo) => {
+      const required =
+        combo.clues;
 
-      clue.addEventListener(
-        "click",
-        function (event) {
-
-          event.stopPropagation();
-
-
-          const clueId =
-            clue.dataset.clue;
-
-
-          openInvestigation(
-            clueId
-          );
-
-        }
+      return (
+        required.includes(clueId1) &&
+        required.includes(clueId2)
       );
+    });
 
-    }
+  if (!combination) {
+    return {
+      success: false,
+      message:
+        "These clues cannot be combined."
+    };
+  }
+
+  const hasAllClues =
+    combination.clues.every(
+      (id) =>
+        clueState.discoveredClues.includes(
+          id
+        )
+    );
+
+  if (!hasAllClues) {
+    return {
+      success: false,
+      message:
+        "You have not discovered all the required clues."
+    };
+  }
+
+  if (
+    clueState.combinedClues.includes(
+      combination.id
+    )
+  ) {
+    return {
+      success: false,
+      message:
+        "These clues have already been combined."
+    };
+  }
+
+  clueState.combinedClues.push(
+    combination.id
   );
 
-
-/* =====================================================
-   BUTTONS
-===================================================== */
-
-if (investigateButton) {
-
-  investigateButton.addEventListener(
-    "click",
-    function () {
-
-      investigateCurrentClue();
-
-    }
-  );
-
+  return {
+    success: true,
+    message:
+      "New evidence discovered!",
+    result:
+      combination.result
+  };
 }
 
 
-if (closeInvestigate) {
+// ==========================================
+// GET COMBINED CLUES
+// ==========================================
 
-  closeInvestigate.addEventListener(
-    "click",
-    function () {
-
-      closeInvestigationPanel();
-
-    }
-  );
-
+export function getCombinedClues() {
+  return [...clueState.combinedClues];
 }
 
 
-/* =====================================================
-   PUBLIC FUNCTIONS
-===================================================== */
+// ==========================================
+// SOLVE MYSTERY
+// ==========================================
 
-window.findClue =
-  function (clueId) {
+export function solveMystery(
+  mysteryId
+) {
+  if (
+    clueState.solvedMysteries.includes(
+      mysteryId
+    )
+  ) {
+    return false;
+  }
 
-    openInvestigation(
-      clueId
+  clueState.solvedMysteries.push(
+    mysteryId
+  );
+
+  return true;
+}
+
+
+// ==========================================
+// CHECK MYSTERY SOLVED
+// ==========================================
+
+export function isMysterySolved(
+  mysteryId
+) {
+  return clueState.solvedMysteries.includes(
+    mysteryId
+  );
+}
+
+
+// ==========================================
+// GET SOLVED MYSTERIES
+// ==========================================
+
+export function getSolvedMysteries() {
+  return [
+    ...clueState.solvedMysteries
+  ];
+}
+
+
+// ==========================================
+// CLUE PROGRESS
+// ==========================================
+
+export function getClueProgress(
+  chapterNumber
+) {
+  const chapterClues =
+    getChapterClues(
+      chapterNumber
     );
 
+  const discovered =
+    chapterClues.filter((clue) =>
+      clueState.discoveredClues.includes(
+        clue.id
+      )
+    ).length;
+
+  return {
+    discovered,
+    total: chapterClues.length,
+
+    percentage:
+      chapterClues.length === 0
+        ? 0
+        : Math.round(
+            (discovered /
+              chapterClues.length) *
+              100
+          )
   };
+}
 
 
-window.hasClue =
-  function (clueId) {
+// ==========================================
+// SAVE CLUE PROGRESS
+// ==========================================
 
-    return !!clues[clueId];
+export function saveClueProgress() {
+  try {
+    localStorage.setItem(
+      "badriQuestClues",
+      JSON.stringify(clueState)
+    );
 
-  };
+    return true;
+  } catch (error) {
+    console.error(
+      "Failed to save clue progress:",
+      error
+    );
+
+    return false;
+  }
+}
 
 
-window.getClueCount =
-  function () {
+// ==========================================
+// LOAD CLUE PROGRESS
+// ==========================================
 
-    return cluesFound;
-
-  };
-
-
-window.resetClues =
-  function () {
-
-    cluesFound = 0;
-
-    Object.keys(clues)
-      .forEach(
-        function (key) {
-
-          clues[key] =
-            false;
-
-        }
+export function loadClueProgress() {
+  try {
+    const savedData =
+      localStorage.getItem(
+        "badriQuestClues"
       );
 
+    if (!savedData) {
+      return false;
+    }
+
+    const parsedData =
+      JSON.parse(savedData);
+
+    clueState = {
+      discoveredClues:
+        Array.isArray(
+          parsedData.discoveredClues
+        )
+          ? parsedData.discoveredClues
+          : [],
+
+      combinedClues:
+        Array.isArray(
+          parsedData.combinedClues
+        )
+          ? parsedData.combinedClues
+          : [],
+
+      solvedMysteries:
+        Array.isArray(
+          parsedData.solvedMysteries
+        )
+          ? parsedData.solvedMysteries
+          : []
+    };
+
+    return true;
+  } catch (error) {
+    console.error(
+      "Failed to load clue progress:",
+      error
+    );
+
+    return false;
+  }
+}
+
+
+// ==========================================
+// RESET CLUES
+// ==========================================
+
+export function resetClues() {
+  clueState = {
+    discoveredClues: [],
+    combinedClues: [],
+    solvedMysteries: []
   };
+}
+
+
+// ==========================================
+// GET COMPLETE CLUE STATE
+// ==========================================
+
+export function getClueState() {
+  return {
+    discoveredClues: [
+      ...clueState.discoveredClues
+    ],
+
+    combinedClues: [
+      ...clueState.combinedClues
+    ],
+
+    solvedMysteries: [
+      ...clueState.solvedMysteries
+    ]
+  };
+}
