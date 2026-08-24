@@ -2255,3 +2255,140 @@ h2 {
 .puzzle-box::after {
   pointer-events: none !important;
 }
+/* =====================================================
+   CHAPTER 2 MOBILE INTERACTION
+===================================================== */
+
+.village-npc,
+.village-house,
+.village-well {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.village-npc:active,
+.village-house:active,
+.village-well:active {
+  transform: scale(0.92);
+}
+
+
+/* =====================================================
+   VILLAGE ACTION BAR
+===================================================== */
+
+.village-action-bar {
+
+  position: fixed;
+
+  left: 50%;
+
+  bottom: 18px;
+
+  transform: translateX(-50%);
+
+  z-index: 500;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  width: 94%;
+
+  pointer-events: auto;
+
+}
+
+
+.village-action-bar button {
+
+  min-width: 150px;
+
+  min-height: 50px;
+
+  padding: 12px 20px;
+
+  border-radius: 12px;
+
+  border: 2px solid #b99a43;
+
+  background:
+    linear-gradient(
+      #3b3219,
+      #181308
+    );
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  touch-action: manipulation;
+
+  box-shadow:
+    0 5px 15px rgba(0,0,0,.6);
+
+}
+
+
+.village-action-bar button:active {
+
+  transform: scale(.92);
+
+  background: #705b24;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .village-action-bar {
+
+    bottom: 10px;
+
+    gap: 8px;
+
+  }
+
+  .village-action-bar button {
+
+    min-width: 130px;
+
+    min-height: 48px;
+
+    font-size: 13px;
+
+    padding: 10px 12px;
+
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 380px) {
+
+  .village-action-bar button {
+
+    min-width: 110px;
+
+    font-size: 12px;
+
+  }
+
+}
