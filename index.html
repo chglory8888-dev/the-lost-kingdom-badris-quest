@@ -15,6 +15,11 @@
     content="The Lost Kingdom: Badri's Quest - An adventure game"
   >
 
+  <meta
+    name="theme-color"
+    content="#10170f"
+  >
+
   <title>
     THE LOST KINGDOM: BADRI'S QUEST
   </title>
@@ -29,9 +34,9 @@
 <main id="game">
 
 
-  <!-- ==================================================
+  <!-- =====================================================
        HOME SCREEN
-  =================================================== -->
+  ====================================================== -->
 
   <section
     id="homeScreen"
@@ -63,9 +68,10 @@
 
         <br><br>
 
-        Badri must enter the Dark Forest,
-        solve ancient puzzles, discover hidden
-        secrets and find the lost King.
+        Brave Badri must enter the Dark Forest,
+        solve ancient puzzles, defeat dangerous
+        guardians and discover the hidden path
+        to King Manu.
 
       </p>
 
@@ -82,9 +88,9 @@
 
 
 
-  <!-- ==================================================
-       CHAPTER 1 GAME SCREEN
-  =================================================== -->
+  <!-- =====================================================
+       CHAPTER 1 — DARK FOREST
+  ====================================================== -->
 
   <section
     id="gameScreen"
@@ -124,6 +130,7 @@
       <button
         id="inventoryButton"
         class="inventory-button"
+        type="button"
       >
         🎒
       </button>
@@ -151,7 +158,7 @@
 
 
 
-    <!-- ================= FOREST WORLD ================= -->
+    <!-- ================= FOREST ================= -->
 
     <div id="forest">
 
@@ -162,12 +169,16 @@
 
       <!-- PLAYER -->
 
-      <div id="player">
+      <div
+        id="player"
+        aria-label="Badri"
+      >
         🧙
       </div>
 
 
-      <!-- ENEMIES -->
+
+      <!-- ================= ENEMIES ================= -->
 
       <div
         class="enemy enemy-one"
@@ -182,7 +193,8 @@
       </div>
 
 
-      <!-- COINS -->
+
+      <!-- ================= COINS ================= -->
 
       <div
         class="coin coin-one"
@@ -203,42 +215,48 @@
       </div>
 
 
-      <!-- KEY -->
+
+      <!-- ================= KEY ================= -->
 
       <div id="key">
         🗝️
       </div>
 
 
-      <!-- POTION -->
+
+      <!-- ================= POTION ================= -->
 
       <div id="potion">
         🧪
       </div>
 
 
-      <!-- SCROLL -->
+
+      <!-- ================= SCROLL ================= -->
 
       <div id="scroll">
         📜
       </div>
 
 
-      <!-- ANCIENT GATE -->
+
+      <!-- ================= ANCIENT GATE ================= -->
 
       <div id="ancientGate">
         🏛️
       </div>
 
 
-      <!-- CRYSTAL -->
+
+      <!-- ================= CRYSTAL ================= -->
 
       <div id="crystalItem">
         💎
       </div>
 
 
-      <!-- MESSAGE -->
+
+      <!-- ================= GAME MESSAGE ================= -->
 
       <div id="message">
       </div>
@@ -247,69 +265,117 @@
 
 
 
-    <!-- ================= MOBILE CONTROLS ================= -->
+    <!-- =================================================
+         PROFESSIONAL GAME CONTROLS
+    ================================================== -->
 
-    <div class="controls">
-
-      <div></div>
-
-      <button
-        data-key="ArrowUp"
-      >
-        ▲
-      </button>
-
-      <div></div>
+    <div class="controls-wrapper">
 
 
-      <button
-        data-key="ArrowLeft"
-      >
-        ◀
-      </button>
+      <!-- ================= D-PAD ================= -->
 
-      <button
-        data-key="Space"
-      >
-        ⚔️
-      </button>
-
-      <button
-        data-key="ArrowRight"
-      >
-        ▶
-      </button>
+      <div class="dpad">
 
 
-      <div></div>
+        <button
+          type="button"
+          data-key="ArrowUp"
+          aria-label="Move Up"
+        >
+          ▲
+        </button>
 
-      <button
-        data-key="ArrowDown"
-      >
-        ▼
-      </button>
 
-      <div></div>
+        <button
+          type="button"
+          data-key="ArrowLeft"
+          aria-label="Move Left"
+        >
+          ◀
+        </button>
+
+
+        <button
+          type="button"
+          data-key="Space"
+          class="dpad-center"
+          aria-label="Action"
+        >
+          ✦
+        </button>
+
+
+        <button
+          type="button"
+          data-key="ArrowRight"
+          aria-label="Move Right"
+        >
+          ▶
+        </button>
+
+
+        <button
+          type="button"
+          data-key="ArrowDown"
+          aria-label="Move Down"
+        >
+          ▼
+        </button>
+
+      </div>
+
+
+
+      <!-- ================= ACTION BUTTONS ================= -->
+
+      <div class="action-controls">
+
+
+        <!-- ATTACK -->
+
+        <button
+          id="attackButton"
+          class="attack-button"
+          type="button"
+          data-key="Space"
+          aria-label="Attack"
+        >
+
+          <span class="attack-icon">
+            ⚔️
+          </span>
+
+          <span class="attack-label">
+            ATTACK
+          </span>
+
+        </button>
+
+
+
+        <!-- INVENTORY -->
+
+        <button
+          id="mobileInventoryButton"
+          class="mobile-inventory-button"
+          type="button"
+          aria-label="Inventory"
+        >
+          🎒
+        </button>
+
+      </div>
 
     </div>
 
-
-    <p class="keyboard-help">
-
-      PC:
-      Arrow Keys = Move |
-      Space = Attack |
-      I = Inventory
-
-    </p>
 
   </section>
 
 
 
-  <!-- ==================================================
+  <!-- =====================================================
        ANCIENT GATE PUZZLE
-  =================================================== -->
+  ====================================================== -->
 
   <section
     id="puzzleScreen"
@@ -317,6 +383,7 @@
   >
 
     <div class="puzzle-box">
+
 
       <div class="puzzle-label">
         ANCIENT STONE GATE
@@ -337,63 +404,107 @@
       </p>
 
 
+
+      <!-- SEQUENCE -->
+
       <div
         id="sequenceDisplay"
         class="sequence-display"
       >
 
-        <span>?</span>
+        <span>
+          ?
+        </span>
 
-        <span>?</span>
+        <span>
+          ?
+        </span>
 
-        <span>?</span>
+        <span>
+          ?
+        </span>
 
-        <span>?</span>
+        <span>
+          ?
+        </span>
 
       </div>
 
 
+
+      <!-- SYMBOLS -->
+
       <div class="symbol-buttons">
 
-        <button data-symbol="🌙">
+
+        <button
+          type="button"
+          data-symbol="🌙"
+        >
           🌙
         </button>
 
-        <button data-symbol="🔥">
+
+        <button
+          type="button"
+          data-symbol="🔥"
+        >
           🔥
         </button>
 
-        <button data-symbol="🌿">
+
+        <button
+          type="button"
+          data-symbol="🌿"
+        >
           🌿
         </button>
 
-        <button data-symbol="⭐">
+
+        <button
+          type="button"
+          data-symbol="⭐"
+        >
           ⭐
         </button>
 
       </div>
 
 
+
+      <!-- PUZZLE ACTIONS -->
+
       <div class="puzzle-actions">
 
-        <button id="hintButton">
+
+        <button
+          id="hintButton"
+          type="button"
+        >
           💡 HINT
         </button>
 
-        <button id="resetPuzzle">
+
+        <button
+          id="resetPuzzle"
+          type="button"
+        >
           🔄 RESET
         </button>
 
       </div>
 
 
+
       <p id="puzzleMessage">
       </p>
+
 
 
       <button
         id="closePuzzle"
         class="close-puzzle"
+        type="button"
       >
         ← RETURN TO FOREST
       </button>
@@ -404,9 +515,9 @@
 
 
 
-  <!-- ==================================================
+  <!-- =====================================================
        INVENTORY
-  =================================================== -->
+  ====================================================== -->
 
   <section
     id="inventoryScreen"
@@ -414,6 +525,7 @@
   >
 
     <div class="inventory-box">
+
 
       <div class="inventory-title">
         🎒 BADRI'S INVENTORY
@@ -426,6 +538,7 @@
         the adventure
 
       </p>
+
 
 
       <div class="inventory-grid">
@@ -530,7 +643,7 @@
 
 
 
-        <!-- SCROLL -->
+        <!-- ANCIENT SCROLL -->
 
         <div class="inventory-item">
 
@@ -576,17 +689,19 @@
 
         </div>
 
-
       </div>
+
 
 
       <p id="inventoryMessage">
       </p>
 
 
+
       <button
         id="closeInventory"
         class="close-inventory"
+        type="button"
       >
         ← BACK TO GAME
       </button>
@@ -597,9 +712,9 @@
 
 
 
-  <!-- ==================================================
+  <!-- =====================================================
        CHAPTER 2 — FORGOTTEN VILLAGE
-  =================================================== -->
+  ====================================================== -->
 
   <section
     id="villageScreen"
@@ -612,10 +727,11 @@
     </div>
 
 
+
     <div class="village-world">
 
 
-      <!-- HOUSES -->
+      <!-- HOUSE 1 -->
 
       <div
         class="village-house house-one"
@@ -624,11 +740,17 @@
       </div>
 
 
+
+      <!-- ABANDONED HOUSE -->
+
       <div
         class="village-house house-two"
+        id="abandonedHouse"
+        title="Abandoned House"
       >
         🏚️
       </div>
+
 
 
       <!-- OLD VILLAGER -->
@@ -636,6 +758,9 @@
       <div
         id="villageNpc"
         class="village-npc"
+        role="button"
+        tabindex="0"
+        aria-label="Old Villager"
       >
         👴
       </div>
@@ -646,11 +771,13 @@
       </div>
 
 
+
       <!-- WELL -->
 
       <div class="village-well">
         🪣
       </div>
+
 
 
       <!-- TREES -->
@@ -665,18 +792,18 @@
       </div>
 
 
-      <!-- QUEST -->
+
+      <!-- VILLAGE QUEST -->
 
       <div class="village-quest-box">
+
 
         <strong>
           📜 CHAPTER 2 QUEST
         </strong>
 
 
-        <p
-          id="villageQuest"
-        >
+        <p id="villageQuest">
           ☐ Talk to the Old Villager
         </p>
 
@@ -695,6 +822,12 @@
           ☐ Discover King Manu's Secret
         </p>
 
+
+        <p>
+          ☐ Open the Shadow Castle Path
+        </p>
+
+
       </div>
 
     </div>
@@ -708,6 +841,7 @@
       class="dialogue-box hidden"
     >
 
+
       <div
         id="dialogueText"
         class="dialogue-text"
@@ -717,28 +851,33 @@
 
       <button
         id="dialogueNext"
+        type="button"
       >
         NEXT →
       </button>
 
+
     </div>
+
 
 
     <button
       class="village-back"
+      type="button"
       onclick="closeVillage()"
     >
       ← RETURN
     </button>
 
+
   </section>
 
 
 
-  <!-- ==================================================
+  <!-- =====================================================
        ABANDONED HOUSE
        HIDDEN OBJECT MINI GAME
-  =================================================== -->
+  ====================================================== -->
 
   <section
     id="hiddenHouseScreen"
@@ -753,15 +892,16 @@
     </div>
 
 
+
     <div class="hidden-house-world">
 
 
-      <!-- =================
-           WRONG OBJECTS
-      ================= -->
+      <!-- ================= WRONG OBJECTS ================= -->
+
 
       <div
         class="hidden-object object-chair"
+        title="Chair"
       >
         🪑
       </div>
@@ -769,6 +909,7 @@
 
       <div
         class="hidden-object object-box"
+        title="Box"
       >
         📦
       </div>
@@ -776,19 +917,20 @@
 
       <div
         class="hidden-object object-mirror"
+        title="Mirror"
       >
         🪞
       </div>
 
 
 
-      <!-- =================
-           CORRECT OBJECTS
-      ================= -->
+      <!-- ================= CORRECT OBJECTS ================= -->
+
 
       <div
         class="hidden-object object-key"
         data-correct="true"
+        title="Village Key"
       >
         🗝️
       </div>
@@ -797,6 +939,7 @@
       <div
         class="hidden-object object-map"
         data-correct="true"
+        title="Ancient Map"
       >
         📜
       </div>
@@ -805,6 +948,7 @@
       <div
         class="hidden-object object-gem"
         data-correct="true"
+        title="Blue Gem"
       >
         💎
       </div>
@@ -813,35 +957,42 @@
       <div
         class="hidden-object object-candle"
         data-correct="true"
+        title="Magic Candle"
       >
         🕯️
       </div>
 
 
 
-      <!-- =================
-           TARGET OBJECTS
-      ================= -->
+      <!-- ================= TARGET ================= -->
 
       <div class="hidden-target">
 
-        Find:
+        <strong>
+          🔎 FIND THESE:
+        </strong>
 
-        <span>🗝️</span>
+        <span>
+          🗝️
+        </span>
 
-        <span>📜</span>
+        <span>
+          📜
+        </span>
 
-        <span>💎</span>
+        <span>
+          💎
+        </span>
 
-        <span>🕯️</span>
+        <span>
+          🕯️
+        </span>
 
       </div>
 
 
 
-      <!-- =================
-           PROGRESS
-      ================= -->
+      <!-- ================= PROGRESS ================= -->
 
       <div
         class="hidden-progress-box"
@@ -859,9 +1010,7 @@
 
 
 
-      <!-- =================
-           MESSAGE
-      ================= -->
+      <!-- ================= MESSAGE ================= -->
 
       <div
         id="hiddenMessage"
@@ -871,29 +1020,56 @@
 
 
 
-      <!-- =================
-           EXIT
-      ================= -->
+      <!-- ================= EXIT ================= -->
 
       <button
         id="closeHouse"
         class="close-house"
+        type="button"
       >
         ← EXIT HOUSE
       </button>
+
 
     </div>
 
   </section>
 
 
+
+  <!-- =====================================================
+       CHAPTER 3 PLACEHOLDER
+       We will build this next
+  ====================================================== -->
+
+  <section
+    id="shadowCastleScreen"
+    class="shadow-castle-screen hidden"
+  >
+
+    <div class="shadow-castle-content">
+
+      <h1>
+        🏰 SHADOW CASTLE
+      </h1>
+
+      <p>
+        The path to King Manu is waiting...
+      </p>
+
+    </div>
+
+  </section>
+
+
+
 </main>
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      JAVASCRIPT
-=================================================== -->
+====================================================== -->
 
 <script src="game.js"></script>
 
@@ -906,6 +1082,102 @@
 <script src="village.js"></script>
 
 <script src="hidden-house.js"></script>
+
+
+<!-- =====================================================
+     OPTIONAL SAFETY
+====================================================== -->
+
+<script>
+
+  /*
+   * Prevent accidental page scrolling
+   * while using game controls.
+   */
+
+  document.addEventListener(
+    "touchmove",
+    function (event) {
+
+      if (
+        event.target.closest(
+          ".controls-wrapper"
+        )
+      ) {
+
+        event.preventDefault();
+
+      }
+
+    },
+    {
+      passive: false
+    }
+  );
+
+
+  /*
+   * Mobile inventory button
+   */
+
+  const mobileInventory =
+    document.getElementById(
+      "mobileInventoryButton"
+    );
+
+
+  if (mobileInventory) {
+
+    mobileInventory.addEventListener(
+      "click",
+      function () {
+
+        if (
+          typeof window.toggleInventory ===
+          "function"
+        ) {
+
+          window.toggleInventory();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Abandoned House
+   */
+
+  const abandonedHouse =
+    document.getElementById(
+      "abandonedHouse"
+    );
+
+
+  if (abandonedHouse) {
+
+    abandonedHouse.addEventListener(
+      "click",
+      function () {
+
+        if (
+          typeof window.openHiddenHouse ===
+          "function"
+        ) {
+
+          window.openHiddenHouse();
+
+        }
+
+      }
+    );
+
+  }
+
+</script>
 
 
 </body>
