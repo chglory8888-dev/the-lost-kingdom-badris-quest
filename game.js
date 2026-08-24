@@ -1,104 +1,294 @@
-const homeScreen = document.getElementById("homeScreen");
-const gameScreen = document.getElementById("gameScreen");
-const puzzleScreen = document.getElementById("puzzleScreen");
-const inventoryScreen = document.getElementById("inventoryScreen");
+/* =====================================================
+   THE LOST KINGDOM: BADRI'S QUEST
+   MAIN GAME CONTROLLER
+===================================================== */
 
-const startButton = document.getElementById("startButton");
-const player = document.getElementById("player");
 
-const healthText = document.getElementById("health");
-const coinsText = document.getElementById("coins");
-const crystalText = document.getElementById("crystal");
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
-const message = document.getElementById("message");
-const ancientGate = document.getElementById("ancientGate");
+const homeScreen =
+  document.getElementById("homeScreen");
+
+const gameScreen =
+  document.getElementById("gameScreen");
+
+const puzzleScreen =
+  document.getElementById("puzzleScreen");
+
+const inventoryScreen =
+  document.getElementById("inventoryScreen");
+
+const villageScreen =
+  document.getElementById("villageScreen");
+
+const player =
+  document.getElementById("player");
+
+const startButton =
+  document.getElementById("startButton");
+
+const healthText =
+  document.getElementById("health");
+
+const coinsText =
+  document.getElementById("coins");
+
+const crystalText =
+  document.getElementById("crystal");
+
+const message =
+  document.getElementById("message");
+
+const ancientGate =
+  document.getElementById("ancientGate");
+
+
+/* =====================================================
+   GAME VARIABLES
+===================================================== */
 
 let playerX = 10;
+
 let playerY = 55;
 
 let health = 100;
+
 let coins = 0;
+
 let crystal = 0;
+
 let keysCollected = 0;
+
 let potions = 0;
+
 let scrolls = 0;
 
 let guardianDefeated = false;
 
-window.gateUnlocked = false;
-
-const speed = 0.45;
-const keys = {};
-
 let forestQuestStarted = false;
 
-
-/* =========================
-   START
-========================= */
-
-startButton.addEventListener("click", () => {
-
-  homeScreen.classList.add("hidden");
-  gameScreen.classList.remove("hidden");
-
-  forestQuestStarted = true;
-
-  if (typeof window.completeQuest === "function") {
-    window.completeQuest("forest");
-  }
-
-  showMessage(
-    "🌲 Quest started: Find the Lost King Manu!"
-  );
-
-});
+let gameStarted = false;
 
 
-/* =========================
-   KEYBOARD
-========================= */
+/* =====================================================
+   MOVEMENT
+===================================================== */
 
-window.addEventListener("keydown", (event) => {
+const keys = {};
 
-  keys[event.code] = true;
+const speed = 0.55;
 
-  if (
-    event.code === "ArrowUp" ||
-    event.code === "ArrowDown" ||
-    event.code === "ArrowLeft" ||
-    event.code === "ArrowRight" ||
-    event.code === "Space"
-  ) {
-    event.preventDefault();
-  }
 
-  if (event.code === "Space") {
-    attack();
-  }
+/* =====================================================
+   PUZZLE STATE
+===================================================== */
 
-  if (event.code === "KeyI" && !event.repeat) {
+window.gateUnlocked = false;
 
-    if (typeof window.toggleInventory === "function") {
-      window.toggleInventory();
+
+/* =====================================================
+   KEYBOARD DOWN
+===================================================== */
+
+window.addEventListener(
+  "keydown",
+  function (event) {
+
+    keys[event.code] = true;
+
+
+    if (
+      event.code === "ArrowUp" ||
+      event.code === "ArrowDown" ||
+      event.code === "ArrowLeft" ||
+      event.code === "ArrowRight" ||
+      event.code === "Space"
+    ) {
+
+      event.preventDefault();
+
+    }
+
+
+    /*
+     * Attack
+     */
+
+    if (
+      event.code === "Space" &&
+      !event.repeat
+    ) {
+
+      attack();
+
     }
 
   }
+);
 
-});
+
+/* =====================================================
+   KEYBOARD UP
+===================================================== */
+
+window.addEventListener(
+  "keyup",
+  function (event) {
+
+    keys[event.code] = false;
+
+  }
+);
 
 
-window.addEventListener("keyup", (event) => {
-  keys[event.code] = false;
-});
+/* =====================================================
+   START GAME
+===================================================== */
+
+if (startButton) {
+
+  startButton.addEventListener(
+    "click",
+    function () {
+
+      if (homeScreen) {
+        homeScreen.classList.add(
+          "hidden"
+        );
+      }
+
+
+      if (gameScreen) {
+        gameScreen.classList.remove(
+          "hidden"
+        );
+      }
+
+
+      gameStarted = true;
+
+      forestQuestStarted = true;
+
+
+      if (
+        typeof window.completeQuest ===
+        "function"
+      ) {
+
+        window.completeQuest(
+          "forest"
+        );
+
+      }
+
+
+      showMessage(
+        "🌲 Quest Started: Find King Manu!"
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   PROFESSIONAL D-PAD
+===================================================== */
+
+const dpadButtons =
+  document.querySelectorAll(
+    ".dpad button[data-key]"
+  );
+
+
+dpadButtons.forEach(
+  function (button) {
+
+    const key =
+      button.getAttribute(
+        "data-key"
+      );
+
+
+    if (!key) {
+      return;
+    }
+
+
+    function press(event) {
+
+      event.preventDefault();
+
+      keys[key] = true;
+
+
+      /*
+       * Center action button
+       */
+
+      if (key === "Space") {
+
+        attack();
+
+      }
+
+    }
+
+
+    function release(event) {
+
+      event.preventDefault();
+
+      keys[key] = false;
+
+    }
+
+
+    button.addEventListener(
+      "pointerdown",
+      press
+    );
+
+
+    button.addEventListener(
+      "pointerup",
+      release
+    );
+
+
+    button.addEventListener(
+      "pointercancel",
+      release
+    );
+
+
+    button.addEventListener(
+      "pointerleave",
+      release
+    );
+
+  }
+);
+
+
+/* =====================================================
+   ATTACK BUTTON
+===================================================== */
+
 const attackButton =
-  document.getElementById("attackButton");
+  document.getElementById(
+    "attackButton"
+  );
+
 
 if (attackButton) {
 
   attackButton.addEventListener(
     "pointerdown",
-    (event) => {
+    function (event) {
 
       event.preventDefault();
 
@@ -110,16 +300,23 @@ if (attackButton) {
 }
 
 
+/* =====================================================
+   INVENTORY BUTTON
+===================================================== */
+
 const mobileInventoryButton =
   document.getElementById(
     "mobileInventoryButton"
   );
 
+
 if (mobileInventoryButton) {
 
   mobileInventoryButton.addEventListener(
     "click",
-    () => {
+    function (event) {
+
+      event.preventDefault();
 
       if (
         typeof window.toggleInventory ===
@@ -135,248 +332,409 @@ if (mobileInventoryButton) {
 
 }
 
-/* =========================
-   MOBILE CONTROLS
-========================= */
 
-document
-  .querySelectorAll(".controls button")
-  .forEach((button) => {
+/* =====================================================
+   TOP INVENTORY BUTTON
+===================================================== */
 
-    const key = button.dataset.key;
+const inventoryButton =
+  document.getElementById(
+    "inventoryButton"
+  );
 
-    button.addEventListener("pointerdown", (event) => {
 
-      event.preventDefault();
+if (inventoryButton) {
 
-      keys[key] = true;
+  inventoryButton.addEventListener(
+    "click",
+    function () {
 
-      if (key === "Space") {
-        attack();
+      if (
+        typeof window.toggleInventory ===
+        "function"
+      ) {
+
+        window.toggleInventory();
+
       }
 
-    });
+    }
+  );
 
-    button.addEventListener("pointerup", () => {
-      keys[key] = false;
-    });
-
-    button.addEventListener("pointercancel", () => {
-      keys[key] = false;
-    });
-
-    button.addEventListener("pointerleave", () => {
-      keys[key] = false;
-    });
-
-  });
+}
 
 
-/* =========================
-   GAME LOOP
-========================= */
+/* =====================================================
+   MAIN GAME LOOP
+===================================================== */
 
 function gameLoop() {
 
-  const puzzleOpen =
-    puzzleScreen &&
-    !puzzleScreen.classList.contains("hidden");
-
-  const inventoryOpen =
-    inventoryScreen &&
-    !inventoryScreen.classList.contains("hidden");
-
-
   if (
-    !gameScreen.classList.contains("hidden") &&
-    !puzzleOpen &&
-    !inventoryOpen
+    gameStarted &&
+    gameScreen &&
+    !gameScreen.classList.contains(
+      "hidden"
+    )
   ) {
 
-    movePlayer();
-    collectItems();
-    checkEnemies();
-    checkGate();
+    const puzzleOpen =
+      puzzleScreen &&
+      !puzzleScreen.classList.contains(
+        "hidden"
+      );
+
+
+    const inventoryOpen =
+      inventoryScreen &&
+      !inventoryScreen.classList.contains(
+        "hidden"
+      );
+
+
+    const villageOpen =
+      villageScreen &&
+      !villageScreen.classList.contains(
+        "hidden"
+      );
+
+
+    /*
+     * Stop forest movement when
+     * another screen is open.
+     */
+
+    if (
+      !puzzleOpen &&
+      !inventoryOpen &&
+      !villageOpen
+    ) {
+
+      movePlayer();
+
+      collectItems();
+
+      checkEnemies();
+
+      checkGate();
+
+    }
 
   }
 
-  requestAnimationFrame(gameLoop);
+
+  requestAnimationFrame(
+    gameLoop
+  );
 
 }
 
-gameLoop();
+
+requestAnimationFrame(
+  gameLoop
+);
 
 
-/* =========================
-   MOVEMENT
-========================= */
+/* =====================================================
+   PLAYER MOVEMENT
+===================================================== */
 
 function movePlayer() {
 
-  if (keys.ArrowLeft) {
+  if (!player) {
+    return;
+  }
+
+
+  /*
+   * LEFT
+   */
+
+  if (keys["ArrowLeft"]) {
+
     playerX -= speed;
+
   }
 
-  if (keys.ArrowRight) {
+
+  /*
+   * RIGHT
+   */
+
+  if (keys["ArrowRight"]) {
+
     playerX += speed;
+
   }
 
-  if (keys.ArrowUp) {
+
+  /*
+   * UP
+   */
+
+  if (keys["ArrowUp"]) {
+
     playerY -= speed;
+
   }
 
-  if (keys.ArrowDown) {
+
+  /*
+   * DOWN
+   */
+
+  if (keys["ArrowDown"]) {
+
     playerY += speed;
+
   }
 
 
-  playerX = Math.max(
-    2,
-    Math.min(94, playerX)
-  );
+  /*
+   * Keep player inside map
+   */
 
-  playerY = Math.max(
-    12,
-    Math.min(84, playerY)
-  );
+  playerX =
+    Math.max(
+      2,
+      Math.min(
+        94,
+        playerX
+      )
+    );
 
 
-  player.style.left = playerX + "%";
-  player.style.top = playerY + "%";
+  playerY =
+    Math.max(
+      12,
+      Math.min(
+        82,
+        playerY
+      )
+    );
+
+
+  /*
+   * Update position
+   */
+
+  player.style.left =
+    playerX + "%";
+
+
+  player.style.top =
+    playerY + "%";
 
 }
 
 
-/* =========================
+/* =====================================================
    DISTANCE
-========================= */
+===================================================== */
 
-function distance(element1, element2) {
+function distance(
+  element1,
+  element2
+) {
 
-  if (!element1 || !element2) {
+  if (
+    !element1 ||
+    !element2
+  ) {
+
     return Infinity;
+
   }
 
-  const a = element1.getBoundingClientRect();
-  const b = element2.getBoundingClientRect();
 
-  const x1 = a.left + a.width / 2;
-  const y1 = a.top + a.height / 2;
+  const a =
+    element1.getBoundingClientRect();
 
-  const x2 = b.left + b.width / 2;
-  const y2 = b.top + b.height / 2;
+  const b =
+    element2.getBoundingClientRect();
+
+
+  const x1 =
+    a.left +
+    a.width / 2;
+
+  const y1 =
+    a.top +
+    a.height / 2;
+
+
+  const x2 =
+    b.left +
+    b.width / 2;
+
+  const y2 =
+    b.top +
+    b.height / 2;
+
 
   return Math.sqrt(
-    Math.pow(x1 - x2, 2) +
-    Math.pow(y1 - y2, 2)
+    Math.pow(
+      x1 - x2,
+      2
+    ) +
+    Math.pow(
+      y1 - y2,
+      2
+    )
   );
 
 }
 
 
-/* =========================
+/* =====================================================
    QUEST HELPER
-========================= */
+===================================================== */
 
-function quest(id) {
+function updateQuest(
+  questId
+) {
 
-  if (typeof window.completeQuest === "function") {
-    window.completeQuest(id);
+  if (
+    typeof window.completeQuest ===
+    "function"
+  ) {
+
+    window.completeQuest(
+      questId
+    );
+
   }
 
 }
 
 
-/* =========================
+/* =====================================================
    COLLECT ITEMS
-========================= */
+===================================================== */
 
 function collectItems() {
 
 
-  /* COINS */
+  /* ================= COINS ================= */
 
   document
     .querySelectorAll(".coin")
-    .forEach((coin) => {
+    .forEach(
+      function (coin) {
 
-      if (
-        coin.style.display !== "none" &&
-        distance(player, coin) < 55
-      ) {
+        if (
+          coin.style.display !==
+            "none" &&
+          distance(
+            player,
+            coin
+          ) < 60
+        ) {
 
-        coin.style.display = "none";
-
-        coins++;
-
-        coinsText.textContent = coins;
-
-        if (typeof window.updateInventoryUI === "function") {
-          window.updateInventoryUI();
-        }
-
-        showMessage(
-          `🪙 Ancient Coin collected! ${coins}/3`
-        );
+          coin.style.display =
+            "none";
 
 
-        if (coins >= 3) {
-          quest("coins");
+          coins++;
+
+
+          if (coinsText) {
+
+            coinsText.textContent =
+              coins;
+
+          }
+
+
+          updateInventory();
+
+
+          showMessage(
+            `🪙 Coin collected! ${coins}/3`
+          );
+
+
+          if (coins >= 3) {
+
+            updateQuest(
+              "coins"
+            );
+
+          }
+
         }
 
       }
+    );
 
-    });
 
-
-  /* KEY */
+  /* ================= ANCIENT KEY ================= */
 
   const key =
-    document.getElementById("key");
+    document.getElementById(
+      "key"
+    );
 
 
   if (
     key &&
-    key.style.display !== "none" &&
-    distance(player, key) < 55
+    key.style.display !==
+      "none" &&
+    distance(
+      player,
+      key
+    ) < 60
   ) {
 
-    key.style.display = "none";
+    key.style.display =
+      "none";
+
 
     keysCollected = 1;
 
-    if (typeof window.updateInventoryUI === "function") {
-      window.updateInventoryUI();
-    }
 
-    quest("key");
+    updateInventory();
+
+
+    updateQuest(
+      "key"
+    );
+
 
     showMessage(
-      "🗝️ Ancient Key discovered!"
+      "🗝️ Ancient Key collected!"
     );
 
   }
 
 
-  /* POTION */
+  /* ================= POTION ================= */
 
   const potion =
-    document.getElementById("potion");
+    document.getElementById(
+      "potion"
+    );
 
 
   if (
     potion &&
-    potion.style.display !== "none" &&
-    distance(player, potion) < 55
+    potion.style.display !==
+      "none" &&
+    distance(
+      player,
+      potion
+    ) < 60
   ) {
 
-    potion.style.display = "none";
+    potion.style.display =
+      "none";
+
 
     potions++;
 
-    if (typeof window.updateInventoryUI === "function") {
-      window.updateInventoryUI();
-    }
+
+    updateInventory();
+
 
     showMessage(
       "🧪 Health Potion collected!"
@@ -385,25 +743,33 @@ function collectItems() {
   }
 
 
-  /* SCROLL */
+  /* ================= SCROLL ================= */
 
   const scroll =
-    document.getElementById("scroll");
+    document.getElementById(
+      "scroll"
+    );
 
 
   if (
     scroll &&
-    scroll.style.display !== "none" &&
-    distance(player, scroll) < 55
+    scroll.style.display !==
+      "none" &&
+    distance(
+      player,
+      scroll
+    ) < 60
   ) {
 
-    scroll.style.display = "none";
+    scroll.style.display =
+      "none";
+
 
     scrolls++;
 
-    if (typeof window.updateInventoryUI === "function") {
-      window.updateInventoryUI();
-    }
+
+    updateInventory();
+
 
     showMessage(
       "📜 Ancient Scroll discovered!"
@@ -412,33 +778,50 @@ function collectItems() {
   }
 
 
-  /* CRYSTAL */
+  /* ================= CRYSTAL ================= */
 
   const crystalItem =
-    document.getElementById("crystalItem");
+    document.getElementById(
+      "crystalItem"
+    );
 
 
   if (
     crystalItem &&
     crystal === 0 &&
-    crystalItem.style.display !== "none" &&
-    distance(player, crystalItem) < 65
+    crystalItem.style.display !==
+      "none" &&
+    distance(
+      player,
+      crystalItem
+    ) < 65
   ) {
 
     crystal = 1;
 
-    crystalText.textContent = crystal;
 
-    crystalItem.style.display = "none";
+    crystalItem.style.display =
+      "none";
 
-    if (typeof window.updateInventoryUI === "function") {
-      window.updateInventoryUI();
+
+    if (crystalText) {
+
+      crystalText.textContent =
+        crystal;
+
     }
 
-    quest("crystal");
+
+    updateInventory();
+
+
+    updateQuest(
+      "crystal"
+    );
+
 
     showMessage(
-      "💎 Crystal Fragment recovered!"
+      "💎 Crystal Fragment collected!"
     );
 
   }
@@ -446,20 +829,212 @@ function collectItems() {
 }
 
 
-/* =========================
-   GATE
-========================= */
+/* =====================================================
+   ENEMY SYSTEM
+===================================================== */
+
+function checkEnemies() {
+
+  document
+    .querySelectorAll(".enemy")
+    .forEach(
+      function (enemy) {
+
+        if (
+          enemy.style.opacity !==
+            "0" &&
+          distance(
+            player,
+            enemy
+          ) < 45
+        ) {
+
+          health -= 0.25;
+
+
+          health =
+            Math.max(
+              0,
+              health
+            );
+
+
+          if (healthText) {
+
+            healthText.textContent =
+              Math.ceil(
+                health
+              );
+
+          }
+
+
+          player.classList.add(
+            "damage"
+          );
+
+
+          setTimeout(
+            function () {
+
+              player.classList.remove(
+                "damage"
+              );
+
+            },
+            200
+          );
+
+
+          if (
+            health <= 0
+          ) {
+
+            gameOver();
+
+          }
+
+        }
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   ATTACK
+===================================================== */
+
+function attack() {
+
+  if (!player) {
+    return;
+  }
+
+
+  /*
+   * Don't attack while puzzle
+   * or inventory is open.
+   */
+
+  if (
+    puzzleScreen &&
+    !puzzleScreen.classList.contains(
+      "hidden"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  if (
+    inventoryScreen &&
+    !inventoryScreen.classList.contains(
+      "hidden"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  /*
+   * Animation
+   */
+
+  player.classList.remove(
+    "attack"
+  );
+
+
+  void player.offsetWidth;
+
+
+  player.classList.add(
+    "attack"
+  );
+
+
+  setTimeout(
+    function () {
+
+      player.classList.remove(
+        "attack"
+      );
+
+    },
+    300
+  );
+
+
+  /*
+   * Hit nearby enemies
+   */
+
+  document
+    .querySelectorAll(".enemy")
+    .forEach(
+      function (enemy) {
+
+        if (
+          enemy.style.opacity !==
+            "0" &&
+          distance(
+            player,
+            enemy
+          ) < 110
+        ) {
+
+          enemy.style.opacity =
+            "0";
+
+
+          guardianDefeated =
+            true;
+
+
+          updateQuest(
+            "guardian"
+          );
+
+
+          showMessage(
+            "⚔️ Enemy defeated!"
+          );
+
+        }
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   GATE CHECK
+===================================================== */
 
 function checkGate() {
 
-  if (window.gateUnlocked) {
+  if (
+    window.gateUnlocked
+  ) {
+
     return;
+
   }
 
 
   if (
     ancientGate &&
-    distance(player, ancientGate) < 85
+    distance(
+      player,
+      ancientGate
+    ) < 90
   ) {
 
     openPuzzle();
@@ -469,210 +1044,518 @@ function checkGate() {
 }
 
 
+/* =====================================================
+   OPEN PUZZLE
+===================================================== */
+
 function openPuzzle() {
 
   if (!puzzleScreen) {
     return;
   }
 
-  puzzleScreen.classList.remove("hidden");
+
+  puzzleScreen.classList.remove(
+    "hidden"
+  );
+
+
+  updateQuest(
+    "gate"
+  );
 
 }
 
 
-/* =========================
-   ENEMIES
-========================= */
+/* =====================================================
+   HEALTH POTION
+===================================================== */
 
-function checkEnemies() {
+window.useHealthPotion =
+  function () {
 
-  document
-    .querySelectorAll(".enemy")
-    .forEach((enemy) => {
+    if (
+      potions <= 0
+    ) {
 
-      if (
-        enemy.style.opacity !== "0" &&
-        distance(player, enemy) < 45
-      ) {
-
-        health -= 0.25;
-
-        health = Math.max(0, health);
-
-        healthText.textContent =
-          Math.ceil(health);
-
-        player.classList.add("damage");
-
-        setTimeout(() => {
-          player.classList.remove("damage");
-        }, 200);
-
-
-        if (health <= 0) {
-          gameOver();
-        }
-
-      }
-
-    });
-
-}
-
-
-/* =========================
-   ATTACK
-========================= */
-
-function attack() {
-
-  if (
-    puzzleScreen &&
-    !puzzleScreen.classList.contains("hidden")
-  ) {
-    return;
-  }
-
-  if (
-    inventoryScreen &&
-    !inventoryScreen.classList.contains("hidden")
-  ) {
-    return;
-  }
-
-
-  player.classList.remove("attack");
-
-  void player.offsetWidth;
-
-  player.classList.add("attack");
-
-
-  document
-    .querySelectorAll(".enemy")
-    .forEach((enemy) => {
-
-      if (
-        enemy.style.opacity !== "0" &&
-        distance(player, enemy) < 110
-      ) {
-
-        enemy.style.opacity = "0";
-
-        guardianDefeated = true;
-
-        quest("guardian");
-
-        showMessage(
-          "⚔️ Forest Guardian defeated!"
-        );
-
-      }
-
-    });
-
-}
-
-
-/* =========================
-   POTION
-========================= */
-
-window.useHealthPotion = function () {
-
-  if (potions <= 0) {
-
-    if (typeof window.showInventoryMessage === "function") {
-      window.showInventoryMessage(
+      showInventoryMessage(
         "❌ No potion available."
       );
+
+      return;
+
     }
 
-    return;
-  }
 
+    if (
+      health >= 100
+    ) {
 
-  if (health >= 100) {
-
-    if (typeof window.showInventoryMessage === "function") {
-      window.showInventoryMessage(
+      showInventoryMessage(
         "❤️ Health is already full."
       );
+
+      return;
+
     }
 
-    return;
-  }
+
+    potions--;
 
 
-  potions--;
-
-  health = Math.min(
-    100,
-    health + 30
-  );
-
-  healthText.textContent =
-    Math.ceil(health);
+    health =
+      Math.min(
+        100,
+        health + 30
+      );
 
 
-  if (typeof window.updateInventoryUI === "function") {
-    window.updateInventoryUI();
-  }
+    if (healthText) {
+
+      healthText.textContent =
+        Math.ceil(
+          health
+        );
+
+    }
 
 
-  if (typeof window.showInventoryMessage === "function") {
-    window.showInventoryMessage(
+    updateInventory();
+
+
+    showInventoryMessage(
       "🧪 Health restored!"
     );
+
+  };
+
+
+/* =====================================================
+   INVENTORY UPDATE
+===================================================== */
+
+function updateInventory() {
+
+  const inventoryCoins =
+    document.getElementById(
+      "inventoryCoins"
+    );
+
+
+  const inventoryCrystal =
+    document.getElementById(
+      "inventoryCrystal"
+    );
+
+
+  const keyCount =
+    document.getElementById(
+      "keyCount"
+    );
+
+
+  const potionCount =
+    document.getElementById(
+      "potionCount"
+    );
+
+
+  const scrollCount =
+    document.getElementById(
+      "scrollCount"
+    );
+
+
+  if (inventoryCoins) {
+
+    inventoryCoins.textContent =
+      coins;
+
   }
 
-};
+
+  if (inventoryCrystal) {
+
+    inventoryCrystal.textContent =
+      crystal;
+
+  }
 
 
-/* =========================
-   GAME OVER
-========================= */
+  if (keyCount) {
 
-function gameOver() {
+    keyCount.textContent =
+      keysCollected;
 
-  keys.ArrowUp = false;
-  keys.ArrowDown = false;
-  keys.ArrowLeft = false;
-  keys.ArrowRight = false;
+  }
 
-  showMessage(
-    "💀 Badri has fallen! Refresh to restart."
-  );
+
+  if (potionCount) {
+
+    potionCount.textContent =
+      potions;
+
+  }
+
+
+  if (scrollCount) {
+
+    scrollCount.textContent =
+      scrolls;
+
+  }
+
+
+  /*
+   * Village Key
+   */
+
+  const villageKeyCount =
+    document.getElementById(
+      "villageKeyCount"
+    );
+
+
+  if (villageKeyCount) {
+
+    villageKeyCount.textContent =
+      window.villageKey
+        ? "1"
+        : "0";
+
+  }
 
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+window.updateInventoryUI =
+  updateInventory;
 
-function showMessage(text) {
+
+/* =====================================================
+   INVENTORY MESSAGE
+===================================================== */
+
+function showInventoryMessage(
+  text
+) {
+
+  const inventoryMessage =
+    document.getElementById(
+      "inventoryMessage"
+    );
+
+
+  if (!inventoryMessage) {
+    return;
+  }
+
+
+  inventoryMessage.textContent =
+    text;
+
+
+  clearTimeout(
+    window.inventoryMessageTimer
+  );
+
+
+  window.inventoryMessageTimer =
+    setTimeout(
+      function () {
+
+        inventoryMessage.textContent =
+          "";
+
+      },
+      1800
+    );
+
+}
+
+
+window.showInventoryMessage =
+  showInventoryMessage;
+
+
+/* =====================================================
+   GENERAL MESSAGE
+===================================================== */
+
+function showMessage(
+  text
+) {
 
   if (!message) {
     return;
   }
 
-  message.textContent = text;
 
-  message.style.display = "block";
+  message.textContent =
+    text;
 
-  clearTimeout(window.messageTimer);
 
-  window.messageTimer =
-    setTimeout(() => {
+  message.style.display =
+    "block";
 
-      message.style.display = "none";
 
-    }, 2500);
+  clearTimeout(
+    window.gameMessageTimer
+  );
+
+
+  window.gameMessageTimer =
+    setTimeout(
+      function () {
+
+        message.style.display =
+          "none";
+
+      },
+      2500
+    );
 
 }
 
 
-window.showMessage = showMessage;
-window.updateInventoryUI =
-  window.updateInventoryUI || function () {};
+window.showMessage =
+  showMessage;
+
+
+/* =====================================================
+   GAME OVER
+===================================================== */
+
+function gameOver() {
+
+  gameStarted =
+    false;
+
+
+  keys.ArrowUp =
+    false;
+
+  keys.ArrowDown =
+    false;
+
+  keys.ArrowLeft =
+    false;
+
+  keys.ArrowRight =
+    false;
+
+  keys.Space =
+    false;
+
+
+  showMessage(
+    "💀 Badri has fallen! Refresh the game to restart."
+  );
+
+}
+
+
+/* =====================================================
+   RESET PLAYER
+===================================================== */
+
+function resetPlayer() {
+
+  playerX = 10;
+
+  playerY = 55;
+
+  health = 100;
+
+  coins = 0;
+
+  crystal = 0;
+
+  keysCollected = 0;
+
+  potions = 0;
+
+  scrolls = 0;
+
+  guardianDefeated =
+    false;
+
+  window.gateUnlocked =
+    false;
+
+
+  if (player) {
+
+    player.style.left =
+      playerX + "%";
+
+    player.style.top =
+      playerY + "%";
+
+  }
+
+
+  if (healthText) {
+
+    healthText.textContent =
+      "100";
+
+  }
+
+
+  if (coinsText) {
+
+    coinsText.textContent =
+      "0";
+
+  }
+
+
+  if (crystalText) {
+
+    crystalText.textContent =
+      "0";
+
+  }
+
+
+  updateInventory();
+
+}
+
+
+/* =====================================================
+   VILLAGE TRANSITION
+===================================================== */
+
+window.openChapter2 =
+  function () {
+
+    if (
+      gameScreen
+    ) {
+
+      gameScreen.classList.add(
+        "hidden"
+      );
+
+    }
+
+
+    if (
+      villageScreen
+    ) {
+
+      villageScreen.classList.remove(
+        "hidden"
+      );
+
+    }
+
+
+    showMessage(
+      "🏘️ Chapter 2 — Forgotten Village"
+    );
+
+  };
+
+
+/* =====================================================
+   HIDDEN HOUSE
+===================================================== */
+
+const abandonedHouse =
+  document.getElementById(
+    "abandonedHouse"
+  );
+
+
+if (abandonedHouse) {
+
+  abandonedHouse.addEventListener(
+    "click",
+    function () {
+
+      if (
+        typeof window.openHiddenHouse ===
+        "function"
+      ) {
+
+        window.openHiddenHouse();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   INITIAL POSITION
+===================================================== */
+
+if (player) {
+
+  player.style.left =
+    playerX + "%";
+
+  player.style.top =
+    playerY + "%";
+
+}
+
+
+/* =====================================================
+   INITIAL INVENTORY
+===================================================== */
+
+updateInventory();
+
+
+/* =====================================================
+   PREVENT DOUBLE TOUCH SCROLL
+===================================================== */
+
+document.addEventListener(
+  "touchmove",
+  function (event) {
+
+    if (
+      event.target.closest(
+        ".controls-wrapper"
+      )
+    ) {
+
+      event.preventDefault();
+
+    }
+
+  },
+  {
+    passive: false
+  }
+);
+
+
+/* =====================================================
+   EXPORT
+===================================================== */
+
+window.movePlayer =
+  movePlayer;
+
+window.attack =
+  attack;
+
+window.collectItems =
+  collectItems;
+
+window.openPuzzle =
+  openPuzzle;
+
+window.showMessage =
+  showMessage;
+
+window.resetPlayer =
+  resetPlayer;
