@@ -1,35 +1,18 @@
-/* =====================================================
-   THE LOST KINGDOM: BADRI'S QUEST
-   COMPLETE STYLE.CSS
-===================================================== */
-
-
-/* =====================================================
-   RESET
-===================================================== */
-
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
-
   width: 100%;
   height: 100%;
-
   overflow: hidden;
-
-  background: #030705;
-
-  color: white;
-
-  font-family: Georgia, serif;
-
-  -webkit-user-select: none;
-  user-select: none;
+  background: #030504;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 body {
@@ -39,8 +22,11 @@ body {
 button {
   font-family: inherit;
   cursor: pointer;
+  border: 0;
+}
 
-  -webkit-tap-highlight-color: transparent;
+button:focus {
+  outline: none;
 }
 
 .hidden {
@@ -49,141 +35,137 @@ button {
 
 
 /* =====================================================
-   HOME SCREEN
+   HOME
 ===================================================== */
 
 .screen {
-  min-height: 100vh;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
+  width: 100%;
+  height: 100vh;
 }
 
 #homeScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
   background:
     radial-gradient(
-      circle at center,
-      #315c3a 0%,
-      #102519 45%,
-      #020604 100%
+      circle at 50% 35%,
+      rgba(70, 105, 65, .8),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #142519,
+      #050805 65%,
+      #020302
     );
 }
 
 .title-screen {
-  width: 92%;
-  max-width: 850px;
-
-  padding: 45px 25px;
-
+  width: min(850px, 94vw);
+  padding: 45px 30px;
   text-align: center;
 
   background:
-    rgba(5, 13, 8, 0.92);
+    linear-gradient(
+      rgba(7, 14, 9, .96),
+      rgba(3, 7, 5, .98)
+    );
 
-  border: 2px solid #b4933d;
-
-  border-radius: 22px;
+  border: 2px solid #a98a3d;
+  border-radius: 24px;
 
   box-shadow:
-    0 0 50px rgba(0, 0, 0, 0.9),
-    inset 0 0 30px
-    rgba(180, 147, 61, 0.08);
+    0 0 70px rgba(0,0,0,.9),
+    inset 0 0 40px rgba(180,150,65,.08);
 }
 
-.kingdom {
-  color: #d9bd63;
-
+.kingdom-title {
+  color: #d8bd67;
+  letter-spacing: 7px;
   font-size: 16px;
-
-  letter-spacing: 6px;
-
   font-weight: bold;
 }
 
-h1 {
-  margin: 18px 0 5px;
+.title-screen h1 {
+  margin: 20px 0 5px;
 
   font-size:
-    clamp(40px, 8vw, 78px);
+    clamp(38px, 8vw, 76px);
 
-  color: #f1d477;
+  line-height: .95;
+
+  color: #e9cf75;
 
   text-shadow:
-    0 0 12px #8c681b,
-    0 5px 15px black;
+    0 0 15px #70551e,
+    0 5px 15px #000;
 }
 
-h2 {
-  margin: 0 0 25px;
+.title-screen h2 {
+  margin: 15px 0 28px;
 
+  color: #ddd;
   font-size:
-    clamp(22px, 5vw, 42px);
-
-  color: #eeeeee;
+    clamp(22px, 5vw, 40px);
 }
 
 .story {
   max-width: 650px;
+  margin: auto;
 
-  margin: 0 auto 30px;
+  color: #c4cec5;
 
-  color: #c8d4ca;
-
-  font-size: 18px;
-
+  font-family: Arial, sans-serif;
+  font-size: 17px;
   line-height: 1.7;
 }
 
 .start-button {
-  padding: 16px 32px;
+  margin-top: 30px;
 
-  border: 2px solid #e4c85e;
+  padding: 16px 35px;
 
+  border: 2px solid #d4b652;
   border-radius: 12px;
 
   background:
     linear-gradient(
-      #8d7229,
-      #49370e
+      #876d29,
+      #3b2c0d
     );
 
   color: white;
 
   font-size: 17px;
-
   font-weight: bold;
 
-  transition: 0.25s;
+  box-shadow:
+    0 5px 20px rgba(0,0,0,.6);
 
-  touch-action: manipulation;
+  transition: .2s;
 }
 
 .start-button:hover {
-  transform: scale(1.06);
-
+  transform: scale(1.05);
   box-shadow:
-    0 0 25px #c5a33e;
-}
-
-.start-button:active {
-  transform: scale(0.96);
+    0 0 30px rgba(210,180,80,.45);
 }
 
 
 /* =====================================================
-   GAME SCREEN
+   GAME
 ===================================================== */
 
-#gameScreen {
+.game-screen {
   position: relative;
 
   width: 100%;
   height: 100vh;
 
-  background: #07120c;
+  background: #071009;
 }
 
 
@@ -197,40 +179,45 @@ h2 {
   height: 58px;
 
   display: flex;
-
+  align-items: center;
   justify-content: space-around;
 
-  align-items: center;
+  padding: 0 10px;
 
-  background: #101b14;
+  background:
+    linear-gradient(
+      #17251a,
+      #0b130d
+    );
 
-  border-bottom: 2px solid #39513f;
+  border-bottom: 2px solid #46583e;
+
+  z-index: 1000;
 
   font-family: Arial, sans-serif;
-
+  font-size: 14px;
   font-weight: bold;
-
-  z-index: 50;
 }
 
-.inventory-button {
-  border: 1px solid #6d805e;
+.hud-player {
+  color: #e6ce78;
+}
 
+.hud-button {
+  width: 43px;
+  height: 40px;
+
+  border: 1px solid #9b813b;
   border-radius: 9px;
 
-  background: #1b3021;
+  background: #18261a;
 
   color: white;
-
-  padding: 7px 12px;
-
   font-size: 20px;
-
-  touch-action: manipulation;
 }
 
-.inventory-button:active {
-  transform: scale(0.9);
+.hud-button:active {
+  transform: scale(.92);
 }
 
 
@@ -238,160 +225,252 @@ h2 {
    QUEST PANEL
 ===================================================== */
 
-#questPanel {
+.quest-panel {
   position: absolute;
 
-  top: 75px;
-  left: 15px;
+  top: 70px;
+  left: 12px;
 
-  width: 250px;
+  width: 205px;
 
-  padding: 14px;
+  z-index: 900;
 
   background:
-    rgba(8, 15, 9, 0.92);
+    rgba(4, 9, 5, .90);
 
-  border: 1px solid #9b8038;
-
-  border-radius: 12px;
-
-  color: white;
-
-  z-index: 25;
+  border: 1px solid #887239;
+  border-radius: 10px;
 
   box-shadow:
-    0 5px 20px
-    rgba(0, 0, 0, 0.5);
+    0 5px 20px rgba(0,0,0,.55);
+
+  font-family: Arial, sans-serif;
 }
 
-#questTitle {
-  color: #f0d36b;
+.quest-toggle {
+  width: 100%;
 
-  font-size: 18px;
+  padding: 8px;
+
+  text-align: left;
+
+  background: transparent;
+
+  color: #e8cd70;
 
   font-weight: bold;
+}
 
-  margin-bottom: 8px;
+#questContent {
+  padding: 0 10px 10px;
 }
 
 .quest-main {
-  color: white;
+  margin-bottom: 7px;
 
+  color: #fff;
+
+  font-size: 13px;
   font-weight: bold;
-
-  margin-bottom: 10px;
 }
 
 .quest-item {
-  padding: 5px 0;
+  padding: 3px 0;
 
-  color: #c9d0c9;
+  color: #aeb9ae;
 
-  font-size: 14px;
+  font-size: 11px;
 }
 
 .quest-item.completed {
-  color: #7dff9c;
+  color: #75df91;
 }
 
 
 /* =====================================================
-   FOREST
+   CHAPTER BANNER
 ===================================================== */
 
-#forest {
-  position: relative;
+.chapter-banner {
+  position: absolute;
 
-  height:
-    calc(100vh - 178px);
+  top: 68px;
+  left: 50%;
 
-  min-height: 400px;
+  transform: translateX(-50%);
+
+  z-index: 500;
+
+  padding: 6px 15px;
+
+  background:
+    rgba(0,0,0,.55);
+
+  border: 1px solid rgba(185,155,70,.5);
+  border-radius: 8px;
+
+  color: #d8c36e;
+
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+
+  text-align: center;
+}
+
+.chapter-banner span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #d5ddd5;
+
+  letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   WORLD
+===================================================== */
+
+.world {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  top: 58px;
+  bottom: 0;
 
   overflow: hidden;
 
   background:
     radial-gradient(
-      circle at 50% 35%,
-      #426d45 0%,
-      #1d3b26 35%,
-      #09170d 80%
+      ellipse at 50% 35%,
+      #3c6240 0%,
+      #234329 30%,
+      #102516 58%,
+      #050b07 100%
     );
 }
 
-#forest::before {
+.world::before {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
-  opacity: 0.35;
+  opacity: .35;
 
-  background-image:
+  background:
     radial-gradient(
       circle,
-      #66855d 2px,
-      transparent 3px
-    ),
-    radial-gradient(
-      circle,
-      #183c23 3px,
-      transparent 4px
+      rgba(170,200,145,.15) 1px,
+      transparent 2px
     );
 
-  background-size:
-    70px 70px,
-    110px 110px;
+  background-size: 70px 70px;
 
   pointer-events: none;
-
-  z-index: 1;
 }
 
-#forest::after {
-  content:
-    "🌲   🌳    🌲      🌳    🌲      🌲    🌳      🌲";
+.world::after {
+  content: "";
 
   position: absolute;
-
-  top: 5px;
-  left: 0;
-
-  width: 100%;
-
-  font-size: 55px;
-
-  opacity: 0.7;
-
-  white-space: nowrap;
+  inset: 0;
 
   pointer-events: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.15),
+      transparent 35%,
+      rgba(0,0,0,.45)
+    );
+}
+
+
+/* =====================================================
+   FOG
+===================================================== */
+
+.fog {
+  position: absolute;
+
+  width: 300px;
+  height: 100px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(180,205,180,.08);
+
+  filter: blur(25px);
+
+  pointer-events: none;
+}
+
+.fog-one {
+  left: 5%;
+  bottom: 25%;
+  animation: fogMove 9s infinite alternate;
+}
+
+.fog-two {
+  right: 5%;
+  top: 35%;
+  animation: fogMove 12s infinite alternate-reverse;
+}
+
+@keyframes fogMove {
+  from {
+    transform: translateX(-40px);
+  }
+
+  to {
+    transform: translateX(80px);
+  }
+}
+
+
+/* =====================================================
+   TREES
+===================================================== */
+
+.forest-decoration {
+  position: absolute;
 
   z-index: 2;
+
+  font-size: 65px;
+
+  opacity: .75;
+
+  filter:
+    drop-shadow(0 8px 5px #000);
 }
 
-.chapter-title {
-  position: absolute;
+.tree-a {
+  left: 2%;
+  top: 12%;
+}
 
-  top: 15px;
-  left: 50%;
+.tree-b {
+  left: 15%;
+  top: 7%;
+}
 
-  transform:
-    translateX(-50%);
+.tree-c {
+  right: 8%;
+  top: 13%;
+}
 
-  color: #d8eab8;
-
-  font-family: Arial, sans-serif;
-
-  font-size: 13px;
-
-  font-weight: bold;
-
-  letter-spacing: 2px;
-
-  z-index: 10;
-
-  white-space: nowrap;
+.tree-d {
+  right: 20%;
+  bottom: 15%;
 }
 
 
@@ -399,185 +478,270 @@ h2 {
    PLAYER
 ===================================================== */
 
-#player {
+.player {
   position: absolute;
 
   left: 10%;
   top: 55%;
 
-  font-size: 48px;
+  z-index: 300;
 
-  z-index: 15;
+  width: 52px;
+  height: 58px;
 
-  filter:
-    drop-shadow(
-      0 6px 5px black
-    );
-
-  user-select: none;
-
-  transition:
-    transform 0.08s;
-
-  pointer-events: none;
-}
-
-
-/* =====================================================
-   ENEMIES
-===================================================== */
-
-.enemy {
-  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   font-size: 45px;
 
-  z-index: 12;
+  user-select: none;
 
   filter:
-    drop-shadow(
-      0 5px 5px black
-    );
+    drop-shadow(0 7px 5px #000);
 
   transition:
-    opacity 0.25s;
-
-  pointer-events: none;
+    left .05s linear,
+    top .05s linear;
 }
 
-.enemy-one {
-  left: 45%;
-  top: 40%;
+.player.attack {
+  animation: playerAttack .28s;
 }
 
-.enemy-two {
-  left: 68%;
-  top: 63%;
+@keyframes playerAttack {
+  50% {
+    transform:
+      scale(1.45)
+      rotate(-18deg);
+  }
+}
+
+.player.damage {
+  animation: damageFlash .25s;
+}
+
+@keyframes damageFlash {
+  50% {
+    filter:
+      brightness(2)
+      drop-shadow(0 0 18px red);
+  }
 }
 
 
 /* =====================================================
-   ITEMS
+   INVESTIGATION OBJECTS
 ===================================================== */
 
-.coin,
-#key,
-#potion,
-#scroll,
-#crystalItem,
-#ancientGate {
+.investigate-object,
+.collectible,
+.location-object {
   position: absolute;
 
-  z-index: 12;
+  z-index: 200;
+
+  background: transparent;
+
+  padding: 0;
+
+  color: white;
 
   filter:
-    drop-shadow(
-      0 4px 5px black
-    );
+    drop-shadow(0 5px 5px #000);
 
-  pointer-events: none;
+  transition:
+    transform .2s,
+    filter .2s,
+    opacity .3s;
 }
 
-.coin {
-  font-size: 38px;
+.investigate-object:hover,
+.collectible:hover,
+.location-object:hover {
+  transform: scale(1.15);
+
+  filter:
+    drop-shadow(0 0 15px #d9bd63);
 }
 
-.coin-one {
-  left: 30%;
-  top: 70%;
+.investigate-object {
+  font-size: 48px;
 }
 
-.coin-two {
-  left: 55%;
-  top: 30%;
+#ancientStone {
+  left: 23%;
+  top: 34%;
 }
 
-.coin-three {
-  left: 75%;
-  top: 30%;
+#brokenCart {
+  left: 43%;
+  top: 65%;
 }
 
-#key {
-  left: 53%;
+#oldSign {
+  left: 58%;
+  top: 29%;
+}
+
+#watchtower {
+  right: 12%;
+  top: 34%;
+
+  font-size: 72px;
+}
+
+
+/* =====================================================
+   COLLECTIBLES
+===================================================== */
+
+.collectible {
+  font-size: 37px;
+}
+
+#coin1 {
+  left: 29%;
   top: 72%;
-
-  font-size: 38px;
 }
 
-#potion {
-  left: 38%;
-  top: 50%;
-
-  font-size: 42px;
+#coin2 {
+  left: 68%;
+  top: 31%;
 }
 
-#scroll {
-  left: 62%;
-  top: 22%;
-
-  font-size: 42px;
+#coin3 {
+  left: 82%;
+  top: 67%;
 }
 
-#ancientGate {
-  left: 76%;
-  top: 70%;
-
-  font-size: 65px;
-
-  cursor: pointer;
-
-  pointer-events: auto;
+#ancientKey {
+  left: 50%;
+  top: 76%;
 }
 
-#ancientGate.gate-unlocked {
-  animation:
-    gateGlow 1s infinite alternate;
-}
+#crystalFragment {
+  right: 10%;
+  top: 55%;
 
-@keyframes gateGlow {
-  from {
-    filter:
-      drop-shadow(
-        0 0 5px #d8c05c
-      );
-  }
-
-  to {
-    filter:
-      drop-shadow(
-        0 0 30px #f5df76
-      );
-  }
-}
-
-#crystalItem {
-  left: 88%;
-  top: 45%;
-
-  font-size: 55px;
+  font-size: 50px;
 
   animation:
     crystalGlow 1.5s infinite alternate;
 }
 
+#healthPotion {
+  left: 73%;
+  top: 48%;
+}
+
+#ancientScroll {
+  left: 34%;
+  top: 25%;
+}
+
 @keyframes crystalGlow {
   from {
     transform: scale(1);
-
     filter:
-      drop-shadow(
-        0 0 5px #6ff
-      );
+      drop-shadow(0 0 5px #6ff);
   }
 
   to {
-    transform: scale(1.15);
-
+    transform: scale(1.12);
     filter:
-      drop-shadow(
-        0 0 25px #6ff
-      );
+      drop-shadow(0 0 25px #6ff);
   }
+}
+
+
+/* =====================================================
+   LOCATIONS
+===================================================== */
+
+#forestDoor {
+  left: 7%;
+  top: 55%;
+
+  font-size: 62px;
+}
+
+#brokenBridge {
+  right: 28%;
+  bottom: 13%;
+
+  font-size: 65px;
+}
+
+.ancient-gate {
+  right: 3%;
+  bottom: 17%;
+
+  font-size: 70px;
+}
+
+.secret-path {
+  position: absolute;
+
+  right: 5%;
+  bottom: 10%;
+
+  z-index: 250;
+
+  font-size: 55px;
+
+  animation:
+    secretGlow 1s infinite alternate;
+}
+
+@keyframes secretGlow {
+  from {
+    opacity: .5;
+    transform: scale(.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+
+/* =====================================================
+   GUARDIAN
+===================================================== */
+
+.guardian {
+  position: absolute;
+
+  left: 60%;
+  top: 55%;
+
+  z-index: 220;
+
+  font-size: 58px;
+
+  filter:
+    drop-shadow(0 8px 5px #000);
+
+  animation:
+    guardianFloat 2s infinite alternate;
+}
+
+@keyframes guardianFloat {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-7px);
+  }
+}
+
+.guardian.defeated {
+  opacity: 0;
+  transform: scale(1.5);
+  pointer-events: none;
 }
 
 
@@ -585,101 +749,56 @@ h2 {
    MESSAGE
 ===================================================== */
 
-#message {
-  display: none;
-
+.game-message {
   position: absolute;
 
   left: 50%;
-  bottom: 20px;
+  bottom: 28px;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
-  max-width: 85%;
+  z-index: 800;
 
-  padding: 12px 18px;
+  width: min(500px, 85vw);
+
+  padding: 11px 16px;
+
+  display: none;
 
   background:
-    rgba(5, 10, 7, 0.92);
+    rgba(3,7,4,.94);
 
-  border:
-    1px solid #7c966e;
+  border: 1px solid #8e793c;
+  border-radius: 10px;
 
-  border-radius: 12px;
-
-  font-family: Arial, sans-serif;
+  color: #eee;
 
   text-align: center;
 
-  z-index: 80;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
 }
 
 
 /* =====================================================
-   ATTACK
-===================================================== */
-
-.attack {
-  animation:
-    swordAttack 0.25s;
-}
-
-@keyframes swordAttack {
-  50% {
-    transform:
-      scale(1.5)
-      rotate(-20deg);
-  }
-}
-
-
-/* =====================================================
-   DAMAGE
-===================================================== */
-
-.damage {
-  animation:
-    damageFlash 0.25s;
-}
-
-@keyframes damageFlash {
-  50% {
-    filter:
-      brightness(2)
-      drop-shadow(
-        0 0 15px red
-      );
-  }
-}
-
-
-/* =====================================================
-   PROFESSIONAL CONTROLS
+   CONTROLS
 ===================================================== */
 
 .controls-wrapper {
   position: fixed;
 
   left: 50%;
+  bottom: 12px;
 
-  bottom: 22px;
+  transform: translateX(-50%);
 
-  transform:
-    translateX(-50%);
+  z-index: 5000;
 
-  z-index: 999;
-
-  width:
-    min(620px, 94vw);
+  width: min(620px, 96vw);
 
   display: flex;
-
-  justify-content:
-    space-between;
-
-  align-items:
-    flex-end;
+  justify-content: space-between;
+  align-items: flex-end;
 
   pointer-events: none;
 }
@@ -691,16 +810,12 @@ h2 {
   display: grid;
 
   grid-template-columns:
-    55px 55px 55px;
+    repeat(3, 55px);
 
   grid-template-rows:
-    55px 55px 55px;
+    repeat(3, 55px);
 
   gap: 3px;
-
-  justify-content: center;
-
-  align-items: center;
 
   pointer-events: auto;
 }
@@ -709,27 +824,18 @@ h2 {
   width: 52px;
   height: 52px;
 
+  border: 2px solid #9c813b;
   border-radius: 12px;
 
-  border:
-    2px solid #b99a43;
-
   background:
-    rgba(
-      15,
-      25,
-      18,
-      0.94
-    );
+    rgba(8,16,10,.93);
 
   color: white;
 
-  font-size: 21px;
-
+  font-size: 20px;
   font-weight: bold;
 
   touch-action: none;
-
   user-select: none;
 }
 
@@ -759,20 +865,18 @@ h2 {
 }
 
 .dpad button:active {
-  transform: scale(0.9);
-
-  background: #685522;
+  transform: scale(.9);
+  background: #705c26;
 }
 
 .dpad-center {
   border-radius: 50% !important;
-
-  color: #e7c85e !important;
+  color: #e8cb63 !important;
 }
 
 
 /* =====================================================
-   ATTACK BUTTON
+   ACTION BUTTONS
 ===================================================== */
 
 .action-controls {
@@ -780,229 +884,287 @@ h2 {
 
   align-items: center;
 
-  gap: 14px;
+  gap: 10px;
 
   pointer-events: auto;
 }
 
 .attack-button {
-  width: 82px;
-  height: 82px;
+  width: 78px;
+  height: 78px;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border: 3px solid #b7923d;
   border-radius: 50%;
-
-  border:
-    3px solid #c6a544;
 
   background:
     radial-gradient(
       circle,
       #633d32,
-      #251311
+      #21100e
     );
 
   color: white;
 
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
   font-size: 27px;
-
-  font-weight: bold;
 
   touch-action: none;
 }
 
-.attack-button span {
-  font-size: 9px;
-
-  margin-top: 3px;
+.attack-button small {
+  font-size: 8px;
+  margin-top: 2px;
 }
 
 .attack-button:active {
-  transform: scale(0.9);
-
-  background: #8a3428;
+  transform: scale(.9);
 }
 
 .mobile-inventory-button {
-  width: 58px;
-  height: 58px;
+  width: 56px;
+  height: 56px;
 
+  border: 2px solid #a88b42;
   border-radius: 50%;
 
-  border:
-    2px solid #b99a43;
-
-  background:
-    rgba(
-      15,
-      25,
-      18,
-      0.95
-    );
-
-  font-size: 25px;
+  background: #101b12;
 
   color: white;
 
-  touch-action: manipulation;
-}
-
-.mobile-inventory-button:active {
-  transform: scale(0.9);
+  font-size: 24px;
 }
 
 
 /* =====================================================
-   ANCIENT PUZZLE
+   OVERLAY SCREENS
 ===================================================== */
 
-.puzzle-screen {
+.overlay-screen {
   position: fixed;
 
   inset: 0;
 
-  z-index: 2000;
+  z-index: 10000;
 
   display: flex;
 
   justify-content: center;
-
   align-items: center;
 
   padding: 20px;
 
   background:
     radial-gradient(
-      circle,
-      #39482f,
-      #10190f 55%,
-      #020403
+      circle at center,
+      rgba(55,70,43,.97),
+      rgba(5,9,6,.99) 70%
     );
-
-  pointer-events: auto !important;
-
-  touch-action: manipulation;
 }
 
-.puzzle-box {
-  position: relative;
+.mini-game-box,
+.dialogue-box,
+.inventory-box,
+.chapter-complete-box {
+  width: min(650px, 94vw);
 
-  width: 95%;
+  max-height: 92vh;
 
-  max-width: 650px;
+  overflow-y: auto;
 
-  padding: 35px 25px;
+  padding: 28px 22px;
 
   text-align: center;
 
   background:
-    rgba(
-      7,
-      12,
-      8,
-      0.97
+    linear-gradient(
+      rgba(8,14,9,.98),
+      rgba(3,7,4,.99)
     );
 
-  border:
-    2px solid #b4933d;
-
+  border: 2px solid #a98a3d;
   border-radius: 20px;
 
   box-shadow:
-    0 0 50px black;
-
-  z-index: 2001;
-
-  pointer-events: auto !important;
+    0 0 60px #000;
 }
 
-.puzzle-label {
-  color: #d8bc61;
+.mini-title {
+  color: #e4c968;
 
-  font-size: 13px;
+  font-size:
+    clamp(24px, 6vw, 42px);
 
-  letter-spacing: 4px;
+  font-weight: bold;
+
+  margin-bottom: 15px;
+}
+
+.mini-game-box p {
+  color: #bdc9be;
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   DIALOGUE
+===================================================== */
+
+.dialogue-character {
+  color: #d8bd67;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.dialogue-text {
+  min-height: 65px;
+
+  color: white;
+
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+#dialogueNext {
+  margin-top: 15px;
+
+  padding: 11px 22px;
+
+  border-radius: 9px;
+
+  background: #6d5824;
+
+  color: white;
 
   font-weight: bold;
 }
 
-.puzzle-box h1 {
-  font-size:
-    clamp(
-      30px,
-      7vw,
-      55px
-    );
-
-  margin: 15px 0;
-}
-
-.puzzle-description {
-  color: #c8d4ca;
-
-  line-height: 1.6;
-}
-
 
 /* =====================================================
-   SEQUENCE
+   HIDDEN OBJECT
 ===================================================== */
 
-.sequence-display {
+.hidden-object-scene {
   position: relative;
 
-  display: flex;
+  height: 360px;
 
-  justify-content: center;
+  margin: 15px 0;
 
-  align-items: center;
+  overflow: hidden;
 
-  gap: 12px;
+  border: 1px solid #665633;
+  border-radius: 14px;
 
-  margin: 25px 0;
+  background:
+    radial-gradient(
+      circle at center,
+      #51432e,
+      #1a140d
+    );
+}
 
-  z-index: 2005;
+.hidden-object {
+  position: absolute;
 
+  background: transparent;
+
+  font-size: 45px;
+
+  transition: .2s;
+
+  z-index: 2;
+}
+
+.hidden-object:nth-child(1) {
+  left: 18%;
+  top: 65%;
+}
+
+.hidden-object:nth-child(2) {
+  right: 20%;
+  top: 30%;
+}
+
+.hidden-object:nth-child(3) {
+  left: 55%;
+  top: 62%;
+}
+
+.hidden-object:nth-child(4) {
+  left: 10%;
+  top: 25%;
+}
+
+.hidden-object:nth-child(5) {
+  right: 10%;
+  bottom: 20%;
+}
+
+.hidden-object:nth-child(6) {
+  left: 45%;
+  top: 15%;
+}
+
+.hidden-object.found {
+  opacity: 0;
+  transform: scale(1.7);
   pointer-events: none;
 }
 
-.sequence-display span {
-  width: 58px;
-  height: 58px;
+#hiddenProgress {
+  color: #e4c968;
+  font-weight: bold;
+}
 
-  display: flex;
+#hiddenMessage,
+#mechanismMessage,
+#bridgeMessage,
+#puzzleMessage {
+  min-height: 25px;
 
-  justify-content: center;
+  color: #e4c968;
 
-  align-items: center;
-
-  background:
-    #18251b;
-
-  border:
-    2px solid #526b55;
-
-  border-radius: 10px;
-
-  font-size: 30px;
+  font-weight: bold;
 }
 
 
 /* =====================================================
-   SYMBOL BUTTONS
-   IMPORTANT CLICK / TOUCH FIX
+   MECHANISM
 ===================================================== */
 
-.symbol-buttons {
-  position: relative;
+.mechanism-sequence {
+  display: flex;
 
+  justify-content: center;
+
+  gap: 10px;
+
+  margin: 20px 0;
+}
+
+.mechanism-sequence span,
+.sequence-display span {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px solid #53694f;
+  border-radius: 10px;
+
+  background: #142018;
+
+  font-size: 28px;
+}
+
+.mechanism-buttons,
+.symbol-buttons {
   display: grid;
 
   grid-template-columns:
@@ -1013,191 +1175,110 @@ h2 {
   max-width: 450px;
 
   margin: auto;
-
-  z-index: 2010;
-
-  pointer-events: auto !important;
 }
 
+.mechanism-buttons button,
 .symbol-buttons button {
-  position: relative;
+  min-height: 62px;
 
-  min-height: 65px;
-
-  border:
-    2px solid #526b55;
-
-  border-radius: 12px;
+  border: 2px solid #53694f;
+  border-radius: 11px;
 
   background:
     linear-gradient(
       #29402d,
-      #132116
+      #101c13
     );
-
-  font-size: 32px;
 
   color: white;
 
-  transition:
-    transform 0.2s,
-    border-color 0.2s,
-    box-shadow 0.2s;
+  font-size: 30px;
 
-  cursor: pointer;
-
-  pointer-events: auto !important;
-
-  touch-action:
-    manipulation;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  z-index: 2011;
+  transition: .2s;
 }
 
-.symbol-buttons button:hover {
-  transform: scale(1.08);
-
-  border-color:
-    #d5b84f;
-}
-
+.mechanism-buttons button:active,
 .symbol-buttons button:active {
-  transform:
-    scale(0.92);
-
-  border-color:
-    #f1d477;
-
-  background:
-    linear-gradient(
-      #405d43,
-      #1b3020
-    );
+  transform: scale(.9);
 }
 
-.symbol-buttons button.symbol-selected {
-  transform:
-    scale(1.12);
 
-  border-color:
-    #f1d477;
+/* =====================================================
+   BRIDGE
+===================================================== */
+
+.bridge-pieces {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 12px;
+
+  max-width: 400px;
+
+  margin: 25px auto;
+}
+
+.bridge-pieces button {
+  min-height: 70px;
+
+  border: 2px solid #665533;
+  border-radius: 10px;
+
+  background: #292116;
+
+  font-size: 35px;
+}
+
+.bridge-pieces button.selected {
+  border-color: #e1c762;
 
   box-shadow:
-    0 0 20px
-    rgba(
-      241,
-      212,
-      119,
-      0.7
-    );
+    0 0 15px rgba(225,199,98,.4);
 }
 
 
 /* =====================================================
-   PUZZLE WRONG SHAKE
+   PUZZLE
 ===================================================== */
 
-.puzzle-wrong {
-  animation:
-    puzzleShake 0.4s;
+.sequence-display {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  margin: 22px 0;
 }
-
-@keyframes puzzleShake {
-
-  0% {
-    transform:
-      translateX(0);
-  }
-
-  25% {
-    transform:
-      translateX(-10px);
-  }
-
-  50% {
-    transform:
-      translateX(10px);
-  }
-
-  75% {
-    transform:
-      translateX(-8px);
-  }
-
-  100% {
-    transform:
-      translateX(0);
-  }
-}
-
-
-/* =====================================================
-   PUZZLE ACTIONS
-===================================================== */
 
 .puzzle-actions {
   display: flex;
 
   justify-content: center;
 
-  gap: 12px;
+  gap: 10px;
 
-  margin-top: 20px;
+  margin-top: 18px;
 }
 
-.puzzle-actions button {
-  padding: 12px 20px;
+.puzzle-actions button,
+#resetMechanism,
+#closeMechanism,
+#closeBridge,
+#closeHiddenObject,
+#closePuzzle {
+  padding: 10px 17px;
 
-  border-radius: 10px;
+  border: 1px solid #816d37;
+  border-radius: 9px;
 
-  border:
-    1px solid #877437;
-
-  background:
-    #332a13;
+  background: #2b2413;
 
   color: white;
 
   font-weight: bold;
-
-  touch-action: manipulation;
-}
-
-.puzzle-actions button:active {
-  transform:
-    scale(0.95);
-}
-
-#puzzleMessage {
-  min-height: 25px;
-
-  margin-top: 18px;
-
-  color: #f2d56b;
-
-  font-weight: bold;
-}
-
-.close-puzzle {
-  margin-top: 20px;
-
-  padding: 10px 18px;
-
-  background:
-    transparent;
-
-  color: #9faf9d;
-
-  border:
-    1px solid #4e614f;
-
-  border-radius: 8px;
-
-  touch-action: manipulation;
 }
 
 
@@ -1205,1478 +1286,187 @@ h2 {
    INVENTORY
 ===================================================== */
 
-.inventory-screen {
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 2500;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  padding: 20px;
-
-  background:
-    radial-gradient(
-      circle,
-      #344b36,
-      #101910 55%,
-      #020403
-    );
-
-  pointer-events: auto;
-}
-
-.inventory-box {
-  width: 95%;
-
-  max-width: 650px;
-
-  padding: 30px 22px;
-
-  background:
-    rgba(
-      7,
-      12,
-      8,
-      0.97
-    );
-
-  border:
-    2px solid #b4933d;
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 0 50px black;
-
-  text-align: center;
-}
-
-.inventory-title {
-  color: #f1d477;
-
-  font-size:
-    clamp(
-      28px,
-      6vw,
-      48px
-    );
-
-  font-weight: bold;
-}
-
-.inventory-subtitle {
-  color: #aebbad;
-}
-
 .inventory-grid {
   display: grid;
 
   grid-template-columns:
     repeat(2, 1fr);
 
-  gap: 12px;
+  gap: 10px;
 
-  margin-top: 25px;
+  margin: 20px 0;
 }
 
 .inventory-item {
-  min-height: 85px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 14px;
-
-  padding: 12px;
-
-  background:
-    linear-gradient(
-      #243727,
-      #122017
-    );
-
-  border:
-    1px solid #526b55;
-
-  border-radius: 12px;
-
-  text-align: left;
-}
-
-.inventory-item.usable {
-  cursor: pointer;
-}
-
-.inventory-item.usable:hover {
-  border-color:
-    #e4c85e;
-
-  transform:
-    scale(1.02);
-}
-
-.inventory-icon {
-  font-size: 38px;
-}
-
-.inventory-item strong {
-  display: block;
-
-  color: #e9e9e9;
-}
-
-.inventory-item span {
-  display: block;
-
-  margin-top: 5px;
-
-  color: #d8bc61;
-
-  font-weight: bold;
-}
-
-#inventoryMessage {
-  min-height: 25px;
-
-  margin: 18px 0;
-
-  color: #f2d56b;
-
-  font-weight: bold;
-}
-
-.close-inventory {
-  padding: 12px 22px;
-
-  border:
-    1px solid #877437;
-
-  border-radius: 10px;
-
-  background:
-    #332a13;
-
-  color: white;
-
-  font-weight: bold;
-
-  touch-action: manipulation;
-}
-
-
-/* =====================================================
-   FORGOTTEN VILLAGE
-===================================================== */
-
-.village-screen {
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 3000;
-
-  background:
-    linear-gradient(
-      #162b22,
-      #07100b
-    );
-
-  overflow: hidden;
-}
-
-.village-title {
-  position: absolute;
-
-  top: 18px;
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  z-index: 20;
-
-  padding: 12px 25px;
-
-  border-radius: 12px;
-
-  background:
-    rgba(
-      0,
-      0,
-      0,
-      0.75
-    );
-
-  border:
-    1px solid #b99a43;
-
-  color: #f1d477;
-
-  font-size: 25px;
-
-  font-weight: bold;
-}
-
-.village-world {
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #3d5637,
-      #152417 55%,
-      #050806
-    );
-}
-
-.village-house {
-  position: absolute;
-
-  font-size: 75px;
-
-  filter:
-    drop-shadow(
-      0 8px 5px
-      rgba(
-        0,
-        0,
-        0,
-        0.5
-      )
-    );
-
-  cursor: pointer;
-}
-
-.house-one {
-  left: 12%;
-  top: 35%;
-}
-
-.house-two {
-  right: 12%;
-  top: 32%;
-}
-
-.village-npc {
-  position: absolute;
-
-  left: 50%;
-  top: 47%;
-
-  transform:
-    translate(
-      -50%,
-      -50%
-    );
-
-  font-size: 65px;
-
-  cursor: pointer;
-
-  animation:
-    npcFloat 2s infinite;
-
-  z-index: 10;
-}
-
-.npc-label {
-  position: absolute;
-
-  left: 50%;
-  top: 56%;
-
-  transform:
-    translateX(-50%);
-
-  color: white;
-
-  background:
-    rgba(
-      0,
-      0,
-      0,
-      0.7
-    );
-
-  padding: 5px 10px;
-
-  border-radius: 7px;
-}
-
-.village-well {
-  position: absolute;
-
-  left: 43%;
-  bottom: 18%;
-
-  font-size: 55px;
-}
-
-.village-tree {
-  position: absolute;
-
-  left: 5%;
-  bottom: 10%;
-
-  font-size: 80px;
-}
-
-.tree-two {
-  left: auto;
-  right: 4%;
-}
-
-.village-quest-box {
-  position: absolute;
-
-  top: 90px;
-  left: 15px;
-
-  width: 230px;
-
-  padding: 15px;
-
-  background:
-    rgba(
-      5,
-      10,
-      6,
-      0.9
-    );
-
-  border:
-    1px solid #9d843f;
-
-  border-radius: 12px;
-
-  color: #d5ddd4;
-}
-
-.village-quest-box strong {
-  color: #f0d36b;
-}
-
-.village-quest-box p {
-  margin: 8px 0;
-
-  font-size: 13px;
-}
-
-.village-quest-box .completed {
-  color: #7dff9c;
-}
-
-
-/* =====================================================
-   DIALOGUE
-===================================================== */
-
-.dialogue-box {
-  position: absolute;
-
-  left: 50%;
-  bottom: 35px;
-
-  transform:
-    translateX(-50%);
-
-  width:
-    min(
-      700px,
-      90%
-    );
-
-  padding: 20px;
-
-  background:
-    rgba(
-      5,
-      8,
-      5,
-      0.96
-    );
-
-  border:
-    2px solid #b99a43;
-
-  border-radius: 15px;
-
-  z-index: 50;
-}
-
-.dialogue-text {
-  min-height: 55px;
-
-  color: white;
-
-  font-size: 18px;
-
-  line-height: 1.5;
-}
-
-#dialogueNext {
-  margin-top: 12px;
-
-  padding: 10px 20px;
-
-  border: 0;
-
-  border-radius: 8px;
-
-  background:
-    #705b24;
-
-  color: white;
-
-  font-weight: bold;
-}
-
-.village-back {
-  position: absolute;
-
-  right: 18px;
-  bottom: 18px;
-
-  z-index: 60;
-
-  padding: 10px 18px;
-
-  border-radius: 9px;
-
-  border:
-    1px solid #8e793c;
-
-  background:
-    #1d291e;
-
-  color: white;
-}
-
-@keyframes npcFloat {
-
-  0%,
-  100% {
-    transform:
-      translate(
-        -50%,
-        -50%
-      );
-  }
-
-  50% {
-    transform:
-      translate(
-        -50%,
-        -57%
-      );
-  }
-}
-
-
-/* =====================================================
-   HIDDEN OBJECT HOUSE
-===================================================== */
-
-.hidden-house-screen {
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 4000;
-
-  background:
-    #080b08;
-}
-
-.hidden-house-world {
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #4b3d2b,
-      #1d1710 55%,
-      #070605
-    );
-
-  overflow: hidden;
-}
-
-.hidden-house-title {
-  position: absolute;
-
-  top: 18px;
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  z-index: 20;
-
-  padding: 12px 22px;
-
-  border-radius: 12px;
-
-  background:
-    rgba(
-      0,
-      0,
-      0,
-      0.85
-    );
-
-  border:
-    1px solid #c0a34b;
-
-  color: #f2d477;
-
-  font-size: 22px;
-
-  font-weight: bold;
-}
-
-.hidden-object {
-  position: absolute;
-
-  z-index: 10;
-
-  font-size: 55px;
-
-  cursor: pointer;
-
-  user-select: none;
-
-  transition:
-    transform 0.2s,
-    opacity 0.3s;
-
-  touch-action: manipulation;
-}
-
-.hidden-object:hover {
-  transform:
-    scale(1.15);
-}
-
-.hidden-object.found {
-  opacity: 0;
-
-  transform:
-    scale(1.7);
-
-  pointer-events: none;
-}
-
-.object-chair {
-  left: 12%;
-  top: 30%;
-}
-
-.object-box {
-  right: 15%;
-  top: 25%;
-}
-
-.object-mirror {
-  left: 45%;
-  top: 24%;
-}
-
-.object-key {
-  left: 28%;
-  top: 65%;
-}
-
-.object-map {
-  right: 27%;
-  top: 62%;
-}
-
-.object-gem {
-  left: 63%;
-  top: 43%;
-}
-
-.object-candle {
-  left: 16%;
-  top: 52%;
-}
-
-.hidden-target {
-  position: absolute;
-
-  bottom: 20px;
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  width: 90%;
-
-  max-width: 600px;
-
-  padding: 13px;
-
-  text-align: center;
-
-  background:
-    rgba(
-      0,
-      0,
-      0,
-      0.85
-    );
-
-  border:
-    1px solid #8c7436;
-
-  border-radius: 12px;
-
-  color: white;
-
-  z-index: 20;
-}
-
-.hidden-target span {
-  margin-left: 12px;
-
-  font-size: 25px;
-}
-
-.hidden-progress-box {
-  position: absolute;
-
-  top: 75px;
-  right: 20px;
-
-  padding: 10px 15px;
-
-  background:
-    rgba(
-      0,
-      0,
-      0,
-      0.8
-    );
-
-  border-radius: 9px;
-
-  color: white;
-
-  z-index: 20;
-}
-
-.hidden-progress-box strong {
-  color: #f1d477;
-}
-
-.hidden-message {
-  position: absolute;
-
-  top: 75px;
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  padding: 10px 18px;
-
-  border-radius: 9px;
-
-  background:
-    rgba(
-      0,
-      0,
-      0,
-      0.85
-    );
-
-  font-weight: bold;
-
-  z-index: 30;
-}
-
-.close-house {
-  position: absolute;
-
-  top: 20px;
-  left: 20px;
-
-  z-index: 30;
-
-  padding: 10px 16px;
-
-  border-radius: 8px;
-
-  border:
-    1px solid #8c7436;
-
-  background:
-    #211b10;
-
-  color: white;
-}
-
-
-/* =====================================================
-   SHADOW CASTLE
-===================================================== */
-
-.shadow-castle-screen {
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 5000;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  background:
-    radial-gradient(
-      circle,
-      #251f38,
-      #0b0812 60%,
-      #020103
-    );
-}
-
-.shadow-castle-content {
-  width: 90%;
-
-  max-width: 700px;
-
-  padding: 40px;
-
-  text-align: center;
-
-  background:
-    rgba(
-      5,
-      4,
-      10,
-      0.95
-    );
-
-  border:
-    2px solid #7764a8;
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 0 50px black;
-}
-
-.shadow-castle-content h1 {
-  color: #c9b8ff;
-}
-
-.shadow-castle-content p {
-  color: #c9c4d8;
-
-  font-size: 18px;
-}
-
-
-/* =====================================================
-   OLD CONTROLS HIDDEN
-===================================================== */
-
-.controls {
-  display: none !important;
-}
-
-.keyboard-help {
-  display: none !important;
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media (max-width: 768px) {
-
-  .story {
-    font-size: 16px;
-  }
-
-  .title-screen {
-    padding: 35px 18px;
-  }
-
-  .start-button {
-    width: 100%;
-  }
-
-  #questPanel {
-    top: 65px;
-    left: 8px;
-
-    width: 190px;
-
-    padding: 10px;
-  }
-
-  .quest-item {
-    font-size: 12px;
-  }
-
-  .symbol-buttons {
-    grid-template-columns:
-      repeat(2, 1fr);
-
-    max-width: 330px;
-  }
-
-  .symbol-buttons button {
-    min-height: 62px;
-
-    font-size: 30px;
-  }
-
-  .sequence-display {
-    gap: 6px;
-  }
-
-  .sequence-display span {
-    width: 50px;
-    height: 50px;
-
-    font-size: 27px;
-  }
-
-  .inventory-grid {
-    grid-template-columns:
-      1fr;
-  }
-
-  .inventory-box {
-    max-height: 90vh;
-
-    overflow-y: auto;
-  }
-
-  .village-title {
-    font-size: 18px;
-
-    padding: 9px 15px;
-  }
-
-  .village-quest-box {
-    width: 180px;
-
-    top: 65px;
-    left: 8px;
-  }
-
-  .village-house {
-    font-size: 55px;
-  }
-
-  .dialogue-text {
-    font-size: 15px;
-  }
-
-  .hidden-house-title {
-    font-size: 16px;
-
-    top: 15px;
-  }
-
-  .hidden-object {
-    font-size: 42px;
-  }
-
-  .hidden-target {
-    font-size: 13px;
-  }
-
-  .hidden-target span {
-    margin-left: 5px;
-  }
-
-  .controls-wrapper {
-    bottom: 15px;
-
-    width: 96vw;
-  }
-
-  .dpad {
-    transform:
-      scale(0.82);
-
-    transform-origin:
-      bottom left;
-  }
-
-  .action-controls {
-    gap: 8px;
-  }
-
-  .attack-button {
-    width: 72px;
-    height: 72px;
-  }
-
-  .mobile-inventory-button {
-    width: 52px;
-    height: 52px;
-  }
-}
-
-
-/* =====================================================
-   SMALL MOBILE
-===================================================== */
-
-@media (max-width: 420px) {
-
-  .controls-wrapper {
-    bottom: 8px;
-  }
-
-  .dpad {
-    transform:
-      scale(0.72);
-  }
-
-  .attack-button {
-    width: 65px;
-    height: 65px;
-
-    font-size: 23px;
-  }
-
-  .mobile-inventory-button {
-    width: 48px;
-    height: 48px;
-
-    font-size: 21px;
-  }
-
-  .puzzle-box {
-    padding:
-      25px 15px;
-  }
-
-  .puzzle-description {
-    font-size: 14px;
-  }
-
-  .symbol-buttons {
-    gap: 8px;
-  }
-
-  .symbol-buttons button {
-    min-height: 58px;
-
-    font-size: 27px;
-  }
-
-  .sequence-display {
-    margin: 18px 0;
-  }
-
-  .sequence-display span {
-    width: 46px;
-    height: 46px;
-
-    font-size: 24px;
-  }
-}
-
-
-/* =====================================================
-   VERY SMALL SCREENS
-===================================================== */
-
-@media (max-width: 350px) {
-
-  .symbol-buttons button {
-    min-height: 52px;
-
-    font-size: 24px;
-  }
-
-  .sequence-display span {
-    width: 42px;
-    height: 42px;
-
-    font-size: 22px;
-  }
-
-  .controls-wrapper {
-    width: 100vw;
-  }
-}
-
-
-/* =====================================================
-   TOUCH SAFETY
-===================================================== */
-
-.symbol-buttons,
-.symbol-buttons button,
-.puzzle-actions button,
-.close-puzzle,
-.inventory-button,
-.mobile-inventory-button,
-.attack-button,
-.dpad button {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-
-/* =====================================================
-   PREVENT PUZZLE BACKGROUND INTERFERENCE
-===================================================== */
-
-.puzzle-screen::before,
-.puzzle-screen::after,
-.puzzle-box::before,
-.puzzle-box::after {
-  pointer-events: none !important;
-}
-/* =====================================================
-   CHAPTER 2 MOBILE INTERACTION
-===================================================== */
-
-.village-npc,
-.village-house,
-.village-well {
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.village-npc:active,
-.village-house:active,
-.village-well:active {
-  transform: scale(0.92);
-}
-
-
-/* =====================================================
-   VILLAGE ACTION BAR
-===================================================== */
-
-.village-action-bar {
-
-  position: fixed;
-
-  left: 50%;
-
-  bottom: 18px;
-
-  transform: translateX(-50%);
-
-  z-index: 500;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 12px;
-
-  width: 94%;
-
-  pointer-events: auto;
-
-}
-
-
-.village-action-bar button {
-
-  min-width: 150px;
-
-  min-height: 50px;
-
-  padding: 12px 20px;
-
-  border-radius: 12px;
-
-  border: 2px solid #b99a43;
-
-  background:
-    linear-gradient(
-      #3b3219,
-      #181308
-    );
-
-  color: white;
-
-  font-size: 15px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-  touch-action: manipulation;
-
-  box-shadow:
-    0 5px 15px rgba(0,0,0,.6);
-
-}
-
-
-.village-action-bar button:active {
-
-  transform: scale(.92);
-
-  background: #705b24;
-
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media (max-width: 600px) {
-
-  .village-action-bar {
-
-    bottom: 10px;
-
-    gap: 8px;
-
-  }
-
-  .village-action-bar button {
-
-    min-width: 130px;
-
-    min-height: 48px;
-
-    font-size: 13px;
-
-    padding: 10px 12px;
-
-  }
-
-}
-
-
-/* =====================================================
-   SMALL MOBILE
-===================================================== */
-
-@media (max-width: 380px) {
-
-  .village-action-bar button {
-
-    min-width: 110px;
-
-    font-size: 12px;
-
-  }
-
-}
-/* =====================================================
-   CHAPTER 2 — VILLAGE PLAYER
-===================================================== */
-
-#villagePlayer {
-
-  position: absolute;
-
-  transform:
-    translate(-50%, -50%);
-
-  font-size: 48px;
-
-  z-index: 25;
-
-  pointer-events: none;
-
-  filter:
-    drop-shadow(
-      0 6px 5px rgba(0,0,0,.8)
-    );
-
-  user-select: none;
-
-}
-
-
-/* =====================================================
-   CHAPTER 2 CONTROLS
-===================================================== */
-
-.village-controls {
-
-  position: fixed;
-
-  left: 50%;
-
-  bottom: 18px;
-
-  transform:
-    translateX(-50%);
-
-  width: min(620px, 94vw);
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: flex-end;
-
-  z-index: 9999;
-
-  pointer-events: none;
-
-}
-
-
-/* =====================================================
-   VILLAGE D-PAD
-===================================================== */
-
-.village-dpad {
-
-  width: 175px;
-
-  height: 175px;
+  min-height: 80px;
 
   display: grid;
 
-  grid-template-columns:
-    55px 55px 55px;
-
-  grid-template-rows:
-    55px 55px 55px;
-
-  gap: 3px;
-
-  justify-content: center;
+  grid-template-columns: 45px 1fr 25px;
 
   align-items: center;
 
-  pointer-events: auto;
+  gap: 8px;
 
-}
+  padding: 10px;
 
+  border: 1px solid #53694f;
+  border-radius: 10px;
 
-.village-dpad button {
-
-  width: 52px;
-
-  height: 52px;
-
-  border:
-
-    2px solid #b99a43;
-
-  border-radius: 12px;
-
-  background:
-
-    rgba(12, 23, 15, .96);
+  background: #18281b;
 
   color: white;
 
-  font-size: 21px;
+  text-align: left;
 
-  font-weight: bold;
-
-  touch-action: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
+  font-size: 25px;
 }
 
-
-.village-dpad button:nth-child(1) {
-
-  grid-column: 2;
-
-  grid-row: 1;
-
+.inventory-item span {
+  font-size: 12px;
+  color: #d5ddd5;
 }
 
-
-.village-dpad button:nth-child(2) {
-
-  grid-column: 1;
-
-  grid-row: 2;
-
+.inventory-item b {
+  color: #e4c968;
+  font-size: 15px;
 }
 
+#closeInventory {
+  padding: 11px 22px;
 
-.village-dpad button:nth-child(3) {
+  border-radius: 9px;
 
-  grid-column: 2;
+  background: #6b5623;
 
-  grid-row: 2;
-
-}
-
-
-.village-dpad button:nth-child(4) {
-
-  grid-column: 3;
-
-  grid-row: 2;
-
-}
-
-
-.village-dpad button:nth-child(5) {
-
-  grid-column: 2;
-
-  grid-row: 3;
-
-}
-
-
-.village-dpad button:active {
-
-  transform:
-    scale(.9);
-
-  background:
-    #685522;
-
-}
-
-
-.village-dpad-center {
-
-  border-radius:
-    50% !important;
-
-  color:
-    #e7c85e !important;
-
+  color: white;
 }
 
 
 /* =====================================================
-   VILLAGE ACTION BUTTONS
+   CHAPTER COMPLETE
 ===================================================== */
 
-.village-action-controls {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-
-  pointer-events: auto;
-
+.chapter-complete-box {
+  max-width: 700px;
 }
 
+.complete-icon {
+  font-size: 70px;
 
-.village-interact-button {
+  animation:
+    completeGlow 1.5s infinite alternate;
+}
 
-  width: 82px;
+@keyframes completeGlow {
+  from {
+    transform: scale(1);
+  }
 
-  height: 82px;
+  to {
+    transform: scale(1.12);
+  }
+}
 
-  border-radius: 50%;
+.chapter-complete-box h1 {
+  color: #e6cb6c;
+}
 
-  border:
-    3px solid #c6a544;
+.chapter-complete-box h2 {
+  color: #ddd;
+}
 
-  background:
+.mystery-text {
+  margin: 25px auto;
 
-    radial-gradient(
-      circle,
-      #365f3b,
-      #142217
-    );
+  max-width: 500px;
+
+  padding: 18px;
+
+  border-left: 3px solid #c4a747;
+
+  background: rgba(180,150,60,.08);
+
+  color: #e6d68f;
+
+  font-style: italic;
+
+  line-height: 1.6;
+}
+
+#chapter2Button {
+  padding: 14px 25px;
+
+  border: 2px solid #c8a949;
+  border-radius: 10px;
+
+  background: #594617;
 
   color: white;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  font-size: 28px;
-
-  touch-action: none;
-
-}
-
-
-.village-interact-button small {
-
-  font-size: 10px;
-
-  margin-top: 3px;
 
   font-weight: bold;
-
 }
 
 
-.village-interact-button:active {
+/* =====================================================
+   CHAPTER 2 PLACEHOLDER
+===================================================== */
 
-  transform:
-    scale(.9);
+.chapter-screen {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 12000;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
 
   background:
-    #536f45;
-
+    radial-gradient(
+      circle,
+      #304832,
+      #07100a
+    );
 }
 
+.chapter-placeholder {
+  width: min(600px, 90vw);
 
-.village-back-control {
+  padding: 35px;
 
-  width: 58px;
+  text-align: center;
 
-  height: 58px;
+  border: 2px solid #a98a3d;
+  border-radius: 20px;
 
-  border-radius: 50%;
+  background: rgba(5,10,6,.95);
+}
 
-  border:
-    2px solid #b99a43;
+.chapter-placeholder h1 {
+  color: #e3c96b;
+}
 
-  background:
-    rgba(15,25,18,.96);
+.chapter-placeholder h2 {
+  color: #ddd;
+}
+
+.chapter-placeholder p {
+  color: #bfc9bf;
+}
+
+#backToChapter1 {
+  margin-top: 20px;
+
+  padding: 11px 20px;
+
+  border-radius: 9px;
+
+  background: #685522;
 
   color: white;
-
-  font-size: 25px;
-
-}
-
-
-.village-back-control:active {
-
-  transform:
-    scale(.9);
-
 }
 
 
@@ -2686,50 +1476,98 @@ h2 {
 
 @media (max-width: 768px) {
 
-  .village-controls {
+  .hud {
+    height: 54px;
+    font-size: 12px;
+  }
 
-    bottom: 12px;
+  .world {
+    top: 54px;
+  }
 
+  .quest-panel {
+    top: 62px;
+    left: 7px;
+
+    width: 155px;
+  }
+
+  #questContent {
+    padding: 0 8px 7px;
+  }
+
+  .quest-main {
+    font-size: 11px;
+  }
+
+  .quest-item {
+    font-size: 9px;
+  }
+
+  .chapter-banner {
+    top: 62px;
+    font-size: 8px;
+  }
+
+  .player {
+    font-size: 38px;
+  }
+
+  .investigate-object {
+    font-size: 40px;
+  }
+
+  #watchtower {
+    font-size: 55px;
+  }
+
+  .guardian {
+    font-size: 47px;
+  }
+
+  .ancient-gate {
+    font-size: 55px;
+  }
+
+  .controls-wrapper {
     width: 96vw;
-
+    bottom: 6px;
   }
 
-
-  .village-dpad {
-
-    transform:
-      scale(.82);
-
-    transform-origin:
-      bottom left;
-
+  .dpad {
+    transform: scale(.75);
+    transform-origin: bottom left;
   }
 
-
-  .village-action-controls {
-
-    gap: 7px;
-
+  .attack-button {
+    width: 68px;
+    height: 68px;
   }
 
-
-  .village-interact-button {
-
-    width: 72px;
-
-    height: 72px;
-
+  .mobile-inventory-button {
+    width: 50px;
+    height: 50px;
   }
 
-
-  .village-back-control {
-
-    width: 52px;
-
-    height: 52px;
-
+  .hidden-object-scene {
+    height: 300px;
   }
 
+  .mechanism-buttons,
+  .symbol-buttons {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .inventory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-game-box,
+  .dialogue-box,
+  .inventory-box {
+    padding: 22px 15px;
+  }
 }
 
 
@@ -2739,251 +1577,55 @@ h2 {
 
 @media (max-width: 420px) {
 
-  .village-controls {
-
-    bottom: 7px;
-
+  .title-screen {
+    padding: 30px 17px;
   }
 
-
-  .village-dpad {
-
-    transform:
-      scale(.72);
-
+  .kingdom-title {
+    font-size: 12px;
+    letter-spacing: 4px;
   }
 
-
-  .village-interact-button {
-
-    width: 65px;
-
-    height: 65px;
-
-    font-size: 23px;
-
+  .story {
+    font-size: 14px;
   }
 
-
-  .village-back-control {
-
-    width: 48px;
-
-    height: 48px;
-
-    font-size: 21px;
-
+  .quest-panel {
+    width: 140px;
   }
 
-
-  #villagePlayer {
-
-    font-size: 42px;
-
+  .quest-item {
+    font-size: 8px;
   }
 
-}
-
-
-/* =====================================================
-   DESKTOP — KEEP CONTROLS VISIBLE
-===================================================== */
-
-@media (min-width: 769px) {
-
-  .village-controls {
-
-    bottom: 25px;
-
-    z-index: 9999;
-
+  .chapter-banner {
+    display: none;
   }
 
-}
-/* =====================================================
-   CHAPTER 2 QUEST BOX — COMPACT
-===================================================== */
-
-.village-quest-box {
-
-  width: 185px !important;
-
-  padding: 9px 11px !important;
-
-  top: 72px !important;
-
-  left: 8px !important;
-
-  border-radius: 9px !important;
-
-  font-size: 11px !important;
-
-  line-height: 1.25 !important;
-
-  z-index: 30;
-
-  background:
-    rgba(5, 10, 6, 0.82) !important;
-
-}
-
-
-/* QUEST TITLE */
-
-.village-quest-box strong {
-
-  display: block;
-
-  font-size: 13px;
-
-  margin-bottom: 5px;
-
-  white-space: nowrap;
-
-}
-
-
-/* QUEST ITEMS */
-
-.village-quest-box p {
-
-  margin: 4px 0 !important;
-
-  font-size: 10px !important;
-
-  line-height: 1.25 !important;
-
-  color: #c8d0c8;
-
-}
-
-
-/* COMPLETED */
-
-.village-quest-box p.completed {
-
-  color: #7dff9c;
-
-}
-
-
-/* =====================================================
-   MOBILE — EVEN SMALLER
-===================================================== */
-
-@media (max-width: 600px) {
-
-  .village-quest-box {
-
-    width: 150px !important;
-
-    padding: 7px 8px !important;
-
-    top: 62px !important;
-
-    left: 6px !important;
-
-    border-radius: 8px !important;
-
+  .dpad {
+    transform: scale(.65);
   }
 
-
-  .village-quest-box strong {
-
-    font-size: 11px;
-
-    margin-bottom: 3px;
-
+  .attack-button {
+    width: 62px;
+    height: 62px;
+    font-size: 22px;
   }
 
-
-  .village-quest-box p {
-
-    font-size: 8.5px !important;
-
-    margin: 3px 0 !important;
-
-    line-height: 1.2 !important;
-
+  .mobile-inventory-button {
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
   }
 
-}
-
-
-/* =====================================================
-   VERY SMALL MOBILE
-===================================================== */
-
-@media (max-width: 420px) {
-
-  .village-quest-box {
-
-    width: 138px !important;
-
-    padding: 6px 7px !important;
-
+  .sequence-display span,
+  .mechanism-sequence span {
+    width: 46px;
+    height: 46px;
+    font-size: 24px;
   }
 
-
-  .village-quest-box strong {
-
-    font-size: 10px;
-
+  .hidden-object-scene {
+    height: 260px;
   }
-
-
-  .village-quest-box p {
-
-    font-size: 8px !important;
-
-  }
-
-}
-/* =====================================================
-   CHAPTER 2 BADRI PLAYER
-===================================================== */
-
-#villagePlayer {
-
-  position: absolute;
-
-  left: 50%;
-
-  top: 68%;
-
-  transform:
-    translate(-50%, -50%);
-
-  font-size: 52px;
-
-  z-index: 40;
-
-  display: block;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  filter:
-    drop-shadow(
-      0 6px 5px rgba(0,0,0,.8)
-    );
-
-  transition:
-    left .05s linear,
-    top .05s linear;
-
-}
-
-
-/* Mobile */
-
-@media (max-width: 600px) {
-
-  #villagePlayer {
-
-    font-size: 44px;
-
-  }
-
 }
