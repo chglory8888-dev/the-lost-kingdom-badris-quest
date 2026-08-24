@@ -1,89 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
 
   <meta
     name="description"
-    content="The Lost Kingdom: Badri's Quest - An adventure game"
+    content="The Lost Kingdom: Badri's Quest — Chapter 1"
   >
 
-  <meta
-    name="theme-color"
-    content="#10170f"
-  >
+  <meta name="theme-color" content="#050806">
 
-  <title>
-    THE LOST KINGDOM: BADRI'S QUEST
-  </title>
+  <title>THE LOST KINGDOM — BADRI'S QUEST</title>
 
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
-
+  <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
 <main id="game">
 
-
   <!-- =====================================================
-       HOME SCREEN
+       HOME
   ====================================================== -->
 
-  <section
-    id="homeScreen"
-    class="screen"
-  >
+  <section id="homeScreen" class="screen">
 
     <div class="title-screen">
 
-      <div class="kingdom">
-        🏰 ELDORIA KINGDOM
+      <div class="kingdom-title">
+        🏰 ELDORIA
       </div>
 
-      <h1>
-        THE LOST KINGDOM
-      </h1>
+      <h1>THE LOST KINGDOM</h1>
 
-      <h2>
-        ⚔️ BADRI'S QUEST
-      </h2>
+      <h2>⚔️ BADRI'S QUEST</h2>
 
       <p class="story">
 
-        👑 King Manu has disappeared.
+        👑 King Manu has vanished.
 
         <br><br>
 
-        A mysterious darkness has surrounded
-        the Kingdom of Eldoria.
+        Strange symbols have appeared across
+        the ancient forest.
 
         <br><br>
 
-        Brave Badri must enter the Dark Forest,
-        solve ancient puzzles, defeat dangerous
-        guardians and discover the hidden path
-        to King Manu.
+        Something is hiding inside Eldoria...
+
+        <br><br>
+
+        <strong>
+          Find the truth. Find the King.
+        </strong>
 
       </p>
 
-      <button
-        id="startButton"
-        class="start-button"
-        type="button"
-      >
-        START ADVENTURE
+      <button id="startButton" class="start-button">
+        BEGIN ADVENTURE
       </button>
 
     </div>
@@ -91,156 +70,310 @@
   </section>
 
 
-
   <!-- =====================================================
-       CHAPTER 1 — DARK FOREST
+       CHAPTER 1
   ====================================================== -->
 
-  <section
-    id="gameScreen"
-    class="hidden"
-  >
+  <section id="gameScreen" class="game-screen hidden">
 
-    <!-- HUD -->
+    <!-- ================= HUD ================= -->
 
-    <div class="hud">
+    <header class="hud">
 
-      <span>
-        ⚔️ BADRI
-      </span>
+      <div class="hud-player">
+        🧙 <span>BADRI</span>
+      </div>
 
-      <span>
-        ❤️
-        <b id="health">100</b>
-      </span>
+      <div>
+        ❤️ <b id="health">100</b>
+      </div>
 
-      <span>
-        🪙
-        <b id="coins">0</b>
-      </span>
+      <div>
+        🪙 <b id="coins">0</b>
+      </div>
 
-      <span>
-        💎
-        <b id="crystal">0</b>/1
-      </span>
+      <div>
+        💎 <b id="crystal">0</b>
+      </div>
 
       <button
         id="inventoryButton"
-        class="inventory-button"
+        class="hud-button"
         type="button"
       >
         🎒
       </button>
 
-    </div>
+    </header>
 
 
-    <!-- QUEST -->
+    <!-- =================================================
+         QUEST
+    ================================================== -->
 
-    <div id="questPanel">
+    <div id="questPanel" class="quest-panel">
 
-      <div id="questTitle">
+      <button
+        id="questToggle"
+        class="quest-toggle"
+        type="button"
+      >
         📜 QUEST
-      </div>
+      </button>
 
-      <div class="quest-main">
-        Find the Lost King Manu
-      </div>
+      <div id="questContent">
 
-      <div id="questObjectives"></div>
+        <div class="quest-main">
+          Find King Manu
+        </div>
+
+        <div id="questObjectives"></div>
+
+      </div>
 
     </div>
 
 
-    <!-- FOREST -->
+    <!-- =================================================
+         CHAPTER TITLE
+    ================================================== -->
 
-    <div id="forest">
+    <div class="chapter-banner">
 
-      <div class="chapter-title">
-        CHAPTER 1 — THE DARK FOREST
-      </div>
+      CHAPTER 1
+
+      <span>
+        THE DARK FOREST
+      </span>
+
+    </div>
 
 
-      <!-- PLAYER -->
+    <!-- =================================================
+         FOREST WORLD
+    ================================================== -->
+
+    <div id="forest" class="world">
+
+      <!-- atmosphere -->
+
+      <div class="fog fog-one"></div>
+      <div class="fog fog-two"></div>
+
+
+      <!-- trees -->
+
+      <div class="forest-decoration tree-a">🌲</div>
+      <div class="forest-decoration tree-b">🌳</div>
+      <div class="forest-decoration tree-c">🌲</div>
+      <div class="forest-decoration tree-d">🌳</div>
+
+
+      <!-- =================================================
+           PLAYER
+      ================================================= -->
 
       <div
         id="player"
+        class="player"
         aria-label="Badri"
       >
         🧙
       </div>
 
 
-      <!-- ENEMIES -->
+      <!-- =================================================
+           INVESTIGATION OBJECTS
+      ================================================= -->
 
-      <div class="enemy enemy-one">
+      <button
+        class="investigate-object"
+        id="ancientStone"
+        data-object="stone"
+        aria-label="Ancient Stone"
+      >
+        🗿
+      </button>
+
+
+      <button
+        class="investigate-object"
+        id="brokenCart"
+        data-object="cart"
+        aria-label="Broken Cart"
+      >
+        🛒
+      </button>
+
+
+      <button
+        class="investigate-object"
+        id="oldSign"
+        data-object="sign"
+        aria-label="Ancient Sign"
+      >
+        🪧
+      </button>
+
+
+      <button
+        class="investigate-object"
+        id="watchtower"
+        data-object="watchtower"
+        aria-label="Watchtower"
+      >
+        🏚️
+      </button>
+
+
+      <!-- =================================================
+           COLLECTIBLES
+      ================================================== -->
+
+      <button
+        class="collectible coin"
+        id="coin1"
+        data-item="coin"
+        aria-label="Gold Coin"
+      >
+        🪙
+      </button>
+
+
+      <button
+        class="collectible coin"
+        id="coin2"
+        data-item="coin"
+        aria-label="Gold Coin"
+      >
+        🪙
+      </button>
+
+
+      <button
+        class="collectible coin"
+        id="coin3"
+        data-item="coin"
+        aria-label="Gold Coin"
+      >
+        🪙
+      </button>
+
+
+      <button
+        class="collectible"
+        id="ancientKey"
+        data-item="key"
+        aria-label="Ancient Key"
+      >
+        🗝️
+      </button>
+
+
+      <button
+        class="collectible"
+        id="crystalFragment"
+        data-item="crystal"
+        aria-label="Crystal Fragment"
+      >
+        💎
+      </button>
+
+
+      <button
+        class="collectible"
+        id="healthPotion"
+        data-item="potion"
+        aria-label="Health Potion"
+      >
+        🧪
+      </button>
+
+
+      <button
+        class="collectible"
+        id="ancientScroll"
+        data-item="scroll"
+        aria-label="Ancient Scroll"
+      >
+        📜
+      </button>
+
+
+      <!-- =================================================
+           LOCKED PATH
+      ================================================== -->
+
+      <button
+        id="forestDoor"
+        class="location-object"
+        aria-label="Locked Forest Door"
+      >
+        🚪
+      </button>
+
+
+      <!-- =================================================
+           BROKEN BRIDGE
+      ================================================== -->
+
+      <button
+        id="brokenBridge"
+        class="location-object"
+        aria-label="Broken Bridge"
+      >
+        🌉
+      </button>
+
+
+      <!-- =================================================
+           GUARDIAN
+      ================================================== -->
+
+      <div
+        id="guardian"
+        class="enemy guardian"
+      >
         👹
       </div>
 
-      <div class="enemy enemy-two">
-        🐺
-      </div>
 
+      <!-- =================================================
+           ANCIENT GATE
+      ================================================== -->
 
-      <!-- COINS -->
-
-      <div class="coin coin-one">
-        🪙
-      </div>
-
-      <div class="coin coin-two">
-        🪙
-      </div>
-
-      <div class="coin coin-three">
-        🪙
-      </div>
-
-
-      <!-- KEY -->
-
-      <div id="key">
-        🗝️
-      </div>
-
-
-      <!-- POTION -->
-
-      <div id="potion">
-        🧪
-      </div>
-
-
-      <!-- SCROLL -->
-
-      <div id="scroll">
-        📜
-      </div>
-
-
-      <!-- ANCIENT GATE -->
-
-      <div id="ancientGate">
+      <button
+        id="ancientGate"
+        class="location-object ancient-gate"
+        aria-label="Ancient Gate"
+      >
         🏛️
+      </button>
+
+
+      <!-- =================================================
+           SECRET PATH
+      ================================================== -->
+
+      <div
+        id="secretPath"
+        class="secret-path hidden"
+      >
+        ✨
       </div>
 
 
-      <!-- CRYSTAL -->
+      <!-- =================================================
+           WORLD MESSAGE
+      ================================================== -->
 
-      <div id="crystalItem">
-        💎
-      </div>
-
-
-      <!-- MESSAGE -->
-
-      <div id="message"></div>
+      <div id="message" class="game-message"></div>
 
     </div>
 
 
     <!-- =================================================
-         CHAPTER 1 CONTROLS
+         CONTROLS
     ================================================== -->
 
     <div class="controls-wrapper">
@@ -250,7 +383,7 @@
         <button
           type="button"
           data-key="ArrowUp"
-          aria-label="Move Up"
+          aria-label="Up"
         >
           ▲
         </button>
@@ -258,7 +391,7 @@
         <button
           type="button"
           data-key="ArrowLeft"
-          aria-label="Move Left"
+          aria-label="Left"
         >
           ◀
         </button>
@@ -275,7 +408,7 @@
         <button
           type="button"
           data-key="ArrowRight"
-          aria-label="Move Right"
+          aria-label="Right"
         >
           ▶
         </button>
@@ -283,7 +416,7 @@
         <button
           type="button"
           data-key="ArrowDown"
-          aria-label="Move Down"
+          aria-label="Down"
         >
           ▼
         </button>
@@ -298,17 +431,9 @@
           class="attack-button"
           type="button"
         >
-
-          <span>
-            ⚔️
-          </span>
-
-          <span>
-            ATTACK
-          </span>
-
+          ⚔️
+          <small>ATTACK</small>
         </button>
-
 
         <button
           id="mobileInventoryButton"
@@ -325,6 +450,231 @@
   </section>
 
 
+  <!-- =====================================================
+       INVESTIGATION DIALOGUE
+  ====================================================== -->
+
+  <section
+    id="dialogueScreen"
+    class="overlay-screen hidden"
+  >
+
+    <div class="dialogue-box">
+
+      <div class="dialogue-character">
+        🧙 BADRI
+      </div>
+
+      <div
+        id="dialogueText"
+        class="dialogue-text"
+      ></div>
+
+      <button
+        id="dialogueNext"
+        type="button"
+      >
+        NEXT →
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       HIDDEN OBJECT MINI GAME
+  ====================================================== -->
+
+  <section
+    id="hiddenObjectScreen"
+    class="overlay-screen hidden"
+  >
+
+    <div class="mini-game-box">
+
+      <div class="mini-title">
+        🔎 SEARCH THE WATCHTOWER
+      </div>
+
+      <p>
+        Find the objects that may reveal
+        King Manu's whereabouts.
+      </p>
+
+      <div class="hidden-object-scene">
+
+        <button
+          class="hidden-object"
+          data-correct="true"
+          data-name="key"
+        >
+          🗝️
+        </button>
+
+        <button
+          class="hidden-object"
+          data-correct="true"
+          data-name="scroll"
+        >
+          📜
+        </button>
+
+        <button
+          class="hidden-object"
+          data-correct="true"
+          data-name="crystal"
+        >
+          💎
+        </button>
+
+        <button
+          class="hidden-object"
+          data-correct="false"
+        >
+          🪑
+        </button>
+
+        <button
+          class="hidden-object"
+          data-correct="false"
+        >
+          📦
+        </button>
+
+        <button
+          class="hidden-object"
+          data-correct="false"
+        >
+          🪞
+        </button>
+
+      </div>
+
+      <div id="hiddenProgress">
+        FOUND: 0 / 3
+      </div>
+
+      <p id="hiddenMessage"></p>
+
+      <button
+        id="closeHiddenObject"
+        type="button"
+      >
+        EXIT
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       MECHANISM MINI GAME
+  ====================================================== -->
+
+  <section
+    id="mechanismScreen"
+    class="overlay-screen hidden"
+  >
+
+    <div class="mini-game-box">
+
+      <div class="mini-title">
+        ⚙️ ANCIENT MECHANISM
+      </div>
+
+      <p>
+        Activate the symbols in the
+        correct order.
+      </p>
+
+      <div
+        id="mechanismSequence"
+        class="mechanism-sequence"
+      >
+
+        <span>?</span>
+        <span>?</span>
+        <span>?</span>
+        <span>?</span>
+
+      </div>
+
+      <div class="mechanism-buttons">
+
+        <button data-symbol="🌙">🌙</button>
+        <button data-symbol="🔥">🔥</button>
+        <button data-symbol="🌿">🌿</button>
+        <button data-symbol="⭐">⭐</button>
+
+      </div>
+
+      <p id="mechanismMessage"></p>
+
+      <button
+        id="resetMechanism"
+        type="button"
+      >
+        🔄 RESET
+      </button>
+
+      <button
+        id="closeMechanism"
+        type="button"
+      >
+        EXIT
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       BRIDGE MINI GAME
+  ====================================================== -->
+
+  <section
+    id="bridgeScreen"
+    class="overlay-screen hidden"
+  >
+
+    <div class="mini-game-box">
+
+      <div class="mini-title">
+        🌉 REPAIR THE ANCIENT BRIDGE
+      </div>
+
+      <p>
+        Select the correct pieces to
+        restore the bridge.
+      </p>
+
+      <div class="bridge-pieces">
+
+        <button data-piece="1">🪵</button>
+        <button data-piece="2">🪵</button>
+        <button data-piece="3">🪵</button>
+        <button data-piece="4">🪨</button>
+        <button data-piece="5">🪵</button>
+        <button data-piece="6">🪵</button>
+
+      </div>
+
+      <p id="bridgeMessage"></p>
+
+      <button
+        id="closeBridge"
+        type="button"
+      >
+        EXIT
+      </button>
+
+    </div>
+
+  </section>
+
 
   <!-- =====================================================
        ANCIENT GATE PUZZLE
@@ -332,29 +682,19 @@
 
   <section
     id="puzzleScreen"
-    class="puzzle-screen hidden"
+    class="overlay-screen hidden"
   >
 
-    <div class="puzzle-box">
+    <div class="mini-game-box">
 
-      <div class="puzzle-label">
-        ANCIENT STONE GATE
+      <div class="mini-title">
+        🏛️ ANCIENT GATE
       </div>
 
-      <h1>
-        🧩 Ancient Symbols
-      </h1>
-
-      <p class="puzzle-description">
-
-        Arrange the four ancient symbols
-        in the correct order to unlock
-        the secret path.
-
+      <p>
+        Four symbols guard the path
+        to the lost kingdom.
       </p>
-
-
-      <!-- SEQUENCE -->
 
       <div
         id="sequenceDisplay"
@@ -368,43 +708,14 @@
 
       </div>
 
-
-      <!-- SYMBOL BUTTONS -->
-
       <div class="symbol-buttons">
 
-        <button
-          type="button"
-          data-symbol="🌙"
-        >
-          🌙
-        </button>
-
-        <button
-          type="button"
-          data-symbol="🔥"
-        >
-          🔥
-        </button>
-
-        <button
-          type="button"
-          data-symbol="🌿"
-        >
-          🌿
-        </button>
-
-        <button
-          type="button"
-          data-symbol="⭐"
-        >
-          ⭐
-        </button>
+        <button data-symbol="🌙">🌙</button>
+        <button data-symbol="🔥">🔥</button>
+        <button data-symbol="🌿">🌿</button>
+        <button data-symbol="⭐">⭐</button>
 
       </div>
-
-
-      <!-- PUZZLE ACTIONS -->
 
       <div class="puzzle-actions">
 
@@ -424,22 +735,18 @@
 
       </div>
 
-
       <p id="puzzleMessage"></p>
-
 
       <button
         id="closePuzzle"
-        class="close-puzzle"
         type="button"
       >
-        ← RETURN TO FOREST
+        ← RETURN
       </button>
 
     </div>
 
   </section>
-
 
 
   <!-- =====================================================
@@ -448,163 +755,62 @@
 
   <section
     id="inventoryScreen"
-    class="inventory-screen hidden"
+    class="overlay-screen hidden"
   >
 
     <div class="inventory-box">
 
-      <div class="inventory-title">
+      <div class="mini-title">
         🎒 BADRI'S INVENTORY
       </div>
 
-      <p class="inventory-subtitle">
-        Items collected during the adventure
-      </p>
-
-
       <div class="inventory-grid">
 
-
-        <div class="inventory-item">
-
-          <div class="inventory-icon">
-            🗝️
-          </div>
-
-          <div>
-
-            <strong>
-              Ancient Key
-            </strong>
-
-            <span id="keyCount">
-              0
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="inventory-item">
-
-          <div class="inventory-icon">
-            🪙
-          </div>
-
-          <div>
-
-            <strong>
-              Gold Coins
-            </strong>
-
-            <span id="inventoryCoins">
-              0
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="inventory-item">
-
-          <div class="inventory-icon">
-            💎
-          </div>
-
-          <div>
-
-            <strong>
-              Crystal Fragment
-            </strong>
-
-            <span id="inventoryCrystal">
-              0
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div
-          class="inventory-item usable"
-          id="potionInventory"
+        <button
+          class="inventory-item"
+          id="useKey"
         >
+          🗝️
+          <span>Ancient Key</span>
+          <b id="keyCount">0</b>
+        </button>
 
-          <div class="inventory-icon">
-            🧪
-          </div>
+        <button
+          class="inventory-item"
+          id="usePotion"
+        >
+          🧪
+          <span>Health Potion</span>
+          <b id="potionCount">0</b>
+        </button>
 
-          <div>
+        <button class="inventory-item">
+          🪙
+          <span>Gold Coins</span>
+          <b id="inventoryCoins">0</b>
+        </button>
 
-            <strong>
-              Health Potion
-            </strong>
+        <button class="inventory-item">
+          💎
+          <span>Crystal Fragment</span>
+          <b id="inventoryCrystal">0</b>
+        </button>
 
-            <span id="potionCount">
-              0
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="inventory-item">
-
-          <div class="inventory-icon">
-            📜
-          </div>
-
-          <div>
-
-            <strong>
-              Ancient Scroll
-            </strong>
-
-            <span id="scrollCount">
-              0
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="inventory-item">
-
-          <div class="inventory-icon">
-            🗝️
-          </div>
-
-          <div>
-
-            <strong>
-              Village Key
-            </strong>
-
-            <span id="villageKeyCount">
-              0
-            </span>
-
-          </div>
-
-        </div>
+        <button class="inventory-item">
+          📜
+          <span>Ancient Scroll</span>
+          <b id="scrollCount">0</b>
+        </button>
 
       </div>
 
-
       <p id="inventoryMessage"></p>
-
 
       <button
         id="closeInventory"
-        class="close-inventory"
         type="button"
       >
-        ← BACK TO GAME
+        ← BACK
       </button>
 
     </div>
@@ -612,427 +818,87 @@
   </section>
 
 
+  <!-- =====================================================
+       CHAPTER COMPLETE
+  ====================================================== -->
+
+  <section
+    id="chapterCompleteScreen"
+    class="overlay-screen hidden"
+  >
+
+    <div class="chapter-complete-box">
+
+      <div class="complete-icon">
+        👑
+      </div>
+
+      <h1>
+        CHAPTER 1 COMPLETE
+      </h1>
+
+      <h2>
+        THE SECRET OF THE DARK FOREST
+      </h2>
+
+      <p>
+        Badri has discovered the first clue
+        about King Manu.
+      </p>
+
+      <p class="mystery-text">
+        "Do not trust the shadow
+        wearing the King's crown..."
+      </p>
+
+      <button
+        id="chapter2Button"
+        type="button"
+      >
+        CONTINUE TO CHAPTER 2 →
+      </button>
+
+    </div>
+
+  </section>
+
 
   <!-- =====================================================
-       CHAPTER 2 — FORGOTTEN VILLAGE
+       CHAPTER 2 PLACEHOLDER
   ====================================================== -->
 
   <section
     id="villageScreen"
-    class="village-screen hidden"
+    class="chapter-screen hidden"
   >
 
-
-    <!-- TITLE -->
-
-    <div class="village-title">
-      🏘️ FORGOTTEN VILLAGE
-    </div>
-
-
-    <!-- =================================================
-         VILLAGE WORLD
-    ================================================== -->
-
-    <div class="village-world">
-
-
-      <!-- =========================
-           CHAPTER 2 PLAYER
-      ========================== -->
-
-      <div
-        id="villagePlayer"
-        aria-label="Badri"
-      >
-        🧙
-      </div>
-
-
-      <!-- HOUSE 1 -->
-
-      <div
-        class="village-house house-one"
-      >
-        🏠
-      </div>
-
-
-      <!-- ABANDONED HOUSE -->
-
-      <div
-        class="village-house house-two"
-        id="abandonedHouse"
-        title="Abandoned House"
-      >
-        🏚️
-      </div>
-
-
-      <!-- OLD VILLAGER -->
-
-      <div
-        id="villageNpc"
-        class="village-npc"
-        role="button"
-        tabindex="0"
-        aria-label="Old Villager"
-      >
-        👴
-      </div>
-
-
-      <div class="npc-label">
-        Old Villager
-      </div>
-
-
-      <!-- WELL -->
-
-      <div class="village-well">
-        🪣
-      </div>
-
-
-      <!-- TREES -->
-
-      <div class="village-tree">
-        🌳
-      </div>
-
-      <div class="village-tree tree-two">
-        🌳
-      </div>
-
-
-      <!-- =================================================
-           COMPACT QUEST PANEL
-      ================================================== -->
-
-      <div class="village-quest-box">
-
-        <strong>
-          📜 CHAPTER 2 QUEST
-        </strong>
-
-        <p id="villageQuest">
-          ☐ Talk to Old Villager
-        </p>
-
-        <p>
-          ☐ Find Village Key
-        </p>
-
-        <p>
-          ☐ Search Abandoned House
-        </p>
-
-        <p>
-          ☐ Discover Manu's Secret
-        </p>
-
-        <p>
-          ☐ Open Shadow Castle Path
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <!-- =================================================
-         CHAPTER 2 CONTROLS
-    ================================================== -->
-
-    <div
-      id="villageControls"
-      class="village-controls"
-    >
-
-
-      <!-- D-PAD -->
-
-      <div class="village-dpad">
-
-        <button
-          type="button"
-          data-village-key="ArrowUp"
-          aria-label="Move Up"
-        >
-          ▲
-        </button>
-
-        <button
-          type="button"
-          data-village-key="ArrowLeft"
-          aria-label="Move Left"
-        >
-          ◀
-        </button>
-
-        <button
-          type="button"
-          class="village-dpad-center"
-          data-village-key="Space"
-          aria-label="Talk"
-        >
-          💬
-        </button>
-
-        <button
-          type="button"
-          data-village-key="ArrowRight"
-          aria-label="Move Right"
-        >
-          ▶
-        </button>
-
-        <button
-          type="button"
-          data-village-key="ArrowDown"
-          aria-label="Move Down"
-        >
-          ▼
-        </button>
-
-      </div>
-
-
-      <!-- ACTION -->
-
-      <div class="village-action-controls">
-
-        <button
-          id="villageInteractButton"
-          type="button"
-          class="village-interact-button"
-        >
-
-          <span>
-            💬
-          </span>
-
-          <small>
-            TALK
-          </small>
-
-        </button>
-
-
-        <button
-          id="villageBackButton"
-          type="button"
-          class="village-back-control"
-        >
-          ↩
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- =================================================
-         DIALOGUE
-    ================================================== -->
-
-    <div
-      id="dialogueBox"
-      class="dialogue-box hidden"
-    >
-
-      <div
-        id="dialogueText"
-        class="dialogue-text"
-      >
-      </div>
-
-      <button
-        id="dialogueNext"
-        type="button"
-      >
-        NEXT →
-      </button>
-
-    </div>
-
-
-    <!-- RETURN -->
-
-    <button
-      id="villageBack"
-      class="village-back"
-      type="button"
-    >
-      ← RETURN
-    </button>
-
-  </section>
-
-
-
-  <!-- =====================================================
-       ABANDONED HOUSE
-  ====================================================== -->
-
-  <section
-    id="hiddenHouseScreen"
-    class="hidden-house-screen hidden"
-  >
-
-
-    <div class="hidden-house-title">
-      🔎 SEARCH THE ABANDONED HOUSE
-    </div>
-
-
-    <div class="hidden-house-world">
-
-
-      <!-- WRONG OBJECTS -->
-
-      <div
-        class="hidden-object object-chair"
-        title="Chair"
-      >
-        🪑
-      </div>
-
-
-      <div
-        class="hidden-object object-box"
-        title="Box"
-      >
-        📦
-      </div>
-
-
-      <div
-        class="hidden-object object-mirror"
-        title="Mirror"
-      >
-        🪞
-      </div>
-
-
-      <!-- CORRECT OBJECTS -->
-
-      <div
-        class="hidden-object object-key"
-        data-correct="true"
-        title="Village Key"
-      >
-        🗝️
-      </div>
-
-
-      <div
-        class="hidden-object object-map"
-        data-correct="true"
-        title="Ancient Map"
-      >
-        📜
-      </div>
-
-
-      <div
-        class="hidden-object object-gem"
-        data-correct="true"
-        title="Blue Gem"
-      >
-        💎
-      </div>
-
-
-      <div
-        class="hidden-object object-candle"
-        data-correct="true"
-        title="Magic Candle"
-      >
-        🕯️
-      </div>
-
-
-      <!-- TARGET -->
-
-      <div class="hidden-target">
-
-        <strong>
-          🔎 FIND THESE:
-        </strong>
-
-        <span>🗝️</span>
-        <span>📜</span>
-        <span>💎</span>
-        <span>🕯️</span>
-
-      </div>
-
-
-      <!-- PROGRESS -->
-
-      <div class="hidden-progress-box">
-
-        Progress:
-
-        <strong id="hiddenProgress">
-          0 / 4
-        </strong>
-
-      </div>
-
-
-      <!-- MESSAGE -->
-
-      <div
-        id="hiddenMessage"
-        class="hidden-message"
-      >
-      </div>
-
-
-      <!-- EXIT -->
-
-      <button
-        id="closeHouse"
-        class="close-house"
-        type="button"
-      >
-        ← EXIT HOUSE
-      </button>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- =====================================================
-       CHAPTER 3
-  ====================================================== -->
-
-  <section
-    id="shadowCastleScreen"
-    class="shadow-castle-screen hidden"
-  >
-
-    <div class="shadow-castle-content">
+    <div class="chapter-placeholder">
 
       <h1>
-        🏰 SHADOW CASTLE
+        🏘️ CHAPTER 2
       </h1>
 
+      <h2>
+        THE FORGOTTEN VILLAGE
+      </h2>
+
       <p>
-        The path to King Manu is waiting...
+        The next part of Badri's journey
+        begins here...
       </p>
+
+      <button
+        id="backToChapter1"
+        type="button"
+      >
+        ← BACK
+      </button>
 
     </div>
 
   </section>
 
-
 </main>
-
 
 
 <!-- =====================================================
@@ -1040,160 +906,11 @@
 ====================================================== -->
 
 <script src="game.js"></script>
-
 <script src="puzzle.js"></script>
-
 <script src="inventory.js"></script>
-
 <script src="quest.js"></script>
-
 <script src="village.js"></script>
-
 <script src="hidden-house.js"></script>
 
-
-<!-- =====================================================
-     SAFETY / MOBILE SUPPORT
-====================================================== -->
-
-<script>
-
-document.addEventListener(
-  "touchmove",
-  function(event) {
-
-    if (
-      event.target.closest(
-        ".controls-wrapper"
-      ) ||
-      event.target.closest(
-        ".village-controls"
-      )
-    ) {
-
-      event.preventDefault();
-
-    }
-
-  },
-  {
-    passive: false
-  }
-);
-
-
-/* =====================================================
-   ABANDONED HOUSE
-===================================================== */
-
-const abandonedHouse =
-  document.getElementById(
-    "abandonedHouse"
-  );
-
-
-if (abandonedHouse) {
-
-  abandonedHouse.addEventListener(
-    "click",
-    function() {
-
-      if (
-        typeof window.openHiddenHouse ===
-        "function"
-      ) {
-
-        window.openHiddenHouse();
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   VILLAGE PLAYER INITIAL POSITION
-===================================================== */
-
-const villagePlayer =
-  document.getElementById(
-    "villagePlayer"
-  );
-
-
-if (villagePlayer) {
-
-  villagePlayer.style.left =
-    "50%";
-
-  villagePlayer.style.top =
-    "68%";
-
-}
-
-
-/* =====================================================
-   VILLAGE BACK
-===================================================== */
-
-const villageBackButton =
-  document.getElementById(
-    "villageBackButton"
-  );
-
-
-if (villageBackButton) {
-
-  villageBackButton.addEventListener(
-    "click",
-    function() {
-
-      if (
-        typeof window.closeVillageScreen ===
-        "function"
-      ) {
-
-        window.closeVillageScreen();
-
-      }
-
-    }
-  );
-
-}
-
-
-const villageBack =
-  document.getElementById(
-    "villageBack"
-  );
-
-
-if (villageBack) {
-
-  villageBack.addEventListener(
-    "click",
-    function() {
-
-      if (
-        typeof window.closeVillageScreen ===
-        "function"
-      ) {
-
-        window.closeVillageScreen();
-
-      }
-
-    }
-  );
-
-}
-
-</script>
-
-
 </body>
-
 </html>
