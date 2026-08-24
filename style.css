@@ -1,2392 +1,340 @@
-* {
-  box-sizing: border-box;
-}
+/* =====================================================
+   THE LOST KINGDOM: BADRI'S QUEST
+   ANCIENT SYMBOL PUZZLE
+===================================================== */
 
-html,
-body {
-  margin: 0;
-  padding: 0;
+document.addEventListener("DOMContentLoaded", function () {
 
-  width: 100%;
-  height: 100%;
+  const symbolButtons = document.querySelectorAll(
+    ".symbol-buttons button"
+  );
 
-  overflow: hidden;
+  const sequenceSlots = document.querySelectorAll(
+    "#sequenceDisplay span"
+  );
 
-  background: #030705;
+  const puzzleMessage =
+    document.getElementById("puzzleMessage");
 
-  color: white;
+  const resetPuzzle =
+    document.getElementById("resetPuzzle");
 
-  font-family: Georgia, serif;
-}
+  const hintButton =
+    document.getElementById("hintButton");
 
+  const closePuzzle =
+    document.getElementById("closePuzzle");
 
-/* =========================
-   GENERAL
-========================= */
+  let selectedSequence = [];
 
-.hidden {
-  display: none !important;
-}
+  const correctSequence = [
+    "🌙",
+    "🔥",
+    "🌿",
+    "⭐"
+  ];
 
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
 
+  /* =====================================================
+     UPDATE SEQUENCE
+  ===================================================== */
 
-/* =========================
-   HOME
-========================= */
+  function updateSequence() {
 
-.screen {
+    sequenceSlots.forEach(function (slot, index) {
 
-  min-height: 100vh;
+      slot.textContent =
+        selectedSequence[index] || "?";
 
-  display: flex;
+    });
 
-  justify-content: center;
+  }
 
-  align-items: center;
 
-}
+  /* =====================================================
+     SYMBOL BUTTON CLICK
+  ===================================================== */
 
+  symbolButtons.forEach(function (button) {
 
-#homeScreen {
+    button.addEventListener("click", function (event) {
 
-  background:
+      event.preventDefault();
+      event.stopPropagation();
 
-    radial-gradient(
-      circle at center,
-      #315c3a 0%,
-      #102519 45%,
-      #020604 100%
-    );
+      if (selectedSequence.length >= 4) {
+        return;
+      }
 
-}
+      const symbol =
+        button.getAttribute("data-symbol");
 
+      if (!symbol) {
+        return;
+      }
 
-.title-screen {
+      selectedSequence.push(symbol);
 
-  width: 92%;
+      updateSequence();
 
-  max-width: 850px;
+      /* Button feedback */
 
-  padding: 45px 25px;
+      button.classList.add("symbol-selected");
 
-  text-align: center;
+      setTimeout(function () {
 
-  background:
+        button.classList.remove(
+          "symbol-selected"
+        );
 
-    rgba(5, 13, 8, 0.92);
+      }, 180);
 
-  border:
 
-    2px solid #b4933d;
+      if (selectedSequence.length === 4) {
 
-  border-radius: 22px;
+        checkPuzzle();
 
-  box-shadow:
+      }
 
-    0 0 50px rgba(0, 0, 0, 0.9),
+    });
 
-    inset 0 0 30px
-    rgba(180, 147, 61, 0.08);
+  });
 
-}
 
+  /* =====================================================
+     CHECK PUZZLE
+  ===================================================== */
 
-.kingdom {
+  function checkPuzzle() {
 
-  color: #d9bd63;
+    const correct =
+      selectedSequence.length ===
+        correctSequence.length &&
+      selectedSequence.every(function (
+        symbol,
+        index
+      ) {
 
-  font-size: 16px;
+        return symbol ===
+          correctSequence[index];
 
-  letter-spacing: 6px;
+      });
 
-  font-weight: bold;
 
-}
+    if (!correct) {
 
+      if (puzzleMessage) {
 
-h1 {
+        puzzleMessage.textContent =
+          "❌ Wrong sequence! Try again.";
 
-  margin: 18px 0 5px;
+        puzzleMessage.style.color =
+          "#ff7777";
 
-  font-size:
-    clamp(40px, 8vw, 78px);
+      }
 
-  color: #f1d477;
+      /* Shake sequence */
 
-  text-shadow:
+      const display =
+        document.getElementById(
+          "sequenceDisplay"
+        );
 
-    0 0 12px #8c681b,
+      if (display) {
 
-    0 5px 15px black;
+        display.classList.add(
+          "puzzle-wrong"
+        );
 
-}
+        setTimeout(function () {
 
+          display.classList.remove(
+            "puzzle-wrong"
+          );
 
-h2 {
+        }, 400);
 
-  margin: 0 0 25px;
+      }
 
-  font-size:
-    clamp(22px, 5vw, 42px);
+      return;
 
-  color: #eeeeee;
+    }
 
-}
 
+    /* =================================================
+       CORRECT
+    ================================================= */
 
-.story {
+    if (puzzleMessage) {
 
-  max-width: 650px;
+      puzzleMessage.textContent =
+        "🔓 CORRECT! Ancient Gate unlocked!";
 
-  margin: 0 auto 30px;
+      puzzleMessage.style.color =
+        "#7dff9c";
 
-  color: #c8d4ca;
+    }
 
-  font-size: 18px;
 
-  line-height: 1.7;
+    window.gateUnlocked = true;
 
-}
 
+    if (
+      typeof window.completeQuest ===
+      "function"
+    ) {
 
-.start-button {
+      window.completeQuest("gate");
 
-  padding: 16px 32px;
+    }
 
-  border:
 
-    2px solid #e4c85e;
-
-  border-radius: 12px;
-
-  background:
-
-    linear-gradient(
-      #8d7229,
-      #49370e
-    );
-
-  color: white;
-
-  font-size: 17px;
-
-  font-weight: bold;
-
-  transition: 0.25s;
-
-}
-
-
-.start-button:hover {
-
-  transform: scale(1.06);
-
-  box-shadow:
-
-    0 0 25px #c5a33e;
-
-}
-
-
-/* =========================
-   GAME
-========================= */
-
-#gameScreen {
-
-  width: 100%;
-
-  height: 100vh;
-
-  background: #07120c;
-
-}
-
-
-/* =========================
-   HUD
-========================= */
-
-.hud {
-
-  height: 58px;
-
-  display: flex;
-
-  justify-content: space-around;
-
-  align-items: center;
-
-  background: #101b14;
-
-  border-bottom:
-
-    2px solid #39513f;
-
-  font-family: Arial, sans-serif;
-
-  font-weight: bold;
-
-  z-index: 20;
-
-}
-
-
-/* =========================
-   FOREST
-========================= */
-
-#forest {
-
-  position: relative;
-
-  height:
-    calc(100vh - 178px);
-
-  min-height: 400px;
-
-  overflow: hidden;
-
-  background:
-
-    radial-gradient(
-      circle at 50% 35%,
-      #426d45 0%,
-      #1d3b26 35%,
-      #09170d 80%
-    );
-
-}
-
-
-#forest::before {
-
-  content: "";
-
-  position: absolute;
-
-  inset: 0;
-
-  opacity: 0.35;
-
-  background-image:
-
-    radial-gradient(
-      circle,
-      #66855d 2px,
-      transparent 3px
-    ),
-
-    radial-gradient(
-      circle,
-      #183c23 3px,
-      transparent 4px
-    );
-
-  background-size:
-
-    70px 70px,
-
-    110px 110px;
-
-  pointer-events: none;
-
-}
-
-
-#forest::after {
-
-  content:
-    "🌲   🌳    🌲      🌳    🌲      🌲    🌳      🌲";
-
-  position: absolute;
-
-  top: 5px;
-
-  left: 0;
-
-  width: 100%;
-
-  font-size: 55px;
-
-  opacity: 0.7;
-
-  white-space: nowrap;
-
-  pointer-events: none;
-
-}
-
-
-.chapter-title {
-
-  position: absolute;
-
-  top: 15px;
-
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  color: #d8eab8;
-
-  font-family: Arial, sans-serif;
-
-  font-size: 13px;
-
-  font-weight: bold;
-
-  letter-spacing: 2px;
-
-  z-index: 5;
-
-  white-space: nowrap;
-
-}
-
-
-/* =========================
-   PLAYER
-========================= */
-
-#player {
-
-  position: absolute;
-
-  left: 10%;
-
-  top: 55%;
-
-  font-size: 48px;
-
-  z-index: 10;
-
-  filter:
-    drop-shadow(0 6px 5px black);
-
-  user-select: none;
-
-  transition:
-    transform 0.08s;
-
-}
-
-
-/* =========================
-   ENEMIES
-========================= */
-
-.enemy {
-
-  position: absolute;
-
-  font-size: 45px;
-
-  z-index: 8;
-
-  filter:
-    drop-shadow(0 5px 5px black);
-
-  transition:
-    opacity 0.25s;
-
-}
-
-
-.enemy-one {
-
-  left: 45%;
-
-  top: 40%;
-
-}
-
-
-.enemy-two {
-
-  left: 68%;
-
-  top: 63%;
-
-}
-
-
-/* =========================
-   ITEMS
-========================= */
-
-.coin,
-#key,
-#crystalItem,
-#ancientGate {
-
-  position: absolute;
-
-  z-index: 7;
-
-  filter:
-    drop-shadow(0 4px 5px black);
-
-}
-
-
-.coin {
-
-  font-size: 38px;
-
-}
-
-
-.coin-one {
-
-  left: 30%;
-
-  top: 70%;
-
-}
-
-
-.coin-two {
-
-  left: 75%;
-
-  top: 30%;
-
-}
-
-
-#key {
-
-  left: 53%;
-
-  top: 72%;
-
-  font-size: 38px;
-
-}
-
-
-#ancientGate {
-
-  left: 76%;
-
-  top: 70%;
-
-  font-size: 65px;
-
-  cursor: pointer;
-
-}
-
-
-#crystalItem {
-
-  left: 88%;
-
-  top: 45%;
-
-  font-size: 55px;
-
-  animation:
-    crystalGlow 1.5s infinite alternate;
-
-}
-
-
-@keyframes crystalGlow {
-
-  from {
-
-    transform: scale(1);
-
-    filter:
-      drop-shadow(
-        0 0 5px #6ff
+    const gate =
+      document.getElementById(
+        "ancientGate"
       );
 
-  }
 
-  to {
+    if (gate) {
 
-    transform: scale(1.15);
+      gate.textContent = "🚪";
 
-    filter:
-      drop-shadow(
-        0 0 25px #6ff
+      gate.classList.add(
+        "gate-unlocked"
       );
 
-  }
+    }
 
-}
 
+    if (
+      typeof window.showMessage ===
+      "function"
+    ) {
 
-/* =========================
-   MESSAGE
-========================= */
-
-#message {
-
-  display: none;
-
-  position: absolute;
-
-  left: 50%;
-
-  bottom: 20px;
-
-  transform:
-    translateX(-50%);
-
-  max-width: 85%;
-
-  padding: 12px 18px;
-
-  background:
-    rgba(5, 10, 7, 0.92);
-
-  border:
-    1px solid #7c966e;
-
-  border-radius: 12px;
-
-  font-family: Arial, sans-serif;
-
-  text-align: center;
-
-  z-index: 30;
-
-}
-
-
-/* =========================
-   CONTROLS
-========================= */
-
-.controls {
-
-  height: 100px;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 62px);
-
-  grid-template-rows:
-    repeat(2, 45px);
-
-  justify-content: center;
-
-  gap: 5px;
-
-  padding-top: 5px;
-
-  background: #0b1710;
-
-}
-
-
-.controls button {
-
-  border:
-    1px solid #526b55;
-
-  border-radius: 10px;
-
-  background: #1b3021;
-
-  color: white;
-
-  font-size: 20px;
-
-  font-weight: bold;
-
-  touch-action: none;
-
-}
-
-
-.controls button:active {
-
-  background: #536e4f;
-
-  transform: scale(0.93);
-
-}
-
-
-.keyboard-help {
-
-  height: 20px;
-
-  margin: 0;
-
-  background: #0b1710;
-
-  color: #879a8a;
-
-  text-align: center;
-
-  font-family: Arial, sans-serif;
-
-  font-size: 11px;
-
-}
-
-
-/* =========================
-   ATTACK
-========================= */
-
-.attack {
-
-  animation:
-    swordAttack 0.25s;
-
-}
-
-
-@keyframes swordAttack {
-
-  50% {
-
-    transform:
-      scale(1.5)
-      rotate(-20deg);
-
-  }
-
-}
-
-
-/* =========================
-   DAMAGE
-========================= */
-
-.damage {
-
-  animation:
-    damageFlash 0.25s;
-
-}
-
-
-@keyframes damageFlash {
-
-  50% {
-
-    filter:
-
-      brightness(2)
-
-      drop-shadow(
-        0 0 15px red
+      window.showMessage(
+        "🔓 The Ancient Gate has opened!"
       );
 
+    }
+
+
+    /* Close puzzle */
+
+    setTimeout(function () {
+
+      const screen =
+        document.getElementById(
+          "puzzleScreen"
+        );
+
+      if (screen) {
+
+        screen.classList.add(
+          "hidden"
+        );
+
+      }
+
+      selectedSequence = [];
+
+      updateSequence();
+
+    }, 1800);
+
   }
 
-}
 
+  /* =====================================================
+     RESET
+  ===================================================== */
 
-/* =========================
-   PUZZLE SCREEN
-========================= */
+  if (resetPuzzle) {
 
-.puzzle-screen {
+    resetPuzzle.addEventListener(
+      "click",
+      function (event) {
 
-  position: fixed;
+        event.preventDefault();
 
-  inset: 0;
+        selectedSequence = [];
 
-  z-index: 100;
+        updateSequence();
 
-  display: flex;
+        if (puzzleMessage) {
 
-  justify-content: center;
+          puzzleMessage.textContent = "";
 
-  align-items: center;
+        }
 
-  padding: 20px;
-
-  background:
-
-    radial-gradient(
-      circle,
-      #39482f,
-      #10190f 55%,
-      #020403
+      }
     );
 
-}
+  }
 
 
-.puzzle-box {
+  /* =====================================================
+     HINT
+  ===================================================== */
 
-  width: 95%;
+  if (hintButton) {
 
-  max-width: 650px;
+    hintButton.addEventListener(
+      "click",
+      function (event) {
 
-  padding: 35px 25px;
+        event.preventDefault();
 
-  text-align: center;
+        if (puzzleMessage) {
 
-  background:
-    rgba(7, 12, 8, 0.96);
+          puzzleMessage.textContent =
+            "💡 Hint: Moon → Fire → Nature → Star";
 
-  border:
-    2px solid #b4933d;
+          puzzleMessage.style.color =
+            "#f2d56b";
 
-  border-radius: 20px;
+        }
 
-  box-shadow:
-    0 0 50px black;
-
-}
-
-
-.puzzle-label {
-
-  color: #d8bc61;
-
-  font-size: 13px;
-
-  letter-spacing: 4px;
-
-  font-weight: bold;
-
-}
-
-
-.puzzle-box h1 {
-
-  font-size:
-    clamp(30px, 7vw, 55px);
-
-  margin: 15px 0;
-
-}
-
-
-.puzzle-description {
-
-  color: #c8d4ca;
-
-  line-height: 1.6;
-
-}
-
-
-/* =========================
-   SEQUENCE
-========================= */
-
-.sequence-display {
-
-  display: flex;
-
-  justify-content: center;
-
-  gap: 12px;
-
-  margin: 25px 0;
-
-}
-
-
-.sequence-display span {
-
-  width: 58px;
-
-  height: 58px;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  background: #18251b;
-
-  border:
-    2px solid #526b55;
-
-  border-radius: 10px;
-
-  font-size: 30px;
-
-}
-
-
-/* =========================
-   SYMBOL BUTTONS
-========================= */
-
-.symbol-buttons {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  gap: 10px;
-
-  max-width: 450px;
-
-  margin: auto;
-
-}
-
-
-.symbol-buttons button {
-
-  min-height: 65px;
-
-  border:
-    2px solid #526b55;
-
-  border-radius: 12px;
-
-  background:
-    linear-gradient(
-      #29402d,
-      #132116
+      }
     );
 
-  font-size: 32px;
-
-  transition: 0.2s;
-
-}
-
-
-.symbol-buttons button:hover {
-
-  transform: scale(1.08);
-
-  border-color:
-    #d5b84f;
-
-}
-
-
-.puzzle-actions {
-
-  display: flex;
-
-  justify-content: center;
-
-  gap: 12px;
-
-  margin-top: 20px;
-
-}
-
-
-.puzzle-actions button {
-
-  padding: 12px 20px;
-
-  border-radius: 10px;
-
-  border:
-    1px solid #877437;
-
-  background: #332a13;
-
-  color: white;
-
-  font-weight: bold;
-
-}
-
-
-#puzzleMessage {
-
-  min-height: 25px;
-
-  margin-top: 18px;
-
-  color: #f2d56b;
-
-  font-weight: bold;
-
-}
-
-
-.close-puzzle {
-
-  margin-top: 20px;
-
-  padding: 10px 18px;
-
-  background: transparent;
-
-  color: #9faf9d;
-
-  border:
-    1px solid #4e614f;
-
-  border-radius: 8px;
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-
-  .story {
-
-    font-size: 16px;
-
   }
 
 
-  .title-screen {
+  /* =====================================================
+     CLOSE PUZZLE
+  ===================================================== */
 
-    padding: 35px 18px;
+  if (closePuzzle) {
 
-  }
+    closePuzzle.addEventListener(
+      "click",
+      function (event) {
 
+        event.preventDefault();
 
-  .start-button {
+        const screen =
+          document.getElementById(
+            "puzzleScreen"
+          );
 
-    width: 100%;
+        if (screen) {
 
-  }
+          screen.classList.add(
+            "hidden"
+          );
 
+        }
 
-  .symbol-buttons {
-
-    grid-template-columns:
-      repeat(2, 1fr);
-
-  }
-
-
-  .sequence-display {
-
-    gap: 6px;
-
-  }
-
-
-  .sequence-display span {
-
-    width: 50px;
-
-    height: 50px;
-
-  }
-
-}
-/* =========================
-   INVENTORY
-========================= */
-
-.inventory-button {
-
-  border: 1px solid #6d805e;
-
-  border-radius: 9px;
-
-  background: #1b3021;
-
-  color: white;
-
-  padding: 7px 12px;
-
-  font-size: 20px;
-
-}
-
-
-.inventory-screen {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 200;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  padding: 20px;
-
-  background:
-
-    radial-gradient(
-      circle,
-      #344b36,
-      #101910 55%,
-      #020403
+      }
     );
 
-}
-
-
-.inventory-box {
-
-  width: 95%;
-
-  max-width: 650px;
-
-  padding: 30px 22px;
-
-  background:
-    rgba(7, 12, 8, 0.97);
-
-  border:
-    2px solid #b4933d;
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 0 50px black;
-
-  text-align: center;
-
-}
-
-
-.inventory-title {
-
-  color: #f1d477;
-
-  font-size:
-    clamp(28px, 6vw, 48px);
-
-  font-weight: bold;
-
-}
-
-
-.inventory-subtitle {
-
-  color: #aebbad;
-
-}
-
-
-.inventory-grid {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, 1fr);
-
-  gap: 12px;
-
-  margin-top: 25px;
-
-}
-
-
-.inventory-item {
-
-  min-height: 85px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 14px;
-
-  padding: 12px;
-
-  background:
-    linear-gradient(
-      #243727,
-      #122017
-    );
-
-  border:
-    1px solid #526b55;
-
-  border-radius: 12px;
-
-  text-align: left;
-
-}
-
-
-.inventory-item.usable {
-
-  cursor: pointer;
-
-}
-
-
-.inventory-item.usable:hover {
-
-  border-color: #e4c85e;
-
-  transform: scale(1.02);
-
-}
-
-
-.inventory-icon {
-
-  font-size: 38px;
-
-}
-
-
-.inventory-item strong {
-
-  display: block;
-
-  color: #e9e9e9;
-
-}
-
-
-.inventory-item span {
-
-  display: block;
-
-  margin-top: 5px;
-
-  color: #d8bc61;
-
-  font-weight: bold;
-
-}
-
-
-#inventoryMessage {
-
-  min-height: 25px;
-
-  margin: 18px 0;
-
-  color: #f2d56b;
-
-  font-weight: bold;
-
-}
-
-
-.close-inventory {
-
-  padding: 12px 22px;
-
-  border:
-    1px solid #877437;
-
-  border-radius: 10px;
-
-  background: #332a13;
-
-  color: white;
-
-  font-weight: bold;
-
-}
-
-
-@media (max-width: 600px) {
-
-  .inventory-grid {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-  .inventory-box {
-
-    max-height: 90vh;
-
-    overflow-y: auto;
-
-  }
-
-  }
-/* =========================
-   QUEST PANEL
-========================= */
-
-#questPanel {
-
-  position: absolute;
-
-  top: 75px;
-
-  left: 15px;
-
-  width: 250px;
-
-  padding: 14px;
-
-  background:
-    rgba(8, 15, 9, 0.92);
-
-  border:
-    1px solid #9b8038;
-
-  border-radius: 12px;
-
-  color: white;
-
-  z-index: 20;
-
-  box-shadow:
-    0 5px 20px rgba(0,0,0,0.5);
-
-}
-
-
-#questTitle {
-
-  color: #f0d36b;
-
-  font-size: 18px;
-
-  font-weight: bold;
-
-  margin-bottom: 8px;
-
-}
-
-
-.quest-main {
-
-  color: #ffffff;
-
-  font-weight: bold;
-
-  margin-bottom: 10px;
-
-}
-
-
-.quest-item {
-
-  padding: 5px 0;
-
-  color: #c9d0c9;
-
-  font-size: 14px;
-
-}
-
-
-.quest-item.completed {
-
-  color: #7dff9c;
-
-}
-
-
-@media (max-width: 600px) {
-
-  #questPanel {
-
-    top: 65px;
-
-    left: 8px;
-
-    width: 190px;
-
-    padding: 10px;
-
-  }
-
-  .quest-item {
-
-    font-size: 12px;
-
-  }
-
-}
-/* =========================
-   FORGOTTEN VILLAGE
-========================= */
-
-.village-screen {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 300;
-
-  background:
-    linear-gradient(
-      #162b22,
-      #07100b
-    );
-
-  overflow: hidden;
-
-}
-
-
-.village-title {
-
-  position: absolute;
-
-  top: 18px;
-
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  z-index: 20;
-
-  padding: 12px 25px;
-
-  border-radius: 12px;
-
-  background:
-    rgba(0,0,0,.75);
-
-  border:
-    1px solid #b99a43;
-
-  color: #f1d477;
-
-  font-size: 25px;
-
-  font-weight: bold;
-
-}
-
-
-.village-world {
-
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #3d5637,
-      #152417 55%,
-      #050806
-    );
-
-}
-
-
-.village-house {
-
-  position: absolute;
-
-  font-size: 75px;
-
-  filter:
-    drop-shadow(
-      0 8px 5px
-      rgba(0,0,0,.5)
-    );
-
-}
-
-
-.house-one {
-
-  left: 12%;
-
-  top: 35%;
-
-}
-
-
-.house-two {
-
-  right: 12%;
-
-  top: 32%;
-
-}
-
-
-.village-npc {
-
-  position: absolute;
-
-  left: 50%;
-
-  top: 47%;
-
-  transform:
-    translate(-50%, -50%);
-
-  font-size: 65px;
-
-  cursor: pointer;
-
-  animation:
-    npcFloat 2s infinite;
-
-}
-
-
-.npc-label {
-
-  position: absolute;
-
-  left: 50%;
-
-  top: 56%;
-
-  transform:
-    translateX(-50%);
-
-  color: white;
-
-  background:
-    rgba(0,0,0,.7);
-
-  padding: 5px 10px;
-
-  border-radius: 7px;
-
-}
-
-
-.village-well {
-
-  position: absolute;
-
-  left: 43%;
-
-  bottom: 18%;
-
-  font-size: 55px;
-
-}
-
-
-.village-tree {
-
-  position: absolute;
-
-  left: 5%;
-
-  bottom: 10%;
-
-  font-size: 80px;
-
-}
-
-
-.tree-two {
-
-  left: auto;
-
-  right: 4%;
-
-}
-
-
-.village-quest-box {
-
-  position: absolute;
-
-  top: 90px;
-
-  left: 15px;
-
-  width: 230px;
-
-  padding: 15px;
-
-  background:
-    rgba(5,10,6,.9);
-
-  border:
-    1px solid #9d843f;
-
-  border-radius: 12px;
-
-  color: #d5ddd4;
-
-}
-
-
-.village-quest-box strong {
-
-  color: #f0d36b;
-
-}
-
-
-.village-quest-box p {
-
-  margin: 8px 0;
-
-  font-size: 13px;
-
-}
-
-
-.village-quest-box
-.completed {
-
-  color: #7dff9c;
-
-}
-
-
-.dialogue-box {
-
-  position: absolute;
-
-  left: 50%;
-
-  bottom: 35px;
-
-  transform:
-    translateX(-50%);
-
-  width: min(700px, 90%);
-
-  padding: 20px;
-
-  background:
-    rgba(5,8,5,.96);
-
-  border:
-    2px solid #b99a43;
-
-  border-radius: 15px;
-
-  z-index: 50;
-
-}
-
-
-.dialogue-text {
-
-  min-height: 55px;
-
-  color: white;
-
-  font-size: 18px;
-
-  line-height: 1.5;
-
-}
-
-
-#dialogueNext {
-
-  margin-top: 12px;
-
-  padding: 10px 20px;
-
-  border: 0;
-
-  border-radius: 8px;
-
-  background: #705b24;
-
-  color: white;
-
-  font-weight: bold;
-
-}
-
-
-.village-back {
-
-  position: absolute;
-
-  right: 18px;
-
-  bottom: 18px;
-
-  z-index: 60;
-
-  padding: 10px 18px;
-
-  border-radius: 9px;
-
-  border: 1px solid #8e793c;
-
-  background: #1d291e;
-
-  color: white;
-
-}
-
-
-@keyframes npcFloat {
-
-  0%, 100% {
-    transform:
-      translate(-50%, -50%);
-  }
-
-  50% {
-    transform:
-      translate(-50%, -57%);
-  }
-
-}
-
-
-@media(max-width:600px) {
-
-  .village-title {
-
-    font-size: 18px;
-
-    padding: 9px 15px;
-
-  }
-
-  .village-quest-box {
-
-    width: 180px;
-
-    top: 65px;
-
-    left: 8px;
-
-  }
-
-  .village-house {
-
-    font-size: 55px;
-
-  }
-
-  .dialogue-text {
-
-    font-size: 15px;
-
-  }
-
-}
-/* =========================
-   HIDDEN OBJECT HOUSE
-========================= */
-
-.hidden-house-screen {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 400;
-
-  background:
-    #080b08;
-
-}
-
-
-.hidden-house-world {
-
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #4b3d2b,
-      #1d1710 55%,
-      #070605
-    );
-
-  overflow: hidden;
-
-}
-
-
-.hidden-house-title {
-
-  position: absolute;
-
-  top: 18px;
-
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  z-index: 20;
-
-  padding: 12px 22px;
-
-  border-radius: 12px;
-
-  background:
-    rgba(0,0,0,.85);
-
-  border:
-    1px solid #c0a34b;
-
-  color: #f2d477;
-
-  font-size: 22px;
-
-  font-weight: bold;
-
-}
-
-
-.hidden-object {
-
-  position: absolute;
-
-  z-index: 10;
-
-  font-size: 55px;
-
-  cursor: pointer;
-
-  user-select: none;
-
-  transition:
-    transform .2s,
-    opacity .3s;
-
-}
-
-
-.hidden-object:hover {
-
-  transform:
-    scale(1.15);
-
-}
-
-
-.hidden-object.found {
-
-  opacity: 0;
-
-  transform:
-    scale(1.7);
-
-  pointer-events: none;
-
-}
-
-
-/* WRONG OBJECTS */
-
-.object-chair {
-
-  left: 12%;
-
-  top: 30%;
-
-}
-
-
-.object-box {
-
-  right: 15%;
-
-  top: 25%;
-
-}
-
-
-.object-mirror {
-
-  left: 45%;
-
-  top: 24%;
-
-}
-
-
-/* CORRECT OBJECTS */
-
-.object-key {
-
-  left: 28%;
-
-  top: 65%;
-
-}
-
-
-.object-map {
-
-  right: 27%;
-
-  top: 62%;
-
-}
-
-
-.object-gem {
-
-  left: 63%;
-
-  top: 43%;
-
-}
-
-
-.object-candle {
-
-  left: 16%;
-
-  top: 52%;
-
-}
-
-
-.hidden-target {
-
-  position: absolute;
-
-  bottom: 20px;
-
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  width: 90%;
-
-  max-width: 600px;
-
-  padding: 13px;
-
-  text-align: center;
-
-  background:
-    rgba(0,0,0,.85);
-
-  border:
-    1px solid #8c7436;
-
-  border-radius: 12px;
-
-  color: white;
-
-}
-
-
-.hidden-target span {
-
-  margin-left: 12px;
-
-  font-size: 25px;
-
-}
-
-
-.hidden-progress-box {
-
-  position: absolute;
-
-  top: 75px;
-
-  right: 20px;
-
-  padding: 10px 15px;
-
-  background:
-    rgba(0,0,0,.8);
-
-  border-radius: 9px;
-
-  color: white;
-
-}
-
-
-.hidden-progress-box strong {
-
-  color: #f1d477;
-
-}
-
-
-.hidden-message {
-
-  position: absolute;
-
-  top: 75px;
-
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  padding: 10px 18px;
-
-  border-radius: 9px;
-
-  background:
-    rgba(0,0,0,.85);
-
-  font-weight: bold;
-
-}
-
-
-.close-house {
-
-  position: absolute;
-
-  top: 20px;
-
-  left: 20px;
-
-  z-index: 30;
-
-  padding: 10px 16px;
-
-  border-radius: 8px;
-
-  border:
-    1px solid #8c7436;
-
-  background: #211b10;
-
-  color: white;
-
-}
-
-
-@media (max-width: 600px) {
-
-  .hidden-house-title {
-
-    font-size: 16px;
-
-    top: 15px;
-
-  }
-
-  .hidden-object {
-
-    font-size: 42px;
-
-  }
-
-  .hidden-target {
-
-    font-size: 13px;
-
-  }
-
-  .hidden-target span {
-
-    margin-left: 5px;
-
-  }
-
-}
-/* =========================================
-   PROFESSIONAL GAME CONTROLS
-========================================= */
-
-.controls-wrapper {
-
-  position: fixed;
-
-  left: 50%;
-
-  bottom: 22px;
-
-  transform: translateX(-50%);
-
-  z-index: 999;
-
-  width: min(620px, 94vw);
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: flex-end;
-
-  pointer-events: none;
-
-}
-
-
-.dpad {
-
-  width: 170px;
-
-  height: 170px;
-
-  display: grid;
-
-  grid-template-columns:
-    55px 55px 55px;
-
-  grid-template-rows:
-    55px 55px 55px;
-
-  gap: 3px;
-
-  justify-content: center;
-
-  align-items: center;
-
-  pointer-events: auto;
-
-}
-
-
-.dpad button {
-
-  width: 52px;
-
-  height: 52px;
-
-  border-radius: 12px;
-
-  border: 2px solid #b99a43;
-
-  background:
-    rgba(15, 25, 18, .94);
-
-  color: white;
-
-  font-size: 21px;
-
-  font-weight: bold;
-
-  touch-action: none;
-
-  user-select: none;
-
-}
-
-
-.dpad button:nth-child(1) {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.dpad button:nth-child(2) {
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.dpad button:nth-child(3) {
-  grid-column: 2;
-  grid-row: 2;
-}
-
-.dpad button:nth-child(4) {
-  grid-column: 3;
-  grid-row: 2;
-}
-
-.dpad button:nth-child(5) {
-  grid-column: 2;
-  grid-row: 3;
-}
-
-
-.dpad button:active {
-
-  transform: scale(.9);
-
-  background: #685522;
-
-}
-
-
-.dpad-center {
-
-  border-radius: 50% !important;
-
-  color: #e7c85e !important;
-
-}
-
-
-/* =========================
-   ACTION BUTTONS
-========================= */
-
-.action-controls {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 14px;
-
-  pointer-events: auto;
-
-}
-
-
-.attack-button {
-
-  width: 82px;
-
-  height: 82px;
-
-  border-radius: 50%;
-
-  border: 3px solid #c6a544;
-
-  background:
-    radial-gradient(
-      circle,
-      #633d32,
-      #251311
-    );
-
-  color: white;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  font-size: 27px;
-
-  font-weight: bold;
-
-  touch-action: none;
-
-}
-
-
-.attack-button span {
-
-  font-size: 9px;
-
-  margin-top: 3px;
-
-}
-
-
-.attack-button:active {
-
-  transform: scale(.9);
-
-  background: #8a3428;
-
-}
-
-
-.mobile-inventory-button {
-
-  width: 58px;
-
-  height: 58px;
-
-  border-radius: 50%;
-
-  border: 2px solid #b99a43;
-
-  background:
-    rgba(15,25,18,.95);
-
-  font-size: 25px;
-
-  color: white;
-
-}
-
-
-.mobile-inventory-button:active {
-
-  transform: scale(.9);
-
-}
-
-
-/* Hide old keyboard controls text */
-
-.keyboard-help {
-
-  display: none !important;
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 768px) {
-
-  .controls-wrapper {
-
-    bottom: 15px;
-
-    width: 96vw;
-
   }
 
 
-  .dpad {
+  /* =====================================================
+     INITIAL
+  ===================================================== */
 
-    transform: scale(.82);
+  updateSequence();
 
-    transform-origin: bottom left;
-
-  }
-
-
-  .action-controls {
-
-    gap: 8px;
-
-  }
-
-
-  .attack-button {
-
-    width: 72px;
-
-    height: 72px;
-
-  }
-
-
-  .mobile-inventory-button {
-
-    width: 52px;
-
-    height: 52px;
-
-  }
-
-}
-
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 420px) {
-
-  .controls-wrapper {
-
-    bottom: 8px;
-
-  }
-
-
-  .dpad {
-
-    transform: scale(.72);
-
-  }
-
-
-  .attack-button {
-
-    width: 65px;
-
-    height: 65px;
-
-    font-size: 23px;
-
-  }
-
-
-  .mobile-inventory-button {
-
-    width: 48px;
-
-    height: 48px;
-
-    font-size: 21px;
-
-  }
-
-}
-  
-
-
-
-/* =========================================
-   DESKTOP
-========================================= */
-
-@media (min-width: 769px) {
-
-  .controls {
-
-    display: grid !important;
-
-    bottom: 30px !important;
-
-  }
-
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 768px) {
-
-  .controls {
-
-    bottom: 20px !important;
-
-    width: 200px;
-
-    height: 145px;
-
-  }
-
-  .controls button {
-
-    width: 52px !important;
-
-    height: 44px !important;
-
-    font-size: 20px;
-
-  }
-
-  .keyboard-help {
-
-    display: none;
-
-  }
-
-}
-
-
-/* =========================================
-   SMALL MOBILE
-========================================= */
-
-@media (max-width: 420px) {
-
-  .controls {
-
-    bottom: 12px !important;
-
-    transform:
-      translateX(-50%) scale(.9) !important;
-
-  }
-
-}
+});
