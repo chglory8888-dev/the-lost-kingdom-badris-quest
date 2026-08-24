@@ -1994,3 +1994,212 @@ h2 {
   }
 
 }
+/* =========================================
+   GAME CONTROLS - FIXED POSITION
+========================================= */
+
+#gameScreen {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+
+/* Controls container */
+
+.controls {
+  position: fixed !important;
+
+  left: 50% !important;
+  bottom: 25px !important;
+
+  transform: translateX(-50%) !important;
+
+  z-index: 999 !important;
+
+  width: 210px;
+
+  height: 150px;
+
+  display: grid !important;
+
+  grid-template-columns:
+    60px 60px 60px;
+
+  grid-template-rows:
+    50px 50px 50px;
+
+  gap: 5px;
+
+  justify-content: center;
+
+  align-items: center;
+
+  pointer-events: auto;
+}
+
+
+/* Control buttons */
+
+.controls button {
+
+  width: 55px !important;
+
+  height: 45px !important;
+
+  display: flex !important;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 0 !important;
+
+  border-radius: 12px;
+
+  border: 2px solid #b99a43;
+
+  background:
+    rgba(20, 30, 22, 0.95);
+
+  color: white;
+
+  font-size: 22px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  touch-action: none;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.5);
+
+}
+
+
+/* Hover */
+
+.controls button:hover {
+
+  background: #405a3c;
+
+  transform: scale(1.05);
+
+}
+
+
+/* Press */
+
+.controls button:active {
+
+  transform: scale(.92);
+
+  background: #6d5724;
+
+}
+
+
+/* Keyboard text */
+
+.keyboard-help {
+
+  position: fixed !important;
+
+  left: 50%;
+
+  bottom: 5px;
+
+  transform: translateX(-50%);
+
+  z-index: 998;
+
+  margin: 0;
+
+  padding: 4px 10px;
+
+  border-radius: 6px;
+
+  background: rgba(0,0,0,.65);
+
+  color: #ddd;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+
+}
+
+
+/* =========================================
+   DESKTOP
+========================================= */
+
+@media (min-width: 769px) {
+
+  .controls {
+
+    display: grid !important;
+
+    bottom: 30px !important;
+
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .controls {
+
+    bottom: 20px !important;
+
+    width: 200px;
+
+    height: 145px;
+
+  }
+
+  .controls button {
+
+    width: 52px !important;
+
+    height: 44px !important;
+
+    font-size: 20px;
+
+  }
+
+  .keyboard-help {
+
+    display: none;
+
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+
+  .controls {
+
+    bottom: 12px !important;
+
+    transform:
+      translateX(-50%) scale(.9) !important;
+
+  }
+
+}
