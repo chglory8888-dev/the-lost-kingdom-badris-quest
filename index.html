@@ -656,77 +656,32 @@
   class="village-screen hidden"
 >
 
-
   <div class="village-title">
-    🏘️ CHAPTER 2 — FORGOTTEN VILLAGE
+    🏘️ FORGOTTEN VILLAGE
   </div>
 
 
+  <!-- ================= VILLAGE WORLD ================= -->
+
   <div class="village-world">
 
-
-    <!-- SKY / DECORATION -->
-
-    <div class="village-moon">
-      🌙
-    </div>
-
-
     <!-- HOUSE 1 -->
-
-    <div
-      class="village-house house-one"
-    >
+    <div class="village-house house-one">
       🏠
     </div>
 
 
     <!-- ABANDONED HOUSE -->
-
     <div
       class="village-house house-two"
       id="abandonedHouse"
       title="Abandoned House"
-      role="button"
-      tabindex="0"
     >
       🏚️
     </div>
 
 
-    <!-- VILLAGE DOOR -->
-
-    <div
-      id="villageDoor"
-      class="village-door"
-      role="button"
-      tabindex="0"
-      aria-label="Village Door"
-    >
-      🚪
-    </div>
-
-
-    <!-- KING MANU -->
-
-    <div
-      id="kingManu"
-      class="king-manu"
-      role="button"
-      tabindex="0"
-      aria-label="King Manu"
-      title="King Manu"
-    >
-      👑
-    </div>
-
-    <div class="manu-label">
-      KING MANU
-    </div>
-
-
     <!-- OLD VILLAGER -->
-
     <div
       id="villageNpc"
       class="village-npc"
@@ -743,14 +698,12 @@
 
 
     <!-- WELL -->
-
     <div class="village-well">
       🪣
     </div>
 
 
     <!-- TREES -->
-
     <div class="village-tree">
       🌳
     </div>
@@ -759,37 +712,8 @@
       🌳
     </div>
 
-    <div class="village-tree tree-three">
-      🌳
-    </div>
 
-
-    <!-- VILLAGE KEY -->
-
-    <div
-      id="villageKey"
-      class="village-key"
-      role="button"
-      tabindex="0"
-      aria-label="Village Key"
-    >
-      🗝️
-    </div>
-
-
-    <!-- MINI GAME -->
-
-    <button
-      id="villageMiniGameButton"
-      class="village-mini-game"
-      type="button"
-      onclick="villageMiniGame()"
-    >
-      🎮 MINI GAME
-    </button>
-
-
-    <!-- CHAPTER 2 QUEST -->
+    <!-- ================= VILLAGE QUEST ================= -->
 
     <div class="village-quest-box">
 
@@ -822,7 +746,93 @@
   </div>
 
 
-  <!-- DIALOGUE -->
+  <!-- =================================================
+       CHAPTER 2 CONTROL BUTTONS
+  ================================================== -->
+
+  <div
+    id="villageControls"
+    class="village-controls"
+  >
+
+    <!-- D-PAD -->
+
+    <div class="village-dpad">
+
+      <button
+        type="button"
+        data-village-key="ArrowUp"
+        aria-label="Move Up"
+      >
+        ▲
+      </button>
+
+      <button
+        type="button"
+        data-village-key="ArrowLeft"
+        aria-label="Move Left"
+      >
+        ◀
+      </button>
+
+      <button
+        type="button"
+        class="village-dpad-center"
+        data-village-key="Space"
+        aria-label="Talk"
+      >
+        💬
+      </button>
+
+      <button
+        type="button"
+        data-village-key="ArrowRight"
+        aria-label="Move Right"
+      >
+        ▶
+      </button>
+
+      <button
+        type="button"
+        data-village-key="ArrowDown"
+        aria-label="Move Down"
+      >
+        ▼
+      </button>
+
+    </div>
+
+
+    <!-- ACTION BUTTONS -->
+
+    <div class="village-action-controls">
+
+      <button
+        id="villageInteractButton"
+        type="button"
+        class="village-interact-button"
+        aria-label="Interact"
+      >
+        <span>💬</span>
+        <small>TALK</small>
+      </button>
+
+      <button
+        id="villageBackButton"
+        type="button"
+        class="village-back-control"
+      >
+        ↩
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =================================================
+       DIALOGUE
+  ================================================== -->
 
   <div
     id="dialogueBox"
@@ -845,27 +855,17 @@
   </div>
 
 
-  <!-- VILLAGE MESSAGE -->
-
-  <div
-    id="villageMessage"
-    class="village-message"
-  >
-  </div>
-
-
-  <!-- RETURN -->
+  <!-- BACK -->
 
   <button
+    id="villageBack"
     class="village-back"
-    id="villageBackButton"
     type="button"
   >
     ← RETURN
   </button>
 
 </section>
-
 
 
 <!-- =====================================================
