@@ -1494,3 +1494,249 @@ button {
   }
 
 }
+/* =====================================================
+   ADVENTURE CLUES
+===================================================== */
+
+.adventure-clue {
+
+  position: absolute;
+
+  z-index: 12;
+
+  font-size: 42px;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  filter:
+    drop-shadow(
+      0 4px 6px black
+    );
+
+  animation:
+    clueGlow 1.6s infinite alternate;
+
+  transition:
+    transform .2s;
+
+}
+
+
+.adventure-clue:hover {
+
+  transform:
+    scale(1.2);
+
+}
+
+
+@keyframes clueGlow {
+
+  from {
+
+    filter:
+      drop-shadow(
+        0 0 3px #d6c56a
+      );
+
+  }
+
+  to {
+
+    filter:
+      drop-shadow(
+        0 0 18px #f1d477
+      );
+
+  }
+
+}
+
+
+/* CLUE LOCATIONS */
+
+#forestClue {
+
+  left: 21%;
+
+  top: 38%;
+
+}
+
+
+#scrollClue {
+
+  left: 61%;
+
+  top: 24%;
+
+}
+
+
+#crystalClue {
+
+  left: 84%;
+
+  top: 58%;
+
+}
+
+
+/* =====================================================
+   INVESTIGATION PANEL
+===================================================== */
+
+.investigate-panel {
+
+  position: fixed;
+
+  left: 50%;
+
+  top: 50%;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  width: min(
+    92vw,
+    520px
+  );
+
+  padding: 25px;
+
+  background:
+    rgba(5, 9, 6, .98);
+
+  border:
+    2px solid #b4933d;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 0 50px black;
+
+  text-align: center;
+
+  z-index: 500;
+
+}
+
+
+.investigate-panel.hidden {
+
+  display: none !important;
+
+}
+
+
+#investigateTitle {
+
+  color: #f1d477;
+
+  font-size: 25px;
+
+  font-weight: bold;
+
+  margin-bottom: 15px;
+
+}
+
+
+#investigateText {
+
+  color: #d0d8d0;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 16px;
+
+  line-height: 1.6;
+
+  min-height: 70px;
+
+}
+
+
+.investigate-actions {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 20px;
+
+}
+
+
+.investigate-actions button {
+
+  padding: 11px 18px;
+
+  border-radius: 9px;
+
+  border:
+    1px solid #a78a3d;
+
+  background:
+    #2b351f;
+
+  color: white;
+
+  font-weight: bold;
+
+}
+
+
+#investigateButton {
+
+  background:
+    linear-gradient(
+      #705c25,
+      #392d12
+    );
+
+}
+
+
+.investigate-actions button:active {
+
+  transform:
+    scale(.94);
+
+}
+
+
+@media(max-width:600px) {
+
+  .adventure-clue {
+
+    font-size: 34px;
+
+  }
+
+  #investigateTitle {
+
+    font-size: 21px;
+
+  }
+
+  #investigateText {
+
+    font-size: 14px;
+
+  }
+
+  .investigate-panel {
+
+    padding: 20px;
+
+  }
+
+}
