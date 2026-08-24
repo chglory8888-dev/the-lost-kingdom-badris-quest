@@ -2939,3 +2939,51 @@ h2 {
   }
 
 }
+/* =====================================================
+   CHAPTER 2 BADRI PLAYER
+===================================================== */
+
+#villagePlayer {
+
+  position: absolute;
+
+  left: 50%;
+
+  top: 68%;
+
+  transform:
+    translate(-50%, -50%);
+
+  font-size: 52px;
+
+  z-index: 40;
+
+  display: block;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  filter:
+    drop-shadow(
+      0 6px 5px rgba(0,0,0,.8)
+    );
+
+  transition:
+    left .05s linear,
+    top .05s linear;
+
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  #villagePlayer {
+
+    font-size: 44px;
+
+  }
+
+}
