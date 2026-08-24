@@ -1,3 +1,13 @@
+/* =====================================================
+   THE LOST KINGDOM: BADRI'S QUEST
+   ANCIENT GATE PUZZLE CONTROLLER
+===================================================== */
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
 const symbolButtons =
   document.querySelectorAll(
     ".symbol-buttons button"
@@ -28,9 +38,32 @@ const closePuzzle =
     "closePuzzle"
   );
 
+const puzzleScreen =
+  document.getElementById(
+    "puzzleScreen"
+  );
+
+const ancientGate =
+  document.getElementById(
+    "ancientGate"
+  );
+
+
+/* =====================================================
+   PUZZLE VARIABLES
+===================================================== */
 
 let selectedSequence = [];
 
+
+/*
+ * Correct sequence
+ *
+ * 🌙 Moon
+ * 🔥 Fire
+ * 🌿 Nature
+ * ⭐ Star
+ */
 
 const correctSequence = [
   "🌙",
@@ -40,46 +73,103 @@ const correctSequence = [
 ];
 
 
-symbolButtons.forEach((button) => {
+/* =====================================================
+   PUZZLE LOCK
+===================================================== */
 
-  button.addEventListener("click", () => {
-
-    if (
-      selectedSequence.length >= 4
-    ) {
-      return;
-    }
+let puzzleCompleted = false;
 
 
-    const symbol =
-      button.dataset.symbol;
+/* =====================================================
+   INITIAL STATE
+===================================================== */
+
+window.gateUnlocked =
+  window.gateUnlocked || false;
 
 
-    selectedSequence.push(symbol);
+/* =====================================================
+   SYMBOL BUTTONS
+===================================================== */
 
-    updateSequence();
+symbolButtons.forEach(
+  function (button) {
+
+    button.addEventListener(
+      "click",
+      function () {
+
+        /*
+         * Don't allow input after completion
+         */
+
+        if (puzzleCompleted) {
+          return;
+        }
 
 
-    if (
-      selectedSequence.length === 4
-    ) {
+        /*
+         * Maximum 4 symbols
+         */
 
-      checkPuzzle();
+        if (
+          selectedSequence.length >= 4
+        ) {
 
-    }
+          return;
 
-  });
+        }
 
-});
 
+        const symbol =
+          button.dataset.symbol;
+
+
+        if (!symbol) {
+          return;
+        }
+
+
+        selectedSequence.push(
+          symbol
+        );
+
+
+        updateSequence();
+
+
+        /*
+         * Automatically check
+         * after 4 symbols
+         */
+
+        if (
+          selectedSequence.length === 4
+        ) {
+
+          checkPuzzle();
+
+        }
+
+      }
+    );
+
+  }
+);
+
+
+/* =====================================================
+   UPDATE SEQUENCE
+===================================================== */
 
 function updateSequence() {
 
   sequenceSlots.forEach(
-    (slot, index) => {
+    function (slot, index) {
 
       slot.textContent =
-        selectedSequence[index] || "?";
+        selectedSequence[index] ||
+        "?";
 
     }
   );
@@ -87,66 +177,154 @@ function updateSequence() {
 }
 
 
+/* =====================================================
+   CHECK PUZZLE
+===================================================== */
+
 function checkPuzzle() {
+
+  /*
+   * Prevent checking twice
+   */
+
+  if (puzzleCompleted) {
+    return;
+  }
+
 
   const correct =
     selectedSequence.length ===
       correctSequence.length &&
     selectedSequence.every(
-      (symbol, index) =>
-        symbol === correctSequence[index]
+      function (symbol, index) {
+
+        return (
+          symbol ===
+          correctSequence[index]
+        );
+
+      }
     );
 
 
+  /* ===================================================
+     WRONG ANSWER
+  =================================================== */
+
   if (!correct) {
 
-    puzzleMessage.textContent =
-      "❌ Wrong sequence! Try again.";
+    if (puzzleMessage) {
 
-    puzzleMessage.style.color =
-      "#ff7777";
+      puzzleMessage.textContent =
+        "❌ Wrong sequence! Try again.";
+
+      puzzleMessage.style.color =
+        "#ff7777";
+
+    }
+
+
+    /*
+     * Small shake animation
+     */
+
+    if (puzzleScreen) {
+
+      puzzleScreen.classList.remove(
+        "puzzle-shake"
+      );
+
+
+      void puzzleScreen.offsetWidth;
+
+
+      puzzleScreen.classList.add(
+        "puzzle-shake"
+      );
+
+    }
+
+
+    /*
+     * Clear wrong answer
+     * after short delay
+     */
+
+    setTimeout(
+      function () {
+
+        selectedSequence = [];
+
+        updateSequence();
+
+      },
+      900
+    );
+
 
     return;
 
   }
 
 
-  puzzleMessage.textContent =
-    "🔓 CORRECT! Ancient Gate unlocked!";
+  /* ===================================================
+     CORRECT ANSWER
+  =================================================== */
 
-  puzzleMessage.style.color =
-    "#7dff9c";
+  puzzleCompleted = true;
 
 
-  window.gateUnlocked = true;
+  window.gateUnlocked =
+    true;
 
+
+  if (puzzleMessage) {
+
+    puzzleMessage.textContent =
+      "🔓 CORRECT! Ancient Gate unlocked!";
+
+    puzzleMessage.style.color =
+      "#7dff9c";
+
+  }
+
+
+  /* ===================================================
+     COMPLETE QUEST
+  =================================================== */
 
   if (
     typeof window.completeQuest ===
     "function"
   ) {
 
-    window.completeQuest("gate");
+    window.completeQuest(
+      "gate"
+    );
 
   }
 
 
-  const gate =
-    document.getElementById(
-      "ancientGate"
-    );
+  /* ===================================================
+     UPDATE GATE
+  =================================================== */
+
+  if (ancientGate) {
+
+    ancientGate.textContent =
+      "🚪";
 
 
-  if (gate) {
-
-    gate.textContent = "🚪";
-
-    gate.classList.add(
+    ancientGate.classList.add(
       "gate-unlocked"
     );
 
   }
 
+
+  /* ===================================================
+     GAME MESSAGE
+  =================================================== */
 
   if (
     typeof window.showMessage ===
@@ -160,70 +338,269 @@ function checkPuzzle() {
   }
 
 
-  setTimeout(() => {
+  /* ===================================================
+     CLOSE PUZZLE
+  =================================================== */
 
-    const screen =
-      document.getElementById(
-        "puzzleScreen"
+  setTimeout(
+    function () {
+
+      if (puzzleScreen) {
+
+        puzzleScreen.classList.add(
+          "hidden"
+        );
+
+      }
+
+
+      /*
+       * Start Chapter 2
+       */
+
+      if (
+        typeof window.startVillageChapter ===
+        "function"
+      ) {
+
+        window.startVillageChapter();
+
+      }
+
+
+      /*
+       * Open Forgotten Village
+       */
+
+      setTimeout(
+        function () {
+
+          if (
+            typeof window.openChapter2 ===
+            "function"
+          ) {
+
+            window.openChapter2();
+
+          }
+
+        },
+        800
       );
 
-    if (screen) {
-
-      screen.classList.add(
-        "hidden"
-      );
-
-    }
-
-  }, 1800);
+    },
+    1800
+  );
 
 }
 
 
-resetPuzzle.addEventListener(
-  "click",
-  () => {
+/* =====================================================
+   RESET PUZZLE
+===================================================== */
+
+if (resetPuzzle) {
+
+  resetPuzzle.addEventListener(
+    "click",
+    function () {
+
+      if (puzzleCompleted) {
+        return;
+      }
+
+
+      selectedSequence = [];
+
+
+      updateSequence();
+
+
+      if (puzzleMessage) {
+
+        puzzleMessage.textContent =
+          "";
+
+        puzzleMessage.style.color =
+          "";
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   HINT
+===================================================== */
+
+if (hintButton) {
+
+  hintButton.addEventListener(
+    "click",
+    function () {
+
+      if (puzzleCompleted) {
+        return;
+      }
+
+
+      if (!puzzleMessage) {
+        return;
+      }
+
+
+      puzzleMessage.textContent =
+        "💡 Hint: Moon → Fire → Nature → Star";
+
+
+      puzzleMessage.style.color =
+        "#f2d56b";
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   CLOSE PUZZLE
+===================================================== */
+
+if (closePuzzle) {
+
+  closePuzzle.addEventListener(
+    "click",
+    function () {
+
+      if (puzzleScreen) {
+
+        puzzleScreen.classList.add(
+          "hidden"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   OPEN PUZZLE
+===================================================== */
+
+window.openAncientGatePuzzle =
+  function () {
+
+    /*
+     * Already unlocked
+     */
+
+    if (window.gateUnlocked) {
+
+      if (
+        typeof window.showMessage ===
+        "function"
+      ) {
+
+        window.showMessage(
+          "🔓 The Ancient Gate is already unlocked!"
+        );
+
+      }
+
+      return;
+
+    }
+
 
     selectedSequence = [];
 
+    puzzleCompleted = false;
+
+
     updateSequence();
 
-    puzzleMessage.textContent = "";
 
-  }
-);
+    if (puzzleMessage) {
 
+      puzzleMessage.textContent =
+        "";
 
-hintButton.addEventListener(
-  "click",
-  () => {
+      puzzleMessage.style.color =
+        "";
 
-    puzzleMessage.textContent =
-      "💡 Hint: Moon → Fire → Nature → Star";
-
-    puzzleMessage.style.color =
-      "#f2d56b";
-
-  }
-);
+    }
 
 
-closePuzzle.addEventListener(
-  "click",
-  () => {
+    if (puzzleScreen) {
 
-    const screen =
-      document.getElementById(
-        "puzzleScreen"
-      );
-
-    if (screen) {
-
-      screen.classList.add(
+      puzzleScreen.classList.remove(
         "hidden"
       );
 
     }
 
-  }
-);
+  };
+
+
+/* =====================================================
+   COMPATIBILITY
+===================================================== */
+
+window.checkPuzzle =
+  checkPuzzle;
+
+window.updateSequence =
+  updateSequence;
+
+
+/* =====================================================
+   AUTO INITIALIZE
+===================================================== */
+
+updateSequence();
+
+
+/* =====================================================
+   DEBUG / TEST FUNCTION
+===================================================== */
+
+window.resetAncientGatePuzzle =
+  function () {
+
+    selectedSequence = [];
+
+    puzzleCompleted = false;
+
+    window.gateUnlocked =
+      false;
+
+
+    updateSequence();
+
+
+    if (puzzleMessage) {
+
+      puzzleMessage.textContent =
+        "";
+
+    }
+
+
+    if (ancientGate) {
+
+      ancientGate.textContent =
+        "🚪";
+
+      ancientGate.classList.remove(
+        "gate-unlocked"
+      );
+
+    }
+
+  };
