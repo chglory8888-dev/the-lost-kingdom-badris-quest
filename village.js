@@ -1,103 +1,244 @@
-const villageScreen = document.getElementById("villageScreen");
-const villageNpc = document.getElementById("villageNpc");
-const dialogueBox = document.getElementById("dialogueBox");
-const dialogueText = document.getElementById("dialogueText");
-const dialogueNext = document.getElementById("dialogueNext");
-const villageQuest = document.getElementById("villageQuest");
+/* =====================================================
+   FORGOTTEN VILLAGE — CHAPTER 2
+   VILLAGE.JS
+===================================================== */
 
-let dialogueIndex = 0;
+let villageKey = false;
+let villagerTalked = false;
+let houseUnlocked = false;
+
+let dialogueStep = 0;
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const villageNpc =
+  document.getElementById("villageNpc");
+
+const dialogueBox =
+  document.getElementById("dialogueBox");
+
+const dialogueText =
+  document.getElementById("dialogueText");
+
+const dialogueNext =
+  document.getElementById("dialogueNext");
+
+const villageQuest =
+  document.getElementById("villageQuest");
+
+const abandonedHouse =
+  document.getElementById("abandonedHouse");
+
+
+/* =====================================================
+   DIALOGUE
+===================================================== */
 
 const villagerDialogue = [
-  "👴 Old Villager: Badri... you finally reached the Forgotten Village.",
-  "👴 Old Villager: King Manu was taken toward the Shadow Castle.",
-  "👴 Old Villager: But the ancient path has been sealed for many years.",
-  "👴 Old Villager: Find the Village Key inside the abandoned house.",
-  "👴 Old Villager: Then search for the hidden symbol of King Manu.",
-  "⚔️ Badri: I will find the King and bring him home!"
+
+  "👴 Old Villager: Brave traveler... who are you?",
+
+  "🧙 Badri: I am Badri. I am searching for King Manu.",
+
+  "👴 Old Villager: King Manu was taken to the Shadow Castle.",
+
+  "👴 Old Villager: But the path is sealed by an ancient magic.",
+
+  "🧙 Badri: How can I reach the castle?",
+
+  "👴 Old Villager: First, find the Village Key hidden inside the abandoned house.",
+
+  "👴 Old Villager: Search carefully. Four magical objects are hidden there.",
+
+  "🧙 Badri: I will find them and rescue King Manu!",
+
+  "👴 Old Villager: Good luck, brave Badri. The kingdom is counting on you!"
+
 ];
 
 
-function openVillage() {
+/* =====================================================
+   OPEN VILLAGE
+===================================================== */
 
-  if (!villageScreen) {
-    return;
-  }
+window.openVillage =
+  function () {
 
-  villageScreen.classList.remove("hidden");
+    const gameScreen =
+      document.getElementById(
+        "gameScreen"
+      );
 
-  if (typeof window.showMessage === "function") {
-    window.showMessage(
-      "🏘️ Chapter 2 — Forgotten Village"
+    const villageScreen =
+      document.getElementById(
+        "villageScreen"
+      );
+
+
+    if (gameScreen) {
+
+      gameScreen.classList.add(
+        "hidden"
+      );
+
+    }
+
+
+    if (villageScreen) {
+
+      villageScreen.classList.remove(
+        "hidden"
+      );
+
+    }
+
+
+    updateVillageQuest();
+
+  };
+
+
+/* =====================================================
+   CLOSE VILLAGE
+===================================================== */
+
+window.closeVillage =
+  function () {
+
+    const villageScreen =
+      document.getElementById(
+        "villageScreen"
+      );
+
+    const gameScreen =
+      document.getElementById(
+        "gameScreen"
+      );
+
+
+    if (villageScreen) {
+
+      villageScreen.classList.add(
+        "hidden"
+      );
+
+    }
+
+
+    if (gameScreen) {
+
+      gameScreen.classList.remove(
+        "hidden"
+      );
+
+    }
+
+  };
+
+
+/* =====================================================
+   START DIALOGUE
+===================================================== */
+
+function startVillagerDialogue() {
+
+  dialogueStep = 0;
+
+  villagerTalked = true;
+
+  if (dialogueBox) {
+
+    dialogueBox.classList.remove(
+      "hidden"
     );
+
   }
 
-}
-
-
-function closeVillage() {
-
-  if (!villageScreen) {
-    return;
-  }
-
-  villageScreen.classList.add("hidden");
-
-}
-
-
-function startDialogue() {
-
-  dialogueIndex = 0;
-
-  dialogueBox.classList.remove("hidden");
 
   showDialogue();
 
+  updateVillageQuest();
+
 }
 
+
+window.startVillagerDialogue =
+  startVillagerDialogue;
+
+
+/* =====================================================
+   SHOW DIALOGUE
+===================================================== */
 
 function showDialogue() {
 
-  dialogueText.textContent =
-    villagerDialogue[dialogueIndex];
+  if (!dialogueText) {
+    return;
+  }
 
-}
-
-
-dialogueNext.addEventListener("click", () => {
-
-  dialogueIndex++;
 
   if (
-    dialogueIndex >=
+    dialogueStep >=
     villagerDialogue.length
   ) {
 
-    dialogueBox.classList.add("hidden");
-
-    completeVillageQuest();
+    finishDialogue();
 
     return;
 
   }
 
-  showDialogue();
 
-});
+  dialogueText.textContent =
+    villagerDialogue[
+      dialogueStep
+    ];
+
+}
 
 
-function completeVillageQuest() {
+/* =====================================================
+   NEXT DIALOGUE
+===================================================== */
 
-  if (villageQuest) {
+if (dialogueNext) {
 
-    villageQuest.textContent =
-      "☑ Talk to the Old Villager";
+  dialogueNext.addEventListener(
+    "click",
+    function () {
 
-    villageQuest.classList.add(
-      "completed"
+      dialogueStep++;
+
+      showDialogue();
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   FINISH DIALOGUE
+===================================================== */
+
+function finishDialogue() {
+
+  if (dialogueBox) {
+
+    dialogueBox.classList.add(
+      "hidden"
     );
 
   }
+
+
+  villagerTalked = true;
+
+  updateVillageQuest();
+
 
   if (
     typeof window.showMessage ===
@@ -105,7 +246,7 @@ function completeVillageQuest() {
   ) {
 
     window.showMessage(
-      "📜 New quest: Find the Village Key!"
+      "🔎 Quest updated: Search the Abandoned House!"
     );
 
   }
@@ -113,21 +254,243 @@ function completeVillageQuest() {
 }
 
 
+/* =====================================================
+   NPC CLICK
+===================================================== */
+
 if (villageNpc) {
 
   villageNpc.addEventListener(
     "click",
-    startDialogue
+    function () {
+
+      startVillagerDialogue();
+
+    }
+  );
+
+
+  villageNpc.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key === "Enter" ||
+        event.key === " "
+      ) {
+
+        event.preventDefault();
+
+        startVillagerDialogue();
+
+      }
+
+    }
   );
 
 }
 
 
-window.openVillage =
-  openVillage;
+/* =====================================================
+   VILLAGE QUEST
+===================================================== */
 
-window.closeVillage =
-  closeVillage;
+function updateVillageQuest() {
 
-window.startDialogue =
-  startDialogue;
+  if (!villageQuest) {
+    return;
+  }
+
+
+  if (!villagerTalked) {
+
+    villageQuest.innerHTML =
+      "☐ Talk to the Old Villager";
+
+    return;
+
+  }
+
+
+  if (!villageKey) {
+
+    villageQuest.innerHTML =
+      "☑ Talk to the Old Villager<br>" +
+      "☐ Find the Village Key<br>" +
+      "☐ Search the Abandoned House<br>" +
+      "☐ Discover King Manu's Secret";
+
+    return;
+
+  }
+
+
+  villageQuest.innerHTML =
+    "☑ Talk to the Old Villager<br>" +
+    "☑ Find the Village Key<br>" +
+    "☑ Search the Abandoned House<br>" +
+    "☐ Discover King Manu's Secret<br>" +
+    "☐ Open the Shadow Castle Path";
+
+}
+
+
+window.updateVillageQuest =
+  updateVillageQuest;
+
+
+/* =====================================================
+   VILLAGE KEY
+===================================================== */
+
+window.giveVillageKey =
+  function () {
+
+    villageKey = true;
+
+    houseUnlocked = true;
+
+
+    /*
+     * Make the key available
+     * to inventory.js
+     */
+
+    window.villageKey = true;
+
+
+    updateVillageQuest();
+
+
+    if (
+      typeof window.updateInventoryUI ===
+      "function"
+    ) {
+
+      window.updateInventoryUI();
+
+    }
+
+
+    if (
+      typeof window.showMessage ===
+      "function"
+    ) {
+
+      window.showMessage(
+        "🗝️ Village Key found!"
+      );
+
+    }
+
+
+    /*
+     * Unlock abandoned house
+     */
+
+    if (abandonedHouse) {
+
+      abandonedHouse.classList.add(
+        "unlocked"
+      );
+
+      abandonedHouse.title =
+        "Enter Abandoned House";
+
+    }
+
+  };
+
+
+/* =====================================================
+   OPEN ABANDONED HOUSE
+===================================================== */
+
+if (abandonedHouse) {
+
+  abandonedHouse.addEventListener(
+    "click",
+    function () {
+
+      if (!villagerTalked) {
+
+        if (
+          typeof window.showMessage ===
+          "function"
+        ) {
+
+          window.showMessage(
+            "👴 Talk to the Old Villager first."
+          );
+
+        }
+
+        return;
+
+      }
+
+
+      if (
+        typeof window.openHiddenHouse ===
+        "function"
+      ) {
+
+        window.openHiddenHouse();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   VILLAGE KEY STATUS
+===================================================== */
+
+window.hasVillageKey =
+  function () {
+
+    return villageKey;
+
+  };
+
+
+/* =====================================================
+   RESET VILLAGE
+===================================================== */
+
+window.resetVillage =
+  function () {
+
+    villageKey = false;
+
+    villagerTalked = false;
+
+    houseUnlocked = false;
+
+    dialogueStep = 0;
+
+    window.villageKey = false;
+
+
+    if (dialogueBox) {
+
+      dialogueBox.classList.add(
+        "hidden"
+      );
+
+    }
+
+
+    updateVillageQuest();
+
+  };
+
+
+/* =====================================================
+   INITIAL STATE
+===================================================== */
+
+updateVillageQuest();
