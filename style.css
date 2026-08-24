@@ -1,340 +1,2257 @@
 /* =====================================================
    THE LOST KINGDOM: BADRI'S QUEST
-   ANCIENT SYMBOL PUZZLE
+   COMPLETE STYLE.CSS
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
 
-  const symbolButtons = document.querySelectorAll(
-    ".symbol-buttons button"
-  );
+/* =====================================================
+   RESET
+===================================================== */
 
-  const sequenceSlots = document.querySelectorAll(
-    "#sequenceDisplay span"
-  );
+* {
+  box-sizing: border-box;
+}
 
-  const puzzleMessage =
-    document.getElementById("puzzleMessage");
+html,
+body {
+  margin: 0;
+  padding: 0;
 
-  const resetPuzzle =
-    document.getElementById("resetPuzzle");
+  width: 100%;
+  height: 100%;
 
-  const hintButton =
-    document.getElementById("hintButton");
+  overflow: hidden;
 
-  const closePuzzle =
-    document.getElementById("closePuzzle");
+  background: #030705;
 
-  let selectedSequence = [];
+  color: white;
 
-  const correctSequence = [
-    "🌙",
-    "🔥",
-    "🌿",
-    "⭐"
-  ];
+  font-family: Georgia, serif;
 
+  -webkit-user-select: none;
+  user-select: none;
+}
 
-  /* =====================================================
-     UPDATE SEQUENCE
-  ===================================================== */
+body {
+  touch-action: manipulation;
+}
 
-  function updateSequence() {
+button {
+  font-family: inherit;
+  cursor: pointer;
 
-    sequenceSlots.forEach(function (slot, index) {
+  -webkit-tap-highlight-color: transparent;
+}
 
-      slot.textContent =
-        selectedSequence[index] || "?";
+.hidden {
+  display: none !important;
+}
 
-    });
 
-  }
+/* =====================================================
+   HOME SCREEN
+===================================================== */
 
+.screen {
+  min-height: 100vh;
 
-  /* =====================================================
-     SYMBOL BUTTON CLICK
-  ===================================================== */
+  display: flex;
 
-  symbolButtons.forEach(function (button) {
+  justify-content: center;
 
-    button.addEventListener("click", function (event) {
+  align-items: center;
+}
 
-      event.preventDefault();
-      event.stopPropagation();
+#homeScreen {
+  background:
+    radial-gradient(
+      circle at center,
+      #315c3a 0%,
+      #102519 45%,
+      #020604 100%
+    );
+}
 
-      if (selectedSequence.length >= 4) {
-        return;
-      }
+.title-screen {
+  width: 92%;
+  max-width: 850px;
 
-      const symbol =
-        button.getAttribute("data-symbol");
+  padding: 45px 25px;
 
-      if (!symbol) {
-        return;
-      }
+  text-align: center;
 
-      selectedSequence.push(symbol);
+  background:
+    rgba(5, 13, 8, 0.92);
 
-      updateSequence();
+  border: 2px solid #b4933d;
 
-      /* Button feedback */
+  border-radius: 22px;
 
-      button.classList.add("symbol-selected");
+  box-shadow:
+    0 0 50px rgba(0, 0, 0, 0.9),
+    inset 0 0 30px
+    rgba(180, 147, 61, 0.08);
+}
 
-      setTimeout(function () {
+.kingdom {
+  color: #d9bd63;
 
-        button.classList.remove(
-          "symbol-selected"
-        );
+  font-size: 16px;
 
-      }, 180);
+  letter-spacing: 6px;
 
+  font-weight: bold;
+}
 
-      if (selectedSequence.length === 4) {
+h1 {
+  margin: 18px 0 5px;
 
-        checkPuzzle();
+  font-size:
+    clamp(40px, 8vw, 78px);
 
-      }
+  color: #f1d477;
 
-    });
+  text-shadow:
+    0 0 12px #8c681b,
+    0 5px 15px black;
+}
 
-  });
+h2 {
+  margin: 0 0 25px;
 
+  font-size:
+    clamp(22px, 5vw, 42px);
 
-  /* =====================================================
-     CHECK PUZZLE
-  ===================================================== */
+  color: #eeeeee;
+}
 
-  function checkPuzzle() {
+.story {
+  max-width: 650px;
 
-    const correct =
-      selectedSequence.length ===
-        correctSequence.length &&
-      selectedSequence.every(function (
-        symbol,
-        index
-      ) {
+  margin: 0 auto 30px;
 
-        return symbol ===
-          correctSequence[index];
+  color: #c8d4ca;
 
-      });
+  font-size: 18px;
 
+  line-height: 1.7;
+}
 
-    if (!correct) {
+.start-button {
+  padding: 16px 32px;
 
-      if (puzzleMessage) {
+  border: 2px solid #e4c85e;
 
-        puzzleMessage.textContent =
-          "❌ Wrong sequence! Try again.";
+  border-radius: 12px;
 
-        puzzleMessage.style.color =
-          "#ff7777";
-
-      }
-
-      /* Shake sequence */
-
-      const display =
-        document.getElementById(
-          "sequenceDisplay"
-        );
-
-      if (display) {
-
-        display.classList.add(
-          "puzzle-wrong"
-        );
-
-        setTimeout(function () {
-
-          display.classList.remove(
-            "puzzle-wrong"
-          );
-
-        }, 400);
-
-      }
-
-      return;
-
-    }
-
-
-    /* =================================================
-       CORRECT
-    ================================================= */
-
-    if (puzzleMessage) {
-
-      puzzleMessage.textContent =
-        "🔓 CORRECT! Ancient Gate unlocked!";
-
-      puzzleMessage.style.color =
-        "#7dff9c";
-
-    }
-
-
-    window.gateUnlocked = true;
-
-
-    if (
-      typeof window.completeQuest ===
-      "function"
-    ) {
-
-      window.completeQuest("gate");
-
-    }
-
-
-    const gate =
-      document.getElementById(
-        "ancientGate"
-      );
-
-
-    if (gate) {
-
-      gate.textContent = "🚪";
-
-      gate.classList.add(
-        "gate-unlocked"
-      );
-
-    }
-
-
-    if (
-      typeof window.showMessage ===
-      "function"
-    ) {
-
-      window.showMessage(
-        "🔓 The Ancient Gate has opened!"
-      );
-
-    }
-
-
-    /* Close puzzle */
-
-    setTimeout(function () {
-
-      const screen =
-        document.getElementById(
-          "puzzleScreen"
-        );
-
-      if (screen) {
-
-        screen.classList.add(
-          "hidden"
-        );
-
-      }
-
-      selectedSequence = [];
-
-      updateSequence();
-
-    }, 1800);
-
-  }
-
-
-  /* =====================================================
-     RESET
-  ===================================================== */
-
-  if (resetPuzzle) {
-
-    resetPuzzle.addEventListener(
-      "click",
-      function (event) {
-
-        event.preventDefault();
-
-        selectedSequence = [];
-
-        updateSequence();
-
-        if (puzzleMessage) {
-
-          puzzleMessage.textContent = "";
-
-        }
-
-      }
+  background:
+    linear-gradient(
+      #8d7229,
+      #49370e
     );
 
-  }
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: bold;
+
+  transition: 0.25s;
+
+  touch-action: manipulation;
+}
+
+.start-button:hover {
+  transform: scale(1.06);
+
+  box-shadow:
+    0 0 25px #c5a33e;
+}
+
+.start-button:active {
+  transform: scale(0.96);
+}
 
 
-  /* =====================================================
-     HINT
-  ===================================================== */
+/* =====================================================
+   GAME SCREEN
+===================================================== */
 
-  if (hintButton) {
+#gameScreen {
+  position: relative;
 
-    hintButton.addEventListener(
-      "click",
-      function (event) {
+  width: 100%;
+  height: 100vh;
 
-        event.preventDefault();
+  background: #07120c;
+}
 
-        if (puzzleMessage) {
 
-          puzzleMessage.textContent =
-            "💡 Hint: Moon → Fire → Nature → Star";
+/* =====================================================
+   HUD
+===================================================== */
 
-          puzzleMessage.style.color =
-            "#f2d56b";
+.hud {
+  position: relative;
 
-        }
+  height: 58px;
 
-      }
+  display: flex;
+
+  justify-content: space-around;
+
+  align-items: center;
+
+  background: #101b14;
+
+  border-bottom: 2px solid #39513f;
+
+  font-family: Arial, sans-serif;
+
+  font-weight: bold;
+
+  z-index: 50;
+}
+
+.inventory-button {
+  border: 1px solid #6d805e;
+
+  border-radius: 9px;
+
+  background: #1b3021;
+
+  color: white;
+
+  padding: 7px 12px;
+
+  font-size: 20px;
+
+  touch-action: manipulation;
+}
+
+.inventory-button:active {
+  transform: scale(0.9);
+}
+
+
+/* =====================================================
+   QUEST PANEL
+===================================================== */
+
+#questPanel {
+  position: absolute;
+
+  top: 75px;
+  left: 15px;
+
+  width: 250px;
+
+  padding: 14px;
+
+  background:
+    rgba(8, 15, 9, 0.92);
+
+  border: 1px solid #9b8038;
+
+  border-radius: 12px;
+
+  color: white;
+
+  z-index: 25;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0, 0, 0, 0.5);
+}
+
+#questTitle {
+  color: #f0d36b;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  margin-bottom: 8px;
+}
+
+.quest-main {
+  color: white;
+
+  font-weight: bold;
+
+  margin-bottom: 10px;
+}
+
+.quest-item {
+  padding: 5px 0;
+
+  color: #c9d0c9;
+
+  font-size: 14px;
+}
+
+.quest-item.completed {
+  color: #7dff9c;
+}
+
+
+/* =====================================================
+   FOREST
+===================================================== */
+
+#forest {
+  position: relative;
+
+  height:
+    calc(100vh - 178px);
+
+  min-height: 400px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      #426d45 0%,
+      #1d3b26 35%,
+      #09170d 80%
+    );
+}
+
+#forest::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.35;
+
+  background-image:
+    radial-gradient(
+      circle,
+      #66855d 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle,
+      #183c23 3px,
+      transparent 4px
     );
 
-  }
+  background-size:
+    70px 70px,
+    110px 110px;
+
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+#forest::after {
+  content:
+    "🌲   🌳    🌲      🌳    🌲      🌲    🌳      🌲";
+
+  position: absolute;
+
+  top: 5px;
+  left: 0;
+
+  width: 100%;
+
+  font-size: 55px;
+
+  opacity: 0.7;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+.chapter-title {
+  position: absolute;
+
+  top: 15px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  color: #d8eab8;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 13px;
+
+  font-weight: bold;
+
+  letter-spacing: 2px;
+
+  z-index: 10;
+
+  white-space: nowrap;
+}
 
 
-  /* =====================================================
-     CLOSE PUZZLE
-  ===================================================== */
+/* =====================================================
+   PLAYER
+===================================================== */
 
-  if (closePuzzle) {
+#player {
+  position: absolute;
 
-    closePuzzle.addEventListener(
-      "click",
-      function (event) {
+  left: 10%;
+  top: 55%;
 
-        event.preventDefault();
+  font-size: 48px;
 
-        const screen =
-          document.getElementById(
-            "puzzleScreen"
-          );
+  z-index: 15;
 
-        if (screen) {
-
-          screen.classList.add(
-            "hidden"
-          );
-
-        }
-
-      }
+  filter:
+    drop-shadow(
+      0 6px 5px black
     );
 
+  user-select: none;
+
+  transition:
+    transform 0.08s;
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   ENEMIES
+===================================================== */
+
+.enemy {
+  position: absolute;
+
+  font-size: 45px;
+
+  z-index: 12;
+
+  filter:
+    drop-shadow(
+      0 5px 5px black
+    );
+
+  transition:
+    opacity 0.25s;
+
+  pointer-events: none;
+}
+
+.enemy-one {
+  left: 45%;
+  top: 40%;
+}
+
+.enemy-two {
+  left: 68%;
+  top: 63%;
+}
+
+
+/* =====================================================
+   ITEMS
+===================================================== */
+
+.coin,
+#key,
+#potion,
+#scroll,
+#crystalItem,
+#ancientGate {
+  position: absolute;
+
+  z-index: 12;
+
+  filter:
+    drop-shadow(
+      0 4px 5px black
+    );
+
+  pointer-events: none;
+}
+
+.coin {
+  font-size: 38px;
+}
+
+.coin-one {
+  left: 30%;
+  top: 70%;
+}
+
+.coin-two {
+  left: 55%;
+  top: 30%;
+}
+
+.coin-three {
+  left: 75%;
+  top: 30%;
+}
+
+#key {
+  left: 53%;
+  top: 72%;
+
+  font-size: 38px;
+}
+
+#potion {
+  left: 38%;
+  top: 50%;
+
+  font-size: 42px;
+}
+
+#scroll {
+  left: 62%;
+  top: 22%;
+
+  font-size: 42px;
+}
+
+#ancientGate {
+  left: 76%;
+  top: 70%;
+
+  font-size: 65px;
+
+  cursor: pointer;
+
+  pointer-events: auto;
+}
+
+#ancientGate.gate-unlocked {
+  animation:
+    gateGlow 1s infinite alternate;
+}
+
+@keyframes gateGlow {
+  from {
+    filter:
+      drop-shadow(
+        0 0 5px #d8c05c
+      );
   }
 
+  to {
+    filter:
+      drop-shadow(
+        0 0 30px #f5df76
+      );
+  }
+}
 
-  /* =====================================================
-     INITIAL
-  ===================================================== */
+#crystalItem {
+  left: 88%;
+  top: 45%;
 
-  updateSequence();
+  font-size: 55px;
 
-});
+  animation:
+    crystalGlow 1.5s infinite alternate;
+}
+
+@keyframes crystalGlow {
+  from {
+    transform: scale(1);
+
+    filter:
+      drop-shadow(
+        0 0 5px #6ff
+      );
+  }
+
+  to {
+    transform: scale(1.15);
+
+    filter:
+      drop-shadow(
+        0 0 25px #6ff
+      );
+  }
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+#message {
+  display: none;
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 20px;
+
+  transform:
+    translateX(-50%);
+
+  max-width: 85%;
+
+  padding: 12px 18px;
+
+  background:
+    rgba(5, 10, 7, 0.92);
+
+  border:
+    1px solid #7c966e;
+
+  border-radius: 12px;
+
+  font-family: Arial, sans-serif;
+
+  text-align: center;
+
+  z-index: 80;
+}
+
+
+/* =====================================================
+   ATTACK
+===================================================== */
+
+.attack {
+  animation:
+    swordAttack 0.25s;
+}
+
+@keyframes swordAttack {
+  50% {
+    transform:
+      scale(1.5)
+      rotate(-20deg);
+  }
+}
+
+
+/* =====================================================
+   DAMAGE
+===================================================== */
+
+.damage {
+  animation:
+    damageFlash 0.25s;
+}
+
+@keyframes damageFlash {
+  50% {
+    filter:
+      brightness(2)
+      drop-shadow(
+        0 0 15px red
+      );
+  }
+}
+
+
+/* =====================================================
+   PROFESSIONAL CONTROLS
+===================================================== */
+
+.controls-wrapper {
+  position: fixed;
+
+  left: 50%;
+
+  bottom: 22px;
+
+  transform:
+    translateX(-50%);
+
+  z-index: 999;
+
+  width:
+    min(620px, 94vw);
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    flex-end;
+
+  pointer-events: none;
+}
+
+.dpad {
+  width: 170px;
+  height: 170px;
+
+  display: grid;
+
+  grid-template-columns:
+    55px 55px 55px;
+
+  grid-template-rows:
+    55px 55px 55px;
+
+  gap: 3px;
+
+  justify-content: center;
+
+  align-items: center;
+
+  pointer-events: auto;
+}
+
+.dpad button {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 12px;
+
+  border:
+    2px solid #b99a43;
+
+  background:
+    rgba(
+      15,
+      25,
+      18,
+      0.94
+    );
+
+  color: white;
+
+  font-size: 21px;
+
+  font-weight: bold;
+
+  touch-action: none;
+
+  user-select: none;
+}
+
+.dpad button:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.dpad button:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.dpad button:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.dpad button:nth-child(4) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.dpad button:nth-child(5) {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.dpad button:active {
+  transform: scale(0.9);
+
+  background: #685522;
+}
+
+.dpad-center {
+  border-radius: 50% !important;
+
+  color: #e7c85e !important;
+}
+
+
+/* =====================================================
+   ATTACK BUTTON
+===================================================== */
+
+.action-controls {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  pointer-events: auto;
+}
+
+.attack-button {
+  width: 82px;
+  height: 82px;
+
+  border-radius: 50%;
+
+  border:
+    3px solid #c6a544;
+
+  background:
+    radial-gradient(
+      circle,
+      #633d32,
+      #251311
+    );
+
+  color: white;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 27px;
+
+  font-weight: bold;
+
+  touch-action: none;
+}
+
+.attack-button span {
+  font-size: 9px;
+
+  margin-top: 3px;
+}
+
+.attack-button:active {
+  transform: scale(0.9);
+
+  background: #8a3428;
+}
+
+.mobile-inventory-button {
+  width: 58px;
+  height: 58px;
+
+  border-radius: 50%;
+
+  border:
+    2px solid #b99a43;
+
+  background:
+    rgba(
+      15,
+      25,
+      18,
+      0.95
+    );
+
+  font-size: 25px;
+
+  color: white;
+
+  touch-action: manipulation;
+}
+
+.mobile-inventory-button:active {
+  transform: scale(0.9);
+}
+
+
+/* =====================================================
+   ANCIENT PUZZLE
+===================================================== */
+
+.puzzle-screen {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 2000;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 20px;
+
+  background:
+    radial-gradient(
+      circle,
+      #39482f,
+      #10190f 55%,
+      #020403
+    );
+
+  pointer-events: auto !important;
+
+  touch-action: manipulation;
+}
+
+.puzzle-box {
+  position: relative;
+
+  width: 95%;
+
+  max-width: 650px;
+
+  padding: 35px 25px;
+
+  text-align: center;
+
+  background:
+    rgba(
+      7,
+      12,
+      8,
+      0.97
+    );
+
+  border:
+    2px solid #b4933d;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 0 50px black;
+
+  z-index: 2001;
+
+  pointer-events: auto !important;
+}
+
+.puzzle-label {
+  color: #d8bc61;
+
+  font-size: 13px;
+
+  letter-spacing: 4px;
+
+  font-weight: bold;
+}
+
+.puzzle-box h1 {
+  font-size:
+    clamp(
+      30px,
+      7vw,
+      55px
+    );
+
+  margin: 15px 0;
+}
+
+.puzzle-description {
+  color: #c8d4ca;
+
+  line-height: 1.6;
+}
+
+
+/* =====================================================
+   SEQUENCE
+===================================================== */
+
+.sequence-display {
+  position: relative;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 25px 0;
+
+  z-index: 2005;
+
+  pointer-events: none;
+}
+
+.sequence-display span {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background:
+    #18251b;
+
+  border:
+    2px solid #526b55;
+
+  border-radius: 10px;
+
+  font-size: 30px;
+}
+
+
+/* =====================================================
+   SYMBOL BUTTONS
+   IMPORTANT CLICK / TOUCH FIX
+===================================================== */
+
+.symbol-buttons {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 10px;
+
+  max-width: 450px;
+
+  margin: auto;
+
+  z-index: 2010;
+
+  pointer-events: auto !important;
+}
+
+.symbol-buttons button {
+  position: relative;
+
+  min-height: 65px;
+
+  border:
+    2px solid #526b55;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      #29402d,
+      #132116
+    );
+
+  font-size: 32px;
+
+  color: white;
+
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  cursor: pointer;
+
+  pointer-events: auto !important;
+
+  touch-action:
+    manipulation;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  z-index: 2011;
+}
+
+.symbol-buttons button:hover {
+  transform: scale(1.08);
+
+  border-color:
+    #d5b84f;
+}
+
+.symbol-buttons button:active {
+  transform:
+    scale(0.92);
+
+  border-color:
+    #f1d477;
+
+  background:
+    linear-gradient(
+      #405d43,
+      #1b3020
+    );
+}
+
+.symbol-buttons button.symbol-selected {
+  transform:
+    scale(1.12);
+
+  border-color:
+    #f1d477;
+
+  box-shadow:
+    0 0 20px
+    rgba(
+      241,
+      212,
+      119,
+      0.7
+    );
+}
+
+
+/* =====================================================
+   PUZZLE WRONG SHAKE
+===================================================== */
+
+.puzzle-wrong {
+  animation:
+    puzzleShake 0.4s;
+}
+
+@keyframes puzzleShake {
+
+  0% {
+    transform:
+      translateX(0);
+  }
+
+  25% {
+    transform:
+      translateX(-10px);
+  }
+
+  50% {
+    transform:
+      translateX(10px);
+  }
+
+  75% {
+    transform:
+      translateX(-8px);
+  }
+
+  100% {
+    transform:
+      translateX(0);
+  }
+}
+
+
+/* =====================================================
+   PUZZLE ACTIONS
+===================================================== */
+
+.puzzle-actions {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 20px;
+}
+
+.puzzle-actions button {
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  border:
+    1px solid #877437;
+
+  background:
+    #332a13;
+
+  color: white;
+
+  font-weight: bold;
+
+  touch-action: manipulation;
+}
+
+.puzzle-actions button:active {
+  transform:
+    scale(0.95);
+}
+
+#puzzleMessage {
+  min-height: 25px;
+
+  margin-top: 18px;
+
+  color: #f2d56b;
+
+  font-weight: bold;
+}
+
+.close-puzzle {
+  margin-top: 20px;
+
+  padding: 10px 18px;
+
+  background:
+    transparent;
+
+  color: #9faf9d;
+
+  border:
+    1px solid #4e614f;
+
+  border-radius: 8px;
+
+  touch-action: manipulation;
+}
+
+
+/* =====================================================
+   INVENTORY
+===================================================== */
+
+.inventory-screen {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 2500;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 20px;
+
+  background:
+    radial-gradient(
+      circle,
+      #344b36,
+      #101910 55%,
+      #020403
+    );
+
+  pointer-events: auto;
+}
+
+.inventory-box {
+  width: 95%;
+
+  max-width: 650px;
+
+  padding: 30px 22px;
+
+  background:
+    rgba(
+      7,
+      12,
+      8,
+      0.97
+    );
+
+  border:
+    2px solid #b4933d;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 0 50px black;
+
+  text-align: center;
+}
+
+.inventory-title {
+  color: #f1d477;
+
+  font-size:
+    clamp(
+      28px,
+      6vw,
+      48px
+    );
+
+  font-weight: bold;
+}
+
+.inventory-subtitle {
+  color: #aebbad;
+}
+
+.inventory-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 12px;
+
+  margin-top: 25px;
+}
+
+.inventory-item {
+  min-height: 85px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 12px;
+
+  background:
+    linear-gradient(
+      #243727,
+      #122017
+    );
+
+  border:
+    1px solid #526b55;
+
+  border-radius: 12px;
+
+  text-align: left;
+}
+
+.inventory-item.usable {
+  cursor: pointer;
+}
+
+.inventory-item.usable:hover {
+  border-color:
+    #e4c85e;
+
+  transform:
+    scale(1.02);
+}
+
+.inventory-icon {
+  font-size: 38px;
+}
+
+.inventory-item strong {
+  display: block;
+
+  color: #e9e9e9;
+}
+
+.inventory-item span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #d8bc61;
+
+  font-weight: bold;
+}
+
+#inventoryMessage {
+  min-height: 25px;
+
+  margin: 18px 0;
+
+  color: #f2d56b;
+
+  font-weight: bold;
+}
+
+.close-inventory {
+  padding: 12px 22px;
+
+  border:
+    1px solid #877437;
+
+  border-radius: 10px;
+
+  background:
+    #332a13;
+
+  color: white;
+
+  font-weight: bold;
+
+  touch-action: manipulation;
+}
+
+
+/* =====================================================
+   FORGOTTEN VILLAGE
+===================================================== */
+
+.village-screen {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 3000;
+
+  background:
+    linear-gradient(
+      #162b22,
+      #07100b
+    );
+
+  overflow: hidden;
+}
+
+.village-title {
+  position: absolute;
+
+  top: 18px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  z-index: 20;
+
+  padding: 12px 25px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.75
+    );
+
+  border:
+    1px solid #b99a43;
+
+  color: #f1d477;
+
+  font-size: 25px;
+
+  font-weight: bold;
+}
+
+.village-world {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #3d5637,
+      #152417 55%,
+      #050806
+    );
+}
+
+.village-house {
+  position: absolute;
+
+  font-size: 75px;
+
+  filter:
+    drop-shadow(
+      0 8px 5px
+      rgba(
+        0,
+        0,
+        0,
+        0.5
+      )
+    );
+
+  cursor: pointer;
+}
+
+.house-one {
+  left: 12%;
+  top: 35%;
+}
+
+.house-two {
+  right: 12%;
+  top: 32%;
+}
+
+.village-npc {
+  position: absolute;
+
+  left: 50%;
+  top: 47%;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  font-size: 65px;
+
+  cursor: pointer;
+
+  animation:
+    npcFloat 2s infinite;
+
+  z-index: 10;
+}
+
+.npc-label {
+  position: absolute;
+
+  left: 50%;
+  top: 56%;
+
+  transform:
+    translateX(-50%);
+
+  color: white;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.7
+    );
+
+  padding: 5px 10px;
+
+  border-radius: 7px;
+}
+
+.village-well {
+  position: absolute;
+
+  left: 43%;
+  bottom: 18%;
+
+  font-size: 55px;
+}
+
+.village-tree {
+  position: absolute;
+
+  left: 5%;
+  bottom: 10%;
+
+  font-size: 80px;
+}
+
+.tree-two {
+  left: auto;
+  right: 4%;
+}
+
+.village-quest-box {
+  position: absolute;
+
+  top: 90px;
+  left: 15px;
+
+  width: 230px;
+
+  padding: 15px;
+
+  background:
+    rgba(
+      5,
+      10,
+      6,
+      0.9
+    );
+
+  border:
+    1px solid #9d843f;
+
+  border-radius: 12px;
+
+  color: #d5ddd4;
+}
+
+.village-quest-box strong {
+  color: #f0d36b;
+}
+
+.village-quest-box p {
+  margin: 8px 0;
+
+  font-size: 13px;
+}
+
+.village-quest-box .completed {
+  color: #7dff9c;
+}
+
+
+/* =====================================================
+   DIALOGUE
+===================================================== */
+
+.dialogue-box {
+  position: absolute;
+
+  left: 50%;
+  bottom: 35px;
+
+  transform:
+    translateX(-50%);
+
+  width:
+    min(
+      700px,
+      90%
+    );
+
+  padding: 20px;
+
+  background:
+    rgba(
+      5,
+      8,
+      5,
+      0.96
+    );
+
+  border:
+    2px solid #b99a43;
+
+  border-radius: 15px;
+
+  z-index: 50;
+}
+
+.dialogue-text {
+  min-height: 55px;
+
+  color: white;
+
+  font-size: 18px;
+
+  line-height: 1.5;
+}
+
+#dialogueNext {
+  margin-top: 12px;
+
+  padding: 10px 20px;
+
+  border: 0;
+
+  border-radius: 8px;
+
+  background:
+    #705b24;
+
+  color: white;
+
+  font-weight: bold;
+}
+
+.village-back {
+  position: absolute;
+
+  right: 18px;
+  bottom: 18px;
+
+  z-index: 60;
+
+  padding: 10px 18px;
+
+  border-radius: 9px;
+
+  border:
+    1px solid #8e793c;
+
+  background:
+    #1d291e;
+
+  color: white;
+}
+
+@keyframes npcFloat {
+
+  0%,
+  100% {
+    transform:
+      translate(
+        -50%,
+        -50%
+      );
+  }
+
+  50% {
+    transform:
+      translate(
+        -50%,
+        -57%
+      );
+  }
+}
+
+
+/* =====================================================
+   HIDDEN OBJECT HOUSE
+===================================================== */
+
+.hidden-house-screen {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 4000;
+
+  background:
+    #080b08;
+}
+
+.hidden-house-world {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #4b3d2b,
+      #1d1710 55%,
+      #070605
+    );
+
+  overflow: hidden;
+}
+
+.hidden-house-title {
+  position: absolute;
+
+  top: 18px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  z-index: 20;
+
+  padding: 12px 22px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.85
+    );
+
+  border:
+    1px solid #c0a34b;
+
+  color: #f2d477;
+
+  font-size: 22px;
+
+  font-weight: bold;
+}
+
+.hidden-object {
+  position: absolute;
+
+  z-index: 10;
+
+  font-size: 55px;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    transform 0.2s,
+    opacity 0.3s;
+
+  touch-action: manipulation;
+}
+
+.hidden-object:hover {
+  transform:
+    scale(1.15);
+}
+
+.hidden-object.found {
+  opacity: 0;
+
+  transform:
+    scale(1.7);
+
+  pointer-events: none;
+}
+
+.object-chair {
+  left: 12%;
+  top: 30%;
+}
+
+.object-box {
+  right: 15%;
+  top: 25%;
+}
+
+.object-mirror {
+  left: 45%;
+  top: 24%;
+}
+
+.object-key {
+  left: 28%;
+  top: 65%;
+}
+
+.object-map {
+  right: 27%;
+  top: 62%;
+}
+
+.object-gem {
+  left: 63%;
+  top: 43%;
+}
+
+.object-candle {
+  left: 16%;
+  top: 52%;
+}
+
+.hidden-target {
+  position: absolute;
+
+  bottom: 20px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  width: 90%;
+
+  max-width: 600px;
+
+  padding: 13px;
+
+  text-align: center;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.85
+    );
+
+  border:
+    1px solid #8c7436;
+
+  border-radius: 12px;
+
+  color: white;
+
+  z-index: 20;
+}
+
+.hidden-target span {
+  margin-left: 12px;
+
+  font-size: 25px;
+}
+
+.hidden-progress-box {
+  position: absolute;
+
+  top: 75px;
+  right: 20px;
+
+  padding: 10px 15px;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.8
+    );
+
+  border-radius: 9px;
+
+  color: white;
+
+  z-index: 20;
+}
+
+.hidden-progress-box strong {
+  color: #f1d477;
+}
+
+.hidden-message {
+  position: absolute;
+
+  top: 75px;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  padding: 10px 18px;
+
+  border-radius: 9px;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.85
+    );
+
+  font-weight: bold;
+
+  z-index: 30;
+}
+
+.close-house {
+  position: absolute;
+
+  top: 20px;
+  left: 20px;
+
+  z-index: 30;
+
+  padding: 10px 16px;
+
+  border-radius: 8px;
+
+  border:
+    1px solid #8c7436;
+
+  background:
+    #211b10;
+
+  color: white;
+}
+
+
+/* =====================================================
+   SHADOW CASTLE
+===================================================== */
+
+.shadow-castle-screen {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 5000;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background:
+    radial-gradient(
+      circle,
+      #251f38,
+      #0b0812 60%,
+      #020103
+    );
+}
+
+.shadow-castle-content {
+  width: 90%;
+
+  max-width: 700px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  background:
+    rgba(
+      5,
+      4,
+      10,
+      0.95
+    );
+
+  border:
+    2px solid #7764a8;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 0 50px black;
+}
+
+.shadow-castle-content h1 {
+  color: #c9b8ff;
+}
+
+.shadow-castle-content p {
+  color: #c9c4d8;
+
+  font-size: 18px;
+}
+
+
+/* =====================================================
+   OLD CONTROLS HIDDEN
+===================================================== */
+
+.controls {
+  display: none !important;
+}
+
+.keyboard-help {
+  display: none !important;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .story {
+    font-size: 16px;
+  }
+
+  .title-screen {
+    padding: 35px 18px;
+  }
+
+  .start-button {
+    width: 100%;
+  }
+
+  #questPanel {
+    top: 65px;
+    left: 8px;
+
+    width: 190px;
+
+    padding: 10px;
+  }
+
+  .quest-item {
+    font-size: 12px;
+  }
+
+  .symbol-buttons {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    max-width: 330px;
+  }
+
+  .symbol-buttons button {
+    min-height: 62px;
+
+    font-size: 30px;
+  }
+
+  .sequence-display {
+    gap: 6px;
+  }
+
+  .sequence-display span {
+    width: 50px;
+    height: 50px;
+
+    font-size: 27px;
+  }
+
+  .inventory-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .inventory-box {
+    max-height: 90vh;
+
+    overflow-y: auto;
+  }
+
+  .village-title {
+    font-size: 18px;
+
+    padding: 9px 15px;
+  }
+
+  .village-quest-box {
+    width: 180px;
+
+    top: 65px;
+    left: 8px;
+  }
+
+  .village-house {
+    font-size: 55px;
+  }
+
+  .dialogue-text {
+    font-size: 15px;
+  }
+
+  .hidden-house-title {
+    font-size: 16px;
+
+    top: 15px;
+  }
+
+  .hidden-object {
+    font-size: 42px;
+  }
+
+  .hidden-target {
+    font-size: 13px;
+  }
+
+  .hidden-target span {
+    margin-left: 5px;
+  }
+
+  .controls-wrapper {
+    bottom: 15px;
+
+    width: 96vw;
+  }
+
+  .dpad {
+    transform:
+      scale(0.82);
+
+    transform-origin:
+      bottom left;
+  }
+
+  .action-controls {
+    gap: 8px;
+  }
+
+  .attack-button {
+    width: 72px;
+    height: 72px;
+  }
+
+  .mobile-inventory-button {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 420px) {
+
+  .controls-wrapper {
+    bottom: 8px;
+  }
+
+  .dpad {
+    transform:
+      scale(0.72);
+  }
+
+  .attack-button {
+    width: 65px;
+    height: 65px;
+
+    font-size: 23px;
+  }
+
+  .mobile-inventory-button {
+    width: 48px;
+    height: 48px;
+
+    font-size: 21px;
+  }
+
+  .puzzle-box {
+    padding:
+      25px 15px;
+  }
+
+  .puzzle-description {
+    font-size: 14px;
+  }
+
+  .symbol-buttons {
+    gap: 8px;
+  }
+
+  .symbol-buttons button {
+    min-height: 58px;
+
+    font-size: 27px;
+  }
+
+  .sequence-display {
+    margin: 18px 0;
+  }
+
+  .sequence-display span {
+    width: 46px;
+    height: 46px;
+
+    font-size: 24px;
+  }
+}
+
+
+/* =====================================================
+   VERY SMALL SCREENS
+===================================================== */
+
+@media (max-width: 350px) {
+
+  .symbol-buttons button {
+    min-height: 52px;
+
+    font-size: 24px;
+  }
+
+  .sequence-display span {
+    width: 42px;
+    height: 42px;
+
+    font-size: 22px;
+  }
+
+  .controls-wrapper {
+    width: 100vw;
+  }
+}
+
+
+/* =====================================================
+   TOUCH SAFETY
+===================================================== */
+
+.symbol-buttons,
+.symbol-buttons button,
+.puzzle-actions button,
+.close-puzzle,
+.inventory-button,
+.mobile-inventory-button,
+.attack-button,
+.dpad button {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+
+/* =====================================================
+   PREVENT PUZZLE BACKGROUND INTERFERENCE
+===================================================== */
+
+.puzzle-screen::before,
+.puzzle-screen::after,
+.puzzle-box::before,
+.puzzle-box::after {
+  pointer-events: none !important;
+}
