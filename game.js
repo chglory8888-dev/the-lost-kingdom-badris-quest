@@ -91,7 +91,49 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("keyup", (event) => {
   keys[event.code] = false;
 });
+const attackButton =
+  document.getElementById("attackButton");
 
+if (attackButton) {
+
+  attackButton.addEventListener(
+    "pointerdown",
+    (event) => {
+
+      event.preventDefault();
+
+      attack();
+
+    }
+  );
+
+}
+
+
+const mobileInventoryButton =
+  document.getElementById(
+    "mobileInventoryButton"
+  );
+
+if (mobileInventoryButton) {
+
+  mobileInventoryButton.addEventListener(
+    "click",
+    () => {
+
+      if (
+        typeof window.toggleInventory ===
+        "function"
+      ) {
+
+        window.toggleInventory();
+
+      }
+
+    }
+  );
+
+}
 
 /* =========================
    MOBILE CONTROLS
