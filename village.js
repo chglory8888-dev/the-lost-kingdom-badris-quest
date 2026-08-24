@@ -1,18 +1,16 @@
 /* =====================================================
-   FORGOTTEN VILLAGE — CHAPTER 2
-   VILLAGE.JS
+   THE LOST KINGDOM: BADRI'S QUEST
+   CHAPTER 2 — FORGOTTEN VILLAGE
+   VILLAGE CONTROLLER
 ===================================================== */
-
-let villageKey = false;
-let villagerTalked = false;
-let houseUnlocked = false;
-
-let dialogueStep = 0;
 
 
 /* =====================================================
    ELEMENTS
 ===================================================== */
+
+const villageScreen =
+  document.getElementById("villageScreen");
 
 const villageNpc =
   document.getElementById("villageNpc");
@@ -29,151 +27,157 @@ const dialogueNext =
 const villageQuest =
   document.getElementById("villageQuest");
 
-const abandonedHouse =
-  document.getElementById("abandonedHouse");
+const closeVillageButton =
+  document.querySelector(".village-back");
+
+const shadowCastleScreen =
+  document.getElementById("shadowCastleScreen");
+
+
+/* =====================================================
+   VILLAGE STATE
+===================================================== */
+
+let villageDialogueIndex = 0;
+
+let villageDialogueOpen = false;
+
+let villagerTalked = false;
+
+let villageKeyFound = false;
+
+let houseSearched = false;
+
+let kingSecretFound = false;
+
+let shadowPathUnlocked = false;
 
 
 /* =====================================================
    DIALOGUE
 ===================================================== */
 
-const villagerDialogue = [
+const villageDialogue = [
 
-  "👴 Old Villager: Brave traveler... who are you?",
+  "👴 Old Villager: Brave traveler... why have you come to our forgotten village?",
 
-  "🧙 Badri: I am Badri. I am searching for King Manu.",
+  "🧙 Badri: I am searching for King Manu. He disappeared from Eldoria.",
 
-  "👴 Old Villager: King Manu was taken to the Shadow Castle.",
+  "👴 Old Villager: King Manu came here many nights ago. He was searching for an ancient secret.",
 
-  "👴 Old Villager: But the path is sealed by an ancient magic.",
+  "👴 Old Villager: But the Shadow Castle guards discovered him.",
 
-  "🧙 Badri: How can I reach the castle?",
+  "🧙 Badri: Where is the Shadow Castle?",
 
-  "👴 Old Villager: First, find the Village Key hidden inside the abandoned house.",
+  "👴 Old Villager: The path is sealed. Only the Village Key can open it.",
 
-  "👴 Old Villager: Search carefully. Four magical objects are hidden there.",
+  "👴 Old Villager: Search the abandoned house. You may find what you need there.",
 
-  "🧙 Badri: I will find them and rescue King Manu!",
+  "🧙 Badri: I will find the key and rescue King Manu!",
 
-  "👴 Old Villager: Good luck, brave Badri. The kingdom is counting on you!"
+  "👴 Old Villager: Be careful, Badri. The darkness is watching you..."
 
 ];
 
 
 /* =====================================================
-   OPEN VILLAGE
+   QUEST UPDATE
 ===================================================== */
 
-window.openVillage =
-  function () {
+function updateVillageQuest() {
 
-    const gameScreen =
-      document.getElementById(
-        "gameScreen"
-      );
-
-    const villageScreen =
-      document.getElementById(
-        "villageScreen"
-      );
+  if (!villageQuest) {
+    return;
+  }
 
 
-    if (gameScreen) {
+  if (!villagerTalked) {
 
-      gameScreen.classList.add(
-        "hidden"
-      );
+    villageQuest.textContent =
+      "☐ Talk to the Old Villager";
 
-    }
-
-
-    if (villageScreen) {
-
-      villageScreen.classList.remove(
-        "hidden"
-      );
-
-    }
-
-
-    updateVillageQuest();
-
-  };
-
-
-/* =====================================================
-   CLOSE VILLAGE
-===================================================== */
-
-window.closeVillage =
-  function () {
-
-    const villageScreen =
-      document.getElementById(
-        "villageScreen"
-      );
-
-    const gameScreen =
-      document.getElementById(
-        "gameScreen"
-      );
-
-
-    if (villageScreen) {
-
-      villageScreen.classList.add(
-        "hidden"
-      );
-
-    }
-
-
-    if (gameScreen) {
-
-      gameScreen.classList.remove(
-        "hidden"
-      );
-
-    }
-
-  };
-
-
-/* =====================================================
-   START DIALOGUE
-===================================================== */
-
-function startVillagerDialogue() {
-
-  dialogueStep = 0;
-
-  villagerTalked = true;
-
-  if (dialogueBox) {
-
-    dialogueBox.classList.remove(
-      "hidden"
-    );
+    return;
 
   }
 
 
-  showDialogue();
+  if (!villageKeyFound) {
 
-  updateVillageQuest();
+    villageQuest.textContent =
+      "☐ Find the Village Key";
+
+    return;
+
+  }
+
+
+  if (!houseSearched) {
+
+    villageQuest.textContent =
+      "☐ Search the Abandoned House";
+
+    return;
+
+  }
+
+
+  if (!kingSecretFound) {
+
+    villageQuest.textContent =
+      "☐ Discover King Manu's Secret";
+
+    return;
+
+  }
+
+
+  if (!shadowPathUnlocked) {
+
+    villageQuest.textContent =
+      "☐ Open the Shadow Castle Path";
+
+    return;
+
+  }
+
+
+  villageQuest.textContent =
+    "✅ Shadow Castle Path Unlocked!";
 
 }
 
 
-window.startVillagerDialogue =
-  startVillagerDialogue;
+/* =====================================================
+   OPEN VILLAGER DIALOGUE
+===================================================== */
+
+function openVillageDialogue() {
+
+  if (!dialogueBox || !dialogueText) {
+    return;
+  }
+
+
+  villageDialogueOpen = true;
+
+  villageDialogueIndex = 0;
+
+
+  dialogueBox.classList.remove(
+    "hidden"
+  );
+
+
+  showDialogueLine();
+
+}
 
 
 /* =====================================================
    SHOW DIALOGUE
 ===================================================== */
 
-function showDialogue() {
+function showDialogueLine() {
 
   if (!dialogueText) {
     return;
@@ -181,11 +185,11 @@ function showDialogue() {
 
 
   if (
-    dialogueStep >=
-    villagerDialogue.length
+    villageDialogueIndex >=
+    villageDialogue.length
   ) {
 
-    finishDialogue();
+    finishVillageDialogue();
 
     return;
 
@@ -193,9 +197,20 @@ function showDialogue() {
 
 
   dialogueText.textContent =
-    villagerDialogue[
-      dialogueStep
+    villageDialogue[
+      villageDialogueIndex
     ];
+
+
+  if (dialogueNext) {
+
+    dialogueNext.textContent =
+      villageDialogueIndex ===
+        villageDialogue.length - 1
+        ? "✓ FINISH"
+        : "NEXT →";
+
+  }
 
 }
 
@@ -204,18 +219,29 @@ function showDialogue() {
    NEXT DIALOGUE
 ===================================================== */
 
-if (dialogueNext) {
+function nextDialogue() {
 
-  dialogueNext.addEventListener(
-    "click",
-    function () {
+  if (!villageDialogueOpen) {
+    return;
+  }
 
-      dialogueStep++;
 
-      showDialogue();
+  villageDialogueIndex++;
 
-    }
-  );
+
+  if (
+    villageDialogueIndex >=
+    villageDialogue.length
+  ) {
+
+    finishVillageDialogue();
+
+    return;
+
+  }
+
+
+  showDialogueLine();
 
 }
 
@@ -224,7 +250,12 @@ if (dialogueNext) {
    FINISH DIALOGUE
 ===================================================== */
 
-function finishDialogue() {
+function finishVillageDialogue() {
+
+  villageDialogueOpen = false;
+
+  villagerTalked = true;
+
 
   if (dialogueBox) {
 
@@ -235,8 +266,6 @@ function finishDialogue() {
   }
 
 
-  villagerTalked = true;
-
   updateVillageQuest();
 
 
@@ -246,7 +275,7 @@ function finishDialogue() {
   ) {
 
     window.showMessage(
-      "🔎 Quest updated: Search the Abandoned House!"
+      "📜 Quest Updated: Search the Abandoned House!"
     );
 
   }
@@ -264,7 +293,7 @@ if (villageNpc) {
     "click",
     function () {
 
-      startVillagerDialogue();
+      openVillageDialogue();
 
     }
   );
@@ -281,7 +310,7 @@ if (villageNpc) {
 
         event.preventDefault();
 
-        startVillagerDialogue();
+        openVillageDialogue();
 
       }
 
@@ -292,74 +321,38 @@ if (villageNpc) {
 
 
 /* =====================================================
-   VILLAGE QUEST
+   DIALOGUE NEXT BUTTON
 ===================================================== */
 
-function updateVillageQuest() {
+if (dialogueNext) {
 
-  if (!villageQuest) {
-    return;
-  }
+  dialogueNext.addEventListener(
+    "click",
+    function () {
 
+      nextDialogue();
 
-  if (!villagerTalked) {
-
-    villageQuest.innerHTML =
-      "☐ Talk to the Old Villager";
-
-    return;
-
-  }
-
-
-  if (!villageKey) {
-
-    villageQuest.innerHTML =
-      "☑ Talk to the Old Villager<br>" +
-      "☐ Find the Village Key<br>" +
-      "☐ Search the Abandoned House<br>" +
-      "☐ Discover King Manu's Secret";
-
-    return;
-
-  }
-
-
-  villageQuest.innerHTML =
-    "☑ Talk to the Old Villager<br>" +
-    "☑ Find the Village Key<br>" +
-    "☑ Search the Abandoned House<br>" +
-    "☐ Discover King Manu's Secret<br>" +
-    "☐ Open the Shadow Castle Path";
+    }
+  );
 
 }
-
-
-window.updateVillageQuest =
-  updateVillageQuest;
 
 
 /* =====================================================
    VILLAGE KEY
 ===================================================== */
 
-window.giveVillageKey =
+window.collectVillageKey =
   function () {
 
-    villageKey = true;
+    if (villageKeyFound) {
+      return;
+    }
 
-    houseUnlocked = true;
 
-
-    /*
-     * Make the key available
-     * to inventory.js
-     */
+    villageKeyFound = true;
 
     window.villageKey = true;
-
-
-    updateVillageQuest();
 
 
     if (
@@ -372,30 +365,17 @@ window.giveVillageKey =
     }
 
 
+    updateVillageQuest();
+
+
     if (
       typeof window.showMessage ===
       "function"
     ) {
 
       window.showMessage(
-        "🗝️ Village Key found!"
+        "🗝️ Village Key obtained!"
       );
-
-    }
-
-
-    /*
-     * Unlock abandoned house
-     */
-
-    if (abandonedHouse) {
-
-      abandonedHouse.classList.add(
-        "unlocked"
-      );
-
-      abandonedHouse.title =
-        "Enter Abandoned House";
 
     }
 
@@ -403,82 +383,27 @@ window.giveVillageKey =
 
 
 /* =====================================================
-   OPEN ABANDONED HOUSE
+   HOUSE SEARCH COMPLETE
 ===================================================== */
 
-if (abandonedHouse) {
+window.completeHouseSearch =
+  function () {
 
-  abandonedHouse.addEventListener(
-    "click",
-    function () {
-
-      if (!villagerTalked) {
-
-        if (
-          typeof window.showMessage ===
-          "function"
-        ) {
-
-          window.showMessage(
-            "👴 Talk to the Old Villager first."
-          );
-
-        }
-
-        return;
-
-      }
-
-
-      if (
-        typeof window.openHiddenHouse ===
-        "function"
-      ) {
-
-        window.openHiddenHouse();
-
-      }
-
+    if (houseSearched) {
+      return;
     }
-  );
-
-}
 
 
-/* =====================================================
-   VILLAGE KEY STATUS
-===================================================== */
-
-window.hasVillageKey =
-  function () {
-
-    return villageKey;
-
-  };
+    houseSearched = true;
 
 
-/* =====================================================
-   RESET VILLAGE
-===================================================== */
+    if (
+      typeof window.showMessage ===
+      "function"
+    ) {
 
-window.resetVillage =
-  function () {
-
-    villageKey = false;
-
-    villagerTalked = false;
-
-    houseUnlocked = false;
-
-    dialogueStep = 0;
-
-    window.villageKey = false;
-
-
-    if (dialogueBox) {
-
-      dialogueBox.classList.add(
-        "hidden"
+      window.showMessage(
+        "🏚️ The abandoned house has been searched!"
       );
 
     }
@@ -490,7 +415,384 @@ window.resetVillage =
 
 
 /* =====================================================
-   INITIAL STATE
+   KING SECRET
 ===================================================== */
 
+window.discoverKingSecret =
+  function () {
+
+    if (kingSecretFound) {
+      return;
+    }
+
+
+    kingSecretFound = true;
+
+
+    updateVillageQuest();
+
+
+    if (
+      typeof window.showMessage ===
+      "function"
+    ) {
+
+      window.showMessage(
+        "👑 King Manu left a secret message!"
+      );
+
+    }
+
+
+    setTimeout(
+      function () {
+
+        showKingSecret();
+
+      },
+      1000
+    );
+
+  };
+
+
+/* =====================================================
+   KING SECRET MESSAGE
+===================================================== */
+
+function showKingSecret() {
+
+  if (!dialogueBox || !dialogueText) {
+    return;
+  }
+
+
+  villageDialogueOpen = true;
+
+
+  dialogueBox.classList.remove(
+    "hidden"
+  );
+
+
+  dialogueText.textContent =
+    "📜 King Manu's Message: 'Badri... if you have found this message, follow the ancient path to the Shadow Castle. The darkness begins there.'";
+
+
+  if (dialogueNext) {
+
+    dialogueNext.textContent =
+      "UNLOCK PATH →";
+
+  }
+
+
+  const secretHandler =
+    function () {
+
+      dialogueNext.removeEventListener(
+        "click",
+        secretHandler
+      );
+
+
+      dialogueBox.classList.add(
+        "hidden"
+      );
+
+
+      villageDialogueOpen = false;
+
+
+      unlockShadowCastlePath();
+
+    };
+
+
+  dialogueNext.addEventListener(
+    "click",
+    secretHandler
+  );
+
+}
+
+
+/* =====================================================
+   UNLOCK SHADOW CASTLE
+===================================================== */
+
+function unlockShadowCastlePath() {
+
+  if (shadowPathUnlocked) {
+    return;
+  }
+
+
+  shadowPathUnlocked = true;
+
+
+  updateVillageQuest();
+
+
+  if (
+    typeof window.showMessage ===
+    "function"
+  ) {
+
+    window.showMessage(
+      "🏰 Shadow Castle Path unlocked!"
+    );
+
+  }
+
+
+  createCastlePathButton();
+
+}
+
+
+/* =====================================================
+   CREATE CASTLE PATH BUTTON
+===================================================== */
+
+function createCastlePathButton() {
+
+  let pathButton =
+    document.getElementById(
+      "shadowCastleButton"
+    );
+
+
+  if (pathButton) {
+
+    pathButton.classList.remove(
+      "hidden"
+    );
+
+    return;
+
+  }
+
+
+  pathButton =
+    document.createElement(
+      "button"
+    );
+
+
+  pathButton.id =
+    "shadowCastleButton";
+
+
+  pathButton.type =
+    "button";
+
+
+  pathButton.textContent =
+    "🏰 ENTER SHADOW CASTLE";
+
+
+  pathButton.style.position =
+    "absolute";
+
+
+  pathButton.style.left =
+    "50%";
+
+
+  pathButton.style.bottom =
+    "90px";
+
+
+  pathButton.style.transform =
+    "translateX(-50%)";
+
+
+  pathButton.style.zIndex =
+    "100";
+
+
+  pathButton.style.padding =
+    "15px 25px";
+
+
+  pathButton.style.border =
+    "2px solid #d4b650";
+
+
+  pathButton.style.borderRadius =
+    "12px";
+
+
+  pathButton.style.background =
+    "linear-gradient(#5d4720,#241b09)";
+
+
+  pathButton.style.color =
+    "white";
+
+
+  pathButton.style.fontWeight =
+    "bold";
+
+
+  pathButton.style.fontSize =
+    "16px";
+
+
+  pathButton.style.cursor =
+    "pointer";
+
+
+  pathButton.style.boxShadow =
+    "0 0 20px rgba(212,182,80,.4)";
+
+
+  pathButton.addEventListener(
+    "click",
+    function () {
+
+      openShadowCastle();
+
+    }
+  );
+
+
+  if (villageScreen) {
+
+    villageScreen.appendChild(
+      pathButton
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   OPEN SHADOW CASTLE
+===================================================== */
+
+function openShadowCastle() {
+
+  if (!shadowPathUnlocked) {
+
+    if (
+      typeof window.showMessage ===
+      "function"
+    ) {
+
+      window.showMessage(
+        "🔒 The Shadow Castle path is still locked!"
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  if (villageScreen) {
+
+    villageScreen.classList.add(
+      "hidden"
+    );
+
+  }
+
+
+  if (shadowCastleScreen) {
+
+    shadowCastleScreen.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  if (
+    typeof window.showMessage ===
+    "function"
+  ) {
+
+    window.showMessage(
+      "🏰 Chapter 3 — Shadow Castle"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   RETURN TO VILLAGE
+===================================================== */
+
+window.closeVillage =
+  function () {
+
+    if (dialogueBox) {
+
+      dialogueBox.classList.add(
+        "hidden"
+      );
+
+    }
+
+
+    villageDialogueOpen = false;
+
+
+    if (villageScreen) {
+
+      villageScreen.classList.add(
+        "hidden"
+      );
+
+    }
+
+
+    const gameScreen =
+      document.getElementById(
+        "gameScreen"
+      );
+
+
+    if (gameScreen) {
+
+      gameScreen.classList.remove(
+        "hidden"
+      );
+
+    }
+
+  };
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+window.villageKey =
+  window.villageKey || false;
+
+
 updateVillageQuest();
+
+
+/* =====================================================
+   EXPORT
+===================================================== */
+
+window.openVillageDialogue =
+  openVillageDialogue;
+
+window.nextDialogue =
+  nextDialogue;
+
+window.updateVillageQuest =
+  updateVillageQuest;
+
+window.openShadowCastle =
+  openShadowCastle;
