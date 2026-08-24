@@ -1675,3 +1675,322 @@ h2 {
   }
 
 }
+/* =========================
+   HIDDEN OBJECT HOUSE
+========================= */
+
+.hidden-house-screen {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 400;
+
+  background:
+    #080b08;
+
+}
+
+
+.hidden-house-world {
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #4b3d2b,
+      #1d1710 55%,
+      #070605
+    );
+
+  overflow: hidden;
+
+}
+
+
+.hidden-house-title {
+
+  position: absolute;
+
+  top: 18px;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  z-index: 20;
+
+  padding: 12px 22px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(0,0,0,.85);
+
+  border:
+    1px solid #c0a34b;
+
+  color: #f2d477;
+
+  font-size: 22px;
+
+  font-weight: bold;
+
+}
+
+
+.hidden-object {
+
+  position: absolute;
+
+  z-index: 10;
+
+  font-size: 55px;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition:
+    transform .2s,
+    opacity .3s;
+
+}
+
+
+.hidden-object:hover {
+
+  transform:
+    scale(1.15);
+
+}
+
+
+.hidden-object.found {
+
+  opacity: 0;
+
+  transform:
+    scale(1.7);
+
+  pointer-events: none;
+
+}
+
+
+/* WRONG OBJECTS */
+
+.object-chair {
+
+  left: 12%;
+
+  top: 30%;
+
+}
+
+
+.object-box {
+
+  right: 15%;
+
+  top: 25%;
+
+}
+
+
+.object-mirror {
+
+  left: 45%;
+
+  top: 24%;
+
+}
+
+
+/* CORRECT OBJECTS */
+
+.object-key {
+
+  left: 28%;
+
+  top: 65%;
+
+}
+
+
+.object-map {
+
+  right: 27%;
+
+  top: 62%;
+
+}
+
+
+.object-gem {
+
+  left: 63%;
+
+  top: 43%;
+
+}
+
+
+.object-candle {
+
+  left: 16%;
+
+  top: 52%;
+
+}
+
+
+.hidden-target {
+
+  position: absolute;
+
+  bottom: 20px;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  width: 90%;
+
+  max-width: 600px;
+
+  padding: 13px;
+
+  text-align: center;
+
+  background:
+    rgba(0,0,0,.85);
+
+  border:
+    1px solid #8c7436;
+
+  border-radius: 12px;
+
+  color: white;
+
+}
+
+
+.hidden-target span {
+
+  margin-left: 12px;
+
+  font-size: 25px;
+
+}
+
+
+.hidden-progress-box {
+
+  position: absolute;
+
+  top: 75px;
+
+  right: 20px;
+
+  padding: 10px 15px;
+
+  background:
+    rgba(0,0,0,.8);
+
+  border-radius: 9px;
+
+  color: white;
+
+}
+
+
+.hidden-progress-box strong {
+
+  color: #f1d477;
+
+}
+
+
+.hidden-message {
+
+  position: absolute;
+
+  top: 75px;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  padding: 10px 18px;
+
+  border-radius: 9px;
+
+  background:
+    rgba(0,0,0,.85);
+
+  font-weight: bold;
+
+}
+
+
+.close-house {
+
+  position: absolute;
+
+  top: 20px;
+
+  left: 20px;
+
+  z-index: 30;
+
+  padding: 10px 16px;
+
+  border-radius: 8px;
+
+  border:
+    1px solid #8c7436;
+
+  background: #211b10;
+
+  color: white;
+
+}
+
+
+@media (max-width: 600px) {
+
+  .hidden-house-title {
+
+    font-size: 16px;
+
+    top: 15px;
+
+  }
+
+  .hidden-object {
+
+    font-size: 42px;
+
+  }
+
+  .hidden-target {
+
+    font-size: 13px;
+
+  }
+
+  .hidden-target span {
+
+    margin-left: 5px;
+
+  }
+
+}
