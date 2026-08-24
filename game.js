@@ -1559,3 +1559,377 @@ window.showMessage =
 
 window.resetPlayer =
   resetPlayer;
+/* =====================================================
+   CHAPTER 2 — FORGOTTEN VILLAGE
+===================================================== */
+
+window.villageUnlocked = false;
+window.villageKey = false;
+window.manuQuestStarted = false;
+window.manuFound = false;
+
+
+/* =====================================================
+   UNLOCK ANCIENT GATE
+===================================================== */
+
+window.unlockAncientGate = function () {
+
+  window.gateUnlocked = true;
+
+  showMessage(
+    "🔓 Ancient Gate unlocked!"
+  );
+
+  if (ancientGate) {
+
+    ancientGate.classList.add(
+      "gate-open"
+    );
+
+  }
+
+  setTimeout(
+    function () {
+
+      window.openChapter2();
+
+    },
+    1200
+  );
+
+};
+
+
+/* =====================================================
+   CHAPTER 2 START
+===================================================== */
+
+window.startVillageChapter = function () {
+
+  window.villageUnlocked = true;
+
+  window.manuQuestStarted = true;
+
+  showMessage(
+    "🏘️ Forgotten Village discovered!"
+  );
+
+  setTimeout(
+    function () {
+
+      showMessage(
+        "👑 Find King Manu and discover the secret of Badri's Quest!"
+      );
+
+    },
+    2500
+  );
+
+};
+
+
+/* =====================================================
+   KING MANU
+===================================================== */
+
+const kingManu =
+  document.getElementById(
+    "kingManu"
+  );
+
+
+if (kingManu) {
+
+  kingManu.addEventListener(
+    "click",
+    function () {
+
+      if (!window.villageUnlocked) {
+
+        showMessage(
+          "🔒 Complete the Ancient Gate first!"
+        );
+
+        return;
+
+      }
+
+
+      if (!window.manuQuestStarted) {
+
+        window.manuQuestStarted =
+          true;
+
+        showMessage(
+          "👑 King Manu: Badri, I need your help!"
+        );
+
+        return;
+
+      }
+
+
+      if (!window.manuFound) {
+
+        showMessage(
+          "👑 King Manu: Find the Lost Crystal and return to me."
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   LOST CRYSTAL QUEST
+===================================================== */
+
+window.completeManuQuest =
+  function () {
+
+    if (!window.manuQuestStarted) {
+
+      return;
+
+    }
+
+
+    if (crystal < 1) {
+
+      showMessage(
+        "💎 King Manu needs the Lost Crystal!"
+      );
+
+      return;
+
+    }
+
+
+    window.manuFound = true;
+
+
+    coins += 10;
+
+
+    if (coinsText) {
+
+      coinsText.textContent =
+        coins;
+
+    }
+
+
+    updateInventory();
+
+
+    showMessage(
+      "👑 Quest Complete! King Manu rewarded you with 10 coins!"
+    );
+
+
+    setTimeout(
+      function () {
+
+        showMessage(
+          "🗺️ A new path has appeared..."
+        );
+
+      },
+      2500
+    );
+
+  };
+
+
+/* =====================================================
+   VILLAGE KEY
+===================================================== */
+
+window.collectVillageKey =
+  function () {
+
+    if (window.villageKey) {
+
+      return;
+
+    }
+
+
+    window.villageKey = true;
+
+
+    updateInventory();
+
+
+    showMessage(
+      "🗝️ Village Key collected!"
+    );
+
+  };
+
+
+/* =====================================================
+   VILLAGE DOOR
+===================================================== */
+
+const villageDoor =
+  document.getElementById(
+    "villageDoor"
+  );
+
+
+if (villageDoor) {
+
+  villageDoor.addEventListener(
+    "click",
+    function () {
+
+      if (!window.villageKey) {
+
+        showMessage(
+          "🔒 The door is locked. Find the Village Key."
+        );
+
+        return;
+
+      }
+
+
+      showMessage(
+        "🚪 The mysterious house is open!"
+      );
+
+
+      if (
+        typeof window.openHiddenHouse ===
+        "function"
+      ) {
+
+        window.openHiddenHouse();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   VILLAGE MINI GAME
+===================================================== */
+
+window.villageMiniGame =
+  function () {
+
+    if (!window.villageUnlocked) {
+
+      showMessage(
+        "🔒 Unlock the Forgotten Village first."
+      );
+
+      return;
+
+    }
+
+
+    const answer =
+      prompt(
+        "🧩 MINI GAME\n\nWhich item belongs to a King?\n\n1. Crown\n2. Spoon\n3. Shoe"
+      );
+
+
+    if (answer === "1") {
+
+      coins += 5;
+
+
+      if (coinsText) {
+
+        coinsText.textContent =
+          coins;
+
+      }
+
+
+      updateInventory();
+
+
+      showMessage(
+        "🎉 Correct! +5 Coins"
+      );
+
+    }
+    else if (
+      answer !== null
+    ) {
+
+      showMessage(
+        "❌ Wrong answer! Try again."
+      );
+
+    }
+
+  };
+
+
+/* =====================================================
+   NEXT CHAPTER
+===================================================== */
+
+window.unlockNextChapter =
+  function () {
+
+    if (!window.manuFound) {
+
+      showMessage(
+        "👑 Complete King Manu's quest first!"
+      );
+
+      return;
+
+    }
+
+
+    showMessage(
+      "🌋 Chapter 3 unlocked — Dark Mountain!"
+    );
+
+
+    window.chapter3Unlocked =
+      true;
+
+  };
+
+
+/* =====================================================
+   CHAPTER STATUS
+===================================================== */
+
+window.getChapterStatus =
+  function () {
+
+    return {
+
+      gateUnlocked:
+        window.gateUnlocked,
+
+      villageUnlocked:
+        window.villageUnlocked,
+
+      manuQuestStarted:
+        window.manuQuestStarted,
+
+      manuFound:
+        window.manuFound,
+
+      chapter3Unlocked:
+        !!window.chapter3Unlocked
+
+    };
+
+  };
