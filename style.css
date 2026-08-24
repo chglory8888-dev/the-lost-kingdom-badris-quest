@@ -1995,144 +1995,331 @@ h2 {
 
 }
 /* =========================================
-   GAME CONTROLS - FIXED POSITION
+   PROFESSIONAL GAME CONTROLS
 ========================================= */
 
-#gameScreen {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
+.controls-wrapper {
+
+  position: fixed;
+
+  left: 50%;
+
+  bottom: 22px;
+
+  transform: translateX(-50%);
+
+  z-index: 999;
+
+  width: min(620px, 94vw);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+  pointer-events: none;
+
 }
 
 
-/* Controls container */
+.dpad {
 
-.controls {
-  position: fixed !important;
+  width: 170px;
 
-  left: 50% !important;
-  bottom: 25px !important;
+  height: 170px;
 
-  transform: translateX(-50%) !important;
-
-  z-index: 999 !important;
-
-  width: 210px;
-
-  height: 150px;
-
-  display: grid !important;
+  display: grid;
 
   grid-template-columns:
-    60px 60px 60px;
+    55px 55px 55px;
 
   grid-template-rows:
-    50px 50px 50px;
+    55px 55px 55px;
 
-  gap: 5px;
+  gap: 3px;
 
   justify-content: center;
 
   align-items: center;
 
   pointer-events: auto;
+
 }
 
 
-/* Control buttons */
+.dpad button {
 
-.controls button {
+  width: 52px;
 
-  width: 55px !important;
-
-  height: 45px !important;
-
-  display: flex !important;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding: 0 !important;
+  height: 52px;
 
   border-radius: 12px;
 
   border: 2px solid #b99a43;
 
   background:
-    rgba(20, 30, 22, 0.95);
+    rgba(15, 25, 18, .94);
 
   color: white;
 
-  font-size: 22px;
+  font-size: 21px;
 
   font-weight: bold;
 
-  cursor: pointer;
+  touch-action: none;
 
   user-select: none;
 
-  -webkit-user-select: none;
+}
+
+
+.dpad button:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.dpad button:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.dpad button:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.dpad button:nth-child(4) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.dpad button:nth-child(5) {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+
+.dpad button:active {
+
+  transform: scale(.9);
+
+  background: #685522;
+
+}
+
+
+.dpad-center {
+
+  border-radius: 50% !important;
+
+  color: #e7c85e !important;
+
+}
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.action-controls {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  pointer-events: auto;
+
+}
+
+
+.attack-button {
+
+  width: 82px;
+
+  height: 82px;
+
+  border-radius: 50%;
+
+  border: 3px solid #c6a544;
+
+  background:
+    radial-gradient(
+      circle,
+      #633d32,
+      #251311
+    );
+
+  color: white;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-size: 27px;
+
+  font-weight: bold;
 
   touch-action: none;
 
-  box-shadow:
-    0 4px 10px rgba(0,0,0,.5);
+}
+
+
+.attack-button span {
+
+  font-size: 9px;
+
+  margin-top: 3px;
 
 }
 
 
-/* Hover */
+.attack-button:active {
 
-.controls button:hover {
+  transform: scale(.9);
 
-  background: #405a3c;
-
-  transform: scale(1.05);
+  background: #8a3428;
 
 }
 
 
-/* Press */
+.mobile-inventory-button {
 
-.controls button:active {
+  width: 58px;
 
-  transform: scale(.92);
+  height: 58px;
 
-  background: #6d5724;
+  border-radius: 50%;
+
+  border: 2px solid #b99a43;
+
+  background:
+    rgba(15,25,18,.95);
+
+  font-size: 25px;
+
+  color: white;
 
 }
 
 
-/* Keyboard text */
+.mobile-inventory-button:active {
+
+  transform: scale(.9);
+
+}
+
+
+/* Hide old keyboard controls text */
 
 .keyboard-help {
 
-  position: fixed !important;
-
-  left: 50%;
-
-  bottom: 5px;
-
-  transform: translateX(-50%);
-
-  z-index: 998;
-
-  margin: 0;
-
-  padding: 4px 10px;
-
-  border-radius: 6px;
-
-  background: rgba(0,0,0,.65);
-
-  color: #ddd;
-
-  font-size: 11px;
-
-  white-space: nowrap;
+  display: none !important;
 
 }
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .controls-wrapper {
+
+    bottom: 15px;
+
+    width: 96vw;
+
+  }
+
+
+  .dpad {
+
+    transform: scale(.82);
+
+    transform-origin: bottom left;
+
+  }
+
+
+  .action-controls {
+
+    gap: 8px;
+
+  }
+
+
+  .attack-button {
+
+    width: 72px;
+
+    height: 72px;
+
+  }
+
+
+  .mobile-inventory-button {
+
+    width: 52px;
+
+    height: 52px;
+
+  }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 420px) {
+
+  .controls-wrapper {
+
+    bottom: 8px;
+
+  }
+
+
+  .dpad {
+
+    transform: scale(.72);
+
+  }
+
+
+  .attack-button {
+
+    width: 65px;
+
+    height: 65px;
+
+    font-size: 23px;
+
+  }
+
+
+  .mobile-inventory-button {
+
+    width: 48px;
+
+    height: 48px;
+
+    font-size: 21px;
+
+  }
+
+}
+  
+
 
 
 /* =========================================
