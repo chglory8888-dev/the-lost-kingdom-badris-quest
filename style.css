@@ -1,6 +1,11 @@
+/* =========================================================
+   THE LOST KINGDOM: BADRI'S QUEST
+   CHAPTER 1 — DARK FOREST
+   COMPLETE ADVENTURE STYLE
+========================================================= */
+
 * {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -10,23 +15,15 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #030504;
+  background: #050806;
   color: #fff;
   font-family: Georgia, "Times New Roman", serif;
-}
-
-body {
-  touch-action: manipulation;
 }
 
 button {
   font-family: inherit;
   cursor: pointer;
-  border: 0;
-}
-
-button:focus {
-  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .hidden {
@@ -34,491 +31,276 @@ button:focus {
 }
 
 
-/* =====================================================
-   HOME
-===================================================== */
+/* =========================================================
+   HOME / INTRO
+========================================================= */
 
 .screen {
   width: 100%;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #homeScreen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
   background:
     radial-gradient(
-      circle at 50% 35%,
-      rgba(70, 105, 65, .8),
-      transparent 35%
-    ),
-    linear-gradient(
-      135deg,
-      #142519,
-      #050805 65%,
-      #020302
+      circle at 50% 45%,
+      rgba(74, 104, 63, .8),
+      rgba(15, 28, 18, .95) 42%,
+      #020403 100%
     );
 }
 
 .title-screen {
-  width: min(850px, 94vw);
+  width: min(900px, 92vw);
+  max-height: 90vh;
+  overflow-y: auto;
   padding: 45px 30px;
   text-align: center;
-
   background:
     linear-gradient(
-      rgba(7, 14, 9, .96),
-      rgba(3, 7, 5, .98)
+      145deg,
+      rgba(8, 15, 10, .98),
+      rgba(18, 27, 17, .96)
     );
-
-  border: 2px solid #a98a3d;
+  border: 2px solid #b99a43;
   border-radius: 24px;
-
   box-shadow:
-    0 0 70px rgba(0,0,0,.9),
-    inset 0 0 40px rgba(180,150,65,.08);
+    0 0 80px rgba(0, 0, 0, .9),
+    inset 0 0 35px rgba(205, 170, 70, .08);
 }
 
-.kingdom-title {
-  color: #d8bd67;
-  letter-spacing: 7px;
-  font-size: 16px;
+.kingdom {
+  color: #d9bd63;
+  font-size: 14px;
+  letter-spacing: 6px;
   font-weight: bold;
 }
 
 .title-screen h1 {
-  margin: 20px 0 5px;
-
-  font-size:
-    clamp(38px, 8vw, 76px);
-
+  margin: 20px 0 4px;
+  font-size: clamp(38px, 8vw, 82px);
   line-height: .95;
-
-  color: #e9cf75;
-
+  color: #f1d477;
   text-shadow:
-    0 0 15px #70551e,
+    0 0 15px rgba(220, 175, 60, .5),
     0 5px 15px #000;
 }
 
 .title-screen h2 {
   margin: 15px 0 28px;
-
-  color: #ddd;
-  font-size:
-    clamp(22px, 5vw, 40px);
+  color: #e8e8e8;
+  font-size: clamp(22px, 4vw, 42px);
 }
 
 .story {
-  max-width: 650px;
+  max-width: 700px;
   margin: auto;
-
-  color: #c4cec5;
-
-  font-family: Arial, sans-serif;
+  color: #c7d1c8;
   font-size: 17px;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .start-button {
   margin-top: 30px;
-
   padding: 16px 35px;
-
-  border: 2px solid #d4b652;
+  border: 2px solid #e4c85e;
   border-radius: 12px;
-
   background:
-    linear-gradient(
-      #876d29,
-      #3b2c0d
-    );
-
-  color: white;
-
+    linear-gradient(#8d7229, #49370e);
+  color: #fff;
   font-size: 17px;
   font-weight: bold;
-
-  box-shadow:
-    0 5px 20px rgba(0,0,0,.6);
-
+  box-shadow: 0 5px 20px #000;
   transition: .2s;
 }
 
 .start-button:hover {
   transform: scale(1.05);
   box-shadow:
-    0 0 30px rgba(210,180,80,.45);
+    0 0 25px rgba(220, 185, 80, .7);
 }
 
 
-/* =====================================================
-   GAME
-===================================================== */
+/* =========================================================
+   GAME SCREEN
+========================================================= */
 
-.game-screen {
-  position: relative;
-
+#gameScreen {
+  position: fixed;
+  inset: 0;
   width: 100%;
   height: 100vh;
-
-  background: #071009;
+  background: #07100a;
 }
 
 
-/* =====================================================
+/* =========================================================
    HUD
-===================================================== */
+========================================================= */
 
 .hud {
-  position: relative;
-
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 58px;
-
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-around;
-
-  padding: 0 10px;
-
+  gap: 8px;
+  padding: 0 12px;
   background:
     linear-gradient(
-      #17251a,
-      #0b130d
+      rgba(8, 14, 9, .98),
+      rgba(13, 24, 15, .94)
     );
-
-  border-bottom: 2px solid #46583e;
-
-  z-index: 1000;
-
+  border-bottom: 1px solid #536a52;
+  box-shadow: 0 4px 15px #000;
   font-family: Arial, sans-serif;
-  font-size: 14px;
   font-weight: bold;
 }
 
-.hud-player {
-  color: #e6ce78;
+.hud span {
+  white-space: nowrap;
 }
 
-.hud-button {
-  width: 43px;
-  height: 40px;
-
-  border: 1px solid #9b813b;
-  border-radius: 9px;
-
-  background: #18261a;
-
-  color: white;
+.inventory-button {
+  border: 1px solid #b99a43;
+  border-radius: 8px;
+  padding: 6px 12px;
+  background: #172419;
+  color: #fff;
   font-size: 20px;
 }
 
-.hud-button:active {
-  transform: scale(.92);
-}
 
+/* =========================================================
+   FOREST WORLD
+========================================================= */
 
-/* =====================================================
-   QUEST PANEL
-===================================================== */
-
-.quest-panel {
+#forest {
   position: absolute;
-
-  top: 70px;
-  left: 12px;
-
-  width: 205px;
-
-  z-index: 900;
-
-  background:
-    rgba(4, 9, 5, .90);
-
-  border: 1px solid #887239;
-  border-radius: 10px;
-
-  box-shadow:
-    0 5px 20px rgba(0,0,0,.55);
-
-  font-family: Arial, sans-serif;
-}
-
-.quest-toggle {
-  width: 100%;
-
-  padding: 8px;
-
-  text-align: left;
-
-  background: transparent;
-
-  color: #e8cd70;
-
-  font-weight: bold;
-}
-
-#questContent {
-  padding: 0 10px 10px;
-}
-
-.quest-main {
-  margin-bottom: 7px;
-
-  color: #fff;
-
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.quest-item {
-  padding: 3px 0;
-
-  color: #aeb9ae;
-
-  font-size: 11px;
-}
-
-.quest-item.completed {
-  color: #75df91;
-}
-
-
-/* =====================================================
-   CHAPTER BANNER
-===================================================== */
-
-.chapter-banner {
-  position: absolute;
-
-  top: 68px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  z-index: 500;
-
-  padding: 6px 15px;
-
-  background:
-    rgba(0,0,0,.55);
-
-  border: 1px solid rgba(185,155,70,.5);
-  border-radius: 8px;
-
-  color: #d8c36e;
-
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: bold;
-  letter-spacing: 2px;
-
-  text-align: center;
-}
-
-.chapter-banner span {
-  display: block;
-
-  margin-top: 2px;
-
-  color: #d5ddd5;
-
-  letter-spacing: 1px;
-}
-
-
-/* =====================================================
-   WORLD
-===================================================== */
-
-.world {
-  position: absolute;
-
-  left: 0;
-  right: 0;
-
   top: 58px;
-  bottom: 0;
-
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 58px);
   overflow: hidden;
 
   background:
     radial-gradient(
-      ellipse at 50% 35%,
-      #3c6240 0%,
-      #234329 30%,
-      #102516 58%,
+      ellipse at 50% 38%,
+      #466a42 0%,
+      #29462c 28%,
+      #122818 57%,
       #050b07 100%
     );
 }
 
-.world::before {
+#forest::before {
   content: "";
-
   position: absolute;
   inset: 0;
-
-  opacity: .35;
-
-  background:
+  z-index: 1;
+  pointer-events: none;
+  opacity: .28;
+  background-image:
     radial-gradient(
       circle,
-      rgba(170,200,145,.15) 1px,
+      rgba(150, 180, 125, .35) 1px,
       transparent 2px
+    ),
+    radial-gradient(
+      circle,
+      rgba(15, 50, 25, .5) 2px,
+      transparent 3px
     );
-
-  background-size: 70px 70px;
-
-  pointer-events: none;
+  background-size:
+    55px 55px,
+    95px 95px;
 }
 
-.world::after {
-  content: "";
-
+#forest::after {
+  content:
+    "🌲   🌳      🌲   🌳       🌲      🌲   🌳";
   position: absolute;
-  inset: 0;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(0,0,0,.15),
-      transparent 35%,
-      rgba(0,0,0,.45)
-    );
-}
-
-
-/* =====================================================
-   FOG
-===================================================== */
-
-.fog {
-  position: absolute;
-
-  width: 300px;
-  height: 100px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(180,205,180,.08);
-
-  filter: blur(25px);
-
-  pointer-events: none;
-}
-
-.fog-one {
-  left: 5%;
-  bottom: 25%;
-  animation: fogMove 9s infinite alternate;
-}
-
-.fog-two {
-  right: 5%;
-  top: 35%;
-  animation: fogMove 12s infinite alternate-reverse;
-}
-
-@keyframes fogMove {
-  from {
-    transform: translateX(-40px);
-  }
-
-  to {
-    transform: translateX(80px);
-  }
-}
-
-
-/* =====================================================
-   TREES
-===================================================== */
-
-.forest-decoration {
-  position: absolute;
-
+  top: 5px;
+  left: 0;
+  width: 100%;
   z-index: 2;
-
-  font-size: 65px;
-
-  opacity: .75;
-
-  filter:
-    drop-shadow(0 8px 5px #000);
-}
-
-.tree-a {
-  left: 2%;
-  top: 12%;
-}
-
-.tree-b {
-  left: 15%;
-  top: 7%;
-}
-
-.tree-c {
-  right: 8%;
-  top: 13%;
-}
-
-.tree-d {
-  right: 20%;
-  bottom: 15%;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 52px;
+  opacity: .65;
 }
 
 
-/* =====================================================
-   PLAYER
-===================================================== */
+/* =========================================================
+   CHAPTER TITLE
+========================================================= */
 
-.player {
+.chapter-title {
   position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  padding: 6px 15px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, .48);
+  color: #d9e8c9;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
 
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+#player {
+  position: absolute;
   left: 10%;
   top: 55%;
-
-  z-index: 300;
-
-  width: 52px;
-  height: 58px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 45px;
-
+  z-index: 30;
+  font-size: 50px;
   user-select: none;
-
+  pointer-events: none;
   filter:
-    drop-shadow(0 7px 5px #000);
-
-  transition:
-    left .05s linear,
-    top .05s linear;
+    drop-shadow(0 7px 5px rgba(0,0,0,.8));
+  transition: transform .08s linear;
 }
 
-.player.attack {
-  animation: playerAttack .28s;
+#player.attack {
+  animation: swordAttack .28s ease;
 }
 
-@keyframes playerAttack {
-  50% {
-    transform:
-      scale(1.45)
-      rotate(-18deg);
+@keyframes swordAttack {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+
+  45% {
+    transform: scale(1.45) rotate(-18deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0);
   }
 }
 
-.player.damage {
-  animation: damageFlash .25s;
+#player.damage {
+  animation: damageFlash .25s ease;
 }
 
 @keyframes damageFlash {
@@ -530,114 +312,104 @@ button:focus {
 }
 
 
-/* =====================================================
-   INVESTIGATION OBJECTS
-===================================================== */
+/* =========================================================
+   FOREST OBJECTS
+========================================================= */
 
-.investigate-object,
-.collectible,
-.location-object {
+.enemy,
+.coin,
+#key,
+#potion,
+#scroll,
+#crystalItem,
+#ancientGate {
   position: absolute;
-
-  z-index: 200;
-
-  background: transparent;
-
-  padding: 0;
-
-  color: white;
-
-  filter:
-    drop-shadow(0 5px 5px #000);
-
-  transition:
-    transform .2s,
-    filter .2s,
-    opacity .3s;
+  user-select: none;
+  filter: drop-shadow(0 6px 5px rgba(0,0,0,.75));
 }
 
-.investigate-object:hover,
-.collectible:hover,
-.location-object:hover {
-  transform: scale(1.15);
-
-  filter:
-    drop-shadow(0 0 15px #d9bd63);
-}
-
-.investigate-object {
+.enemy {
+  z-index: 25;
   font-size: 48px;
+  transition: opacity .3s, transform .2s;
 }
 
-#ancientStone {
-  left: 23%;
-  top: 34%;
-}
-
-#brokenCart {
+.enemy-one {
   left: 43%;
-  top: 65%;
+  top: 38%;
 }
 
-#oldSign {
-  left: 58%;
+.enemy-two {
+  left: 67%;
+  top: 62%;
+}
+
+.coin {
+  z-index: 20;
+  font-size: 35px;
+  animation: itemFloat 1.5s infinite alternate;
+}
+
+.coin-one {
+  left: 28%;
+  top: 70%;
+}
+
+.coin-two {
+  left: 72%;
   top: 29%;
 }
 
-#watchtower {
-  right: 12%;
-  top: 34%;
-
-  font-size: 72px;
+.coin-three {
+  left: 57%;
+  top: 52%;
 }
 
-
-/* =====================================================
-   COLLECTIBLES
-===================================================== */
-
-.collectible {
-  font-size: 37px;
+#key {
+  left: 51%;
+  top: 73%;
+  z-index: 22;
+  font-size: 38px;
 }
 
-#coin1 {
-  left: 29%;
-  top: 72%;
+#potion {
+  left: 35%;
+  top: 27%;
+  z-index: 22;
+  font-size: 38px;
 }
 
-#coin2 {
-  left: 68%;
-  top: 31%;
-}
-
-#coin3 {
+#scroll {
   left: 82%;
-  top: 67%;
+  top: 57%;
+  z-index: 22;
+  font-size: 38px;
 }
 
-#ancientKey {
-  left: 50%;
-  top: 76%;
+#crystalItem {
+  left: 88%;
+  top: 42%;
+  z-index: 22;
+  font-size: 55px;
+  animation: crystalGlow 1.2s infinite alternate;
 }
 
-#crystalFragment {
-  right: 10%;
-  top: 55%;
-
-  font-size: 50px;
-
-  animation:
-    crystalGlow 1.5s infinite alternate;
+#ancientGate {
+  left: 75%;
+  top: 70%;
+  z-index: 24;
+  font-size: 65px;
+  cursor: pointer;
 }
 
-#healthPotion {
-  left: 73%;
-  top: 48%;
-}
+@keyframes itemFloat {
+  from {
+    transform: translateY(0);
+  }
 
-#ancientScroll {
-  left: 34%;
-  top: 25%;
+  to {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes crystalGlow {
@@ -650,191 +422,131 @@ button:focus {
   to {
     transform: scale(1.12);
     filter:
-      drop-shadow(0 0 25px #6ff);
+      drop-shadow(0 0 28px #6ff);
   }
 }
 
-
-/* =====================================================
-   LOCATIONS
-===================================================== */
-
-#forestDoor {
-  left: 7%;
-  top: 55%;
-
-  font-size: 62px;
+.gate-unlocked {
+  animation: gateOpen .8s ease infinite alternate;
 }
 
-#brokenBridge {
-  right: 28%;
-  bottom: 13%;
-
-  font-size: 65px;
-}
-
-.ancient-gate {
-  right: 3%;
-  bottom: 17%;
-
-  font-size: 70px;
-}
-
-.secret-path {
-  position: absolute;
-
-  right: 5%;
-  bottom: 10%;
-
-  z-index: 250;
-
-  font-size: 55px;
-
-  animation:
-    secretGlow 1s infinite alternate;
-}
-
-@keyframes secretGlow {
+@keyframes gateOpen {
   from {
-    opacity: .5;
-    transform: scale(.9);
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px #7dffb0);
   }
 
   to {
-    opacity: 1;
-    transform: scale(1.15);
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 30px #7dffb0);
   }
 }
 
 
-/* =====================================================
-   GUARDIAN
-===================================================== */
+/* =========================================================
+   QUEST PANEL
+========================================================= */
 
-.guardian {
+#questPanel {
   position: absolute;
-
-  left: 60%;
-  top: 55%;
-
-  z-index: 220;
-
-  font-size: 58px;
-
-  filter:
-    drop-shadow(0 8px 5px #000);
-
-  animation:
-    guardianFloat 2s infinite alternate;
-}
-
-@keyframes guardianFloat {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(-7px);
-  }
-}
-
-.guardian.defeated {
-  opacity: 0;
-  transform: scale(1.5);
+  top: 72px;
+  left: 12px;
+  z-index: 80;
+  width: 215px;
+  padding: 10px;
+  background: rgba(5, 10, 6, .86);
+  border: 1px solid #90783d;
+  border-radius: 10px;
+  box-shadow: 0 5px 18px rgba(0,0,0,.45);
   pointer-events: none;
 }
 
-
-/* =====================================================
-   MESSAGE
-===================================================== */
-
-.game-message {
-  position: absolute;
-
-  left: 50%;
-  bottom: 28px;
-
-  transform: translateX(-50%);
-
-  z-index: 800;
-
-  width: min(500px, 85vw);
-
-  padding: 11px 16px;
-
-  display: none;
-
-  background:
-    rgba(3,7,4,.94);
-
-  border: 1px solid #8e793c;
-  border-radius: 10px;
-
-  color: #eee;
-
-  text-align: center;
-
-  font-family: Arial, sans-serif;
+#questTitle {
+  margin-bottom: 5px;
+  color: #efd16b;
   font-size: 14px;
+  font-weight: bold;
+}
+
+.quest-main {
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.quest-item {
+  padding: 2px 0;
+  color: #b9c2b8;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+
+.quest-item.completed {
+  color: #7dff9c;
 }
 
 
-/* =====================================================
+/* =========================================================
+   GAME MESSAGE
+========================================================= */
+
+#message {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: 125px;
+  transform: translateX(-50%);
+  z-index: 500;
+  width: min(600px, 82vw);
+  padding: 12px 18px;
+  border: 1px solid #879c78;
+  border-radius: 12px;
+  background: rgba(3, 8, 5, .94);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 5px 25px #000;
+}
+
+
+/* =========================================================
    CONTROLS
-===================================================== */
+========================================================= */
 
 .controls-wrapper {
   position: fixed;
-
   left: 50%;
   bottom: 12px;
-
   transform: translateX(-50%);
-
-  z-index: 5000;
-
-  width: min(620px, 96vw);
-
+  z-index: 900;
+  width: min(650px, 96vw);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-
   pointer-events: none;
 }
 
 .dpad {
-  width: 170px;
-  height: 170px;
-
+  width: 165px;
+  height: 165px;
   display: grid;
-
-  grid-template-columns:
-    repeat(3, 55px);
-
-  grid-template-rows:
-    repeat(3, 55px);
-
+  grid-template-columns: repeat(3, 52px);
+  grid-template-rows: repeat(3, 52px);
   gap: 3px;
-
   pointer-events: auto;
 }
 
 .dpad button {
-  width: 52px;
-  height: 52px;
-
-  border: 2px solid #9c813b;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #a98c42;
   border-radius: 12px;
-
-  background:
-    rgba(8,16,10,.93);
-
-  color: white;
-
+  background: rgba(12, 22, 15, .94);
+  color: #fff;
   font-size: 20px;
   font-weight: bold;
-
   touch-action: none;
   user-select: none;
 }
@@ -866,58 +578,49 @@ button:focus {
 
 .dpad button:active {
   transform: scale(.9);
-  background: #705c26;
+  background: #695622;
 }
 
 .dpad-center {
   border-radius: 50% !important;
-  color: #e8cb63 !important;
+  color: #e7c85e !important;
 }
 
 
-/* =====================================================
-   ACTION BUTTONS
-===================================================== */
+/* =========================================================
+   ATTACK / INVENTORY
+========================================================= */
 
 .action-controls {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
   pointer-events: auto;
 }
 
 .attack-button {
   width: 78px;
   height: 78px;
-
+  border: 3px solid #c5a544;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #713d31, #251210);
+  color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-
-  border: 3px solid #b7923d;
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      #633d32,
-      #21100e
-    );
-
-  color: white;
-
-  font-size: 27px;
-
+  justify-content: center;
   touch-action: none;
 }
 
-.attack-button small {
-  font-size: 8px;
+.attack-icon {
+  font-size: 27px;
+}
+
+.attack-label {
   margin-top: 2px;
+  font-size: 8px;
+  font-weight: bold;
 }
 
 .attack-button:active {
@@ -925,188 +628,432 @@ button:focus {
 }
 
 .mobile-inventory-button {
-  width: 56px;
-  height: 56px;
-
-  border: 2px solid #a88b42;
+  width: 55px;
+  height: 55px;
+  border: 2px solid #b99a43;
   border-radius: 50%;
-
-  background: #101b12;
-
-  color: white;
-
+  background: rgba(13, 24, 16, .95);
+  color: #fff;
   font-size: 24px;
 }
 
 
-/* =====================================================
-   OVERLAY SCREENS
-===================================================== */
+/* =========================================================
+   PUZZLE SCREEN
+========================================================= */
 
-.overlay-screen {
+.puzzle-screen {
   position: fixed;
-
   inset: 0;
-
-  z-index: 10000;
-
+  z-index: 2000;
   display: flex;
-
   justify-content: center;
   align-items: center;
-
-  padding: 20px;
-
+  padding: 15px;
   background:
     radial-gradient(
       circle at center,
-      rgba(55,70,43,.97),
-      rgba(5,9,6,.99) 70%
+      #425238,
+      #10180f 55%,
+      #020403 100%
     );
 }
 
-.mini-game-box,
-.dialogue-box,
-.inventory-box,
-.chapter-complete-box {
+.puzzle-box {
   width: min(650px, 94vw);
-
-  max-height: 92vh;
-
+  max-height: 94vh;
   overflow-y: auto;
-
   padding: 28px 22px;
-
   text-align: center;
-
-  background:
-    linear-gradient(
-      rgba(8,14,9,.98),
-      rgba(3,7,4,.99)
-    );
-
-  border: 2px solid #a98a3d;
+  background: rgba(5, 10, 6, .97);
+  border: 2px solid #b4933d;
   border-radius: 20px;
-
-  box-shadow:
-    0 0 60px #000;
+  box-shadow: 0 0 60px #000;
 }
 
-.mini-title {
-  color: #e4c968;
-
-  font-size:
-    clamp(24px, 6vw, 42px);
-
+.puzzle-label {
+  color: #d8bc61;
+  font-size: 12px;
+  letter-spacing: 4px;
   font-weight: bold;
-
-  margin-bottom: 15px;
 }
 
-.mini-game-box p {
-  color: #bdc9be;
+.puzzle-box h1 {
+  margin: 12px 0;
+  color: #f1d477;
+  font-size: clamp(28px, 7vw, 50px);
+}
+
+.puzzle-description {
+  color: #c7d2c8;
   line-height: 1.5;
 }
 
-
-/* =====================================================
-   DIALOGUE
-===================================================== */
-
-.dialogue-character {
-  color: #d8bd67;
-  font-weight: bold;
-  margin-bottom: 12px;
+.sequence-display {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 22px 0;
 }
 
-.dialogue-text {
+.sequence-display span {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #596e59;
+  border-radius: 10px;
+  background: #172319;
+  font-size: 30px;
+}
+
+.symbol-buttons {
+  width: min(450px, 100%);
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.symbol-buttons button {
   min-height: 65px;
-
-  color: white;
-
-  font-size: 18px;
-  line-height: 1.6;
+  border: 2px solid #536b55;
+  border-radius: 12px;
+  background: linear-gradient(#29402d, #132116);
+  color: #fff;
+  font-size: 32px;
+  touch-action: manipulation;
+  pointer-events: auto;
 }
 
-#dialogueNext {
-  margin-top: 15px;
+.symbol-buttons button:hover,
+.symbol-buttons button:active {
+  border-color: #d5b84f;
+  transform: scale(1.04);
+}
 
-  padding: 11px 22px;
+.puzzle-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
 
+.puzzle-actions button,
+.close-puzzle {
+  padding: 10px 18px;
+  border: 1px solid #877437;
   border-radius: 9px;
+  background: #332a13;
+  color: #fff;
+  font-weight: bold;
+}
 
-  background: #6d5824;
-
-  color: white;
-
+#puzzleMessage {
+  min-height: 25px;
+  margin: 15px 0;
   font-weight: bold;
 }
 
 
-/* =====================================================
-   HIDDEN OBJECT
-===================================================== */
+/* =========================================================
+   INVENTORY
+========================================================= */
 
-.hidden-object-scene {
-  position: relative;
+.inventory-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background:
+    radial-gradient(circle, #344b36, #101910 55%, #020403);
+}
 
-  height: 360px;
+.inventory-box {
+  width: min(650px, 94vw);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 28px 20px;
+  text-align: center;
+  background: rgba(5, 10, 6, .97);
+  border: 2px solid #b4933d;
+  border-radius: 20px;
+  box-shadow: 0 0 50px #000;
+}
 
-  margin: 15px 0;
+.inventory-title {
+  color: #f1d477;
+  font-size: clamp(27px, 6vw, 45px);
+  font-weight: bold;
+}
 
+.inventory-subtitle {
+  color: #aebbad;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.inventory-item {
+  min-height: 75px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid #526b55;
+  border-radius: 11px;
+  background: linear-gradient(#243727, #122017);
+  text-align: left;
+}
+
+.inventory-icon {
+  font-size: 34px;
+}
+
+.inventory-item strong {
+  display: block;
+}
+
+.inventory-item span {
+  display: block;
+  margin-top: 4px;
+  color: #d8bc61;
+  font-weight: bold;
+}
+
+.inventory-item.usable {
+  cursor: pointer;
+}
+
+.inventory-item.usable:hover {
+  border-color: #e4c85e;
+}
+
+.close-inventory {
+  margin-top: 15px;
+  padding: 11px 20px;
+  border: 1px solid #877437;
+  border-radius: 9px;
+  background: #332a13;
+  color: #fff;
+}
+
+
+/* =========================================================
+   VILLAGE
+========================================================= */
+
+.village-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
   overflow: hidden;
-
-  border: 1px solid #665633;
-  border-radius: 14px;
-
   background:
     radial-gradient(
       circle at center,
-      #51432e,
-      #1a140d
+      #465b3d,
+      #172719 55%,
+      #050806
     );
+}
+
+.village-title {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  padding: 10px 20px;
+  border: 1px solid #b99a43;
+  border-radius: 12px;
+  background: rgba(0,0,0,.75);
+  color: #f1d477;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.village-world {
+  position: absolute;
+  inset: 0;
+}
+
+.village-house {
+  position: absolute;
+  font-size: 75px;
+  filter: drop-shadow(0 8px 5px #000);
+}
+
+.house-one {
+  left: 12%;
+  top: 35%;
+}
+
+.house-two {
+  right: 12%;
+  top: 32%;
+  cursor: pointer;
+}
+
+.village-npc {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  font-size: 65px;
+  cursor: pointer;
+}
+
+.npc-label {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  border-radius: 7px;
+  background: rgba(0,0,0,.7);
+}
+
+.village-well {
+  position: absolute;
+  left: 43%;
+  bottom: 18%;
+  font-size: 55px;
+}
+
+.village-tree {
+  position: absolute;
+  left: 5%;
+  bottom: 10%;
+  font-size: 80px;
+}
+
+.tree-two {
+  left: auto;
+  right: 4%;
+}
+
+.village-quest-box {
+  position: absolute;
+  top: 75px;
+  left: 12px;
+  z-index: 30;
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #9d843f;
+  border-radius: 10px;
+  background: rgba(5,10,6,.82);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+
+.village-quest-box strong {
+  color: #f0d36b;
+}
+
+.village-quest-box p {
+  margin: 5px 0;
+}
+
+.dialogue-box {
+  position: absolute;
+  left: 50%;
+  bottom: 25px;
+  transform: translateX(-50%);
+  z-index: 100;
+  width: min(700px, 90vw);
+  padding: 18px;
+  border: 2px solid #b99a43;
+  border-radius: 15px;
+  background: rgba(5,8,5,.96);
+}
+
+.dialogue-text {
+  min-height: 50px;
+  line-height: 1.5;
+}
+
+#dialogueNext {
+  margin-top: 10px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #705b24;
+  color: white;
+}
+
+.village-back {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  z-index: 120;
+  padding: 9px 15px;
+  border: 1px solid #8e793c;
+  border-radius: 9px;
+  background: #1d291e;
+  color: white;
+}
+
+
+/* =========================================================
+   HIDDEN HOUSE
+========================================================= */
+
+.hidden-house-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  background: #080b08;
+}
+
+.hidden-house-world {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle,
+      #55452e,
+      #21190f 55%,
+      #070605
+    );
+}
+
+.hidden-house-title {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  padding: 10px 18px;
+  border: 1px solid #c0a34b;
+  border-radius: 10px;
+  background: rgba(0,0,0,.85);
+  color: #f2d477;
+  font-size: 20px;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
 .hidden-object {
   position: absolute;
-
-  background: transparent;
-
-  font-size: 45px;
-
+  z-index: 10;
+  font-size: 55px;
+  cursor: pointer;
+  user-select: none;
   transition: .2s;
-
-  z-index: 2;
 }
 
-.hidden-object:nth-child(1) {
-  left: 18%;
-  top: 65%;
-}
-
-.hidden-object:nth-child(2) {
-  right: 20%;
-  top: 30%;
-}
-
-.hidden-object:nth-child(3) {
-  left: 55%;
-  top: 62%;
-}
-
-.hidden-object:nth-child(4) {
-  left: 10%;
-  top: 25%;
-}
-
-.hidden-object:nth-child(5) {
-  right: 10%;
-  bottom: 20%;
-}
-
-.hidden-object:nth-child(6) {
-  left: 45%;
-  top: 15%;
+.hidden-object:hover {
+  transform: scale(1.15);
 }
 
 .hidden-object.found {
@@ -1115,385 +1062,155 @@ button:focus {
   pointer-events: none;
 }
 
-#hiddenProgress {
-  color: #e4c968;
-  font-weight: bold;
+.object-chair {
+  left: 12%;
+  top: 30%;
 }
 
-#hiddenMessage,
-#mechanismMessage,
-#bridgeMessage,
-#puzzleMessage {
-  min-height: 25px;
-
-  color: #e4c968;
-
-  font-weight: bold;
+.object-box {
+  right: 15%;
+  top: 25%;
 }
 
-
-/* =====================================================
-   MECHANISM
-===================================================== */
-
-.mechanism-sequence {
-  display: flex;
-
-  justify-content: center;
-
-  gap: 10px;
-
-  margin: 20px 0;
+.object-mirror {
+  left: 45%;
+  top: 24%;
 }
 
-.mechanism-sequence span,
-.sequence-display span {
-  width: 55px;
-  height: 55px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border: 2px solid #53694f;
-  border-radius: 10px;
-
-  background: #142018;
-
-  font-size: 28px;
+.object-key {
+  left: 28%;
+  top: 65%;
 }
 
-.mechanism-buttons,
-.symbol-buttons {
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  gap: 10px;
-
-  max-width: 450px;
-
-  margin: auto;
+.object-map {
+  right: 27%;
+  top: 62%;
 }
 
-.mechanism-buttons button,
-.symbol-buttons button {
-  min-height: 62px;
-
-  border: 2px solid #53694f;
-  border-radius: 11px;
-
-  background:
-    linear-gradient(
-      #29402d,
-      #101c13
-    );
-
-  color: white;
-
-  font-size: 30px;
-
-  transition: .2s;
+.object-gem {
+  left: 63%;
+  top: 43%;
 }
 
-.mechanism-buttons button:active,
-.symbol-buttons button:active {
-  transform: scale(.9);
+.object-candle {
+  left: 16%;
+  top: 52%;
 }
 
-
-/* =====================================================
-   BRIDGE
-===================================================== */
-
-.bridge-pieces {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 12px;
-
-  max-width: 400px;
-
-  margin: 25px auto;
-}
-
-.bridge-pieces button {
-  min-height: 70px;
-
-  border: 2px solid #665533;
-  border-radius: 10px;
-
-  background: #292116;
-
-  font-size: 35px;
-}
-
-.bridge-pieces button.selected {
-  border-color: #e1c762;
-
-  box-shadow:
-    0 0 15px rgba(225,199,98,.4);
-}
-
-
-/* =====================================================
-   PUZZLE
-===================================================== */
-
-.sequence-display {
-  display: flex;
-
-  justify-content: center;
-
-  gap: 10px;
-
-  margin: 22px 0;
-}
-
-.puzzle-actions {
-  display: flex;
-
-  justify-content: center;
-
-  gap: 10px;
-
-  margin-top: 18px;
-}
-
-.puzzle-actions button,
-#resetMechanism,
-#closeMechanism,
-#closeBridge,
-#closeHiddenObject,
-#closePuzzle {
-  padding: 10px 17px;
-
-  border: 1px solid #816d37;
-  border-radius: 9px;
-
-  background: #2b2413;
-
-  color: white;
-
-  font-weight: bold;
-}
-
-
-/* =====================================================
-   INVENTORY
-===================================================== */
-
-.inventory-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, 1fr);
-
-  gap: 10px;
-
-  margin: 20px 0;
-}
-
-.inventory-item {
-  min-height: 80px;
-
-  display: grid;
-
-  grid-template-columns: 45px 1fr 25px;
-
-  align-items: center;
-
-  gap: 8px;
-
+.hidden-target {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
   padding: 10px;
-
-  border: 1px solid #53694f;
+  border: 1px solid #8c7436;
   border-radius: 10px;
-
-  background: #18281b;
-
-  color: white;
-
-  text-align: left;
-
-  font-size: 25px;
+  background: rgba(0,0,0,.85);
+  text-align: center;
 }
 
-.inventory-item span {
-  font-size: 12px;
-  color: #d5ddd5;
+.hidden-target span {
+  margin-left: 10px;
+  font-size: 23px;
 }
 
-.inventory-item b {
-  color: #e4c968;
-  font-size: 15px;
+.hidden-progress-box {
+  position: absolute;
+  top: 70px;
+  right: 15px;
+  padding: 9px 13px;
+  border-radius: 8px;
+  background: rgba(0,0,0,.8);
 }
 
-#closeInventory {
-  padding: 11px 22px;
-
-  border-radius: 9px;
-
-  background: #6b5623;
-
-  color: white;
+.hidden-progress-box strong {
+  color: #f1d477;
 }
 
-
-/* =====================================================
-   CHAPTER COMPLETE
-===================================================== */
-
-.chapter-complete-box {
-  max-width: 700px;
-}
-
-.complete-icon {
-  font-size: 70px;
-
-  animation:
-    completeGlow 1.5s infinite alternate;
-}
-
-@keyframes completeGlow {
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.12);
-  }
-}
-
-.chapter-complete-box h1 {
-  color: #e6cb6c;
-}
-
-.chapter-complete-box h2 {
-  color: #ddd;
-}
-
-.mystery-text {
-  margin: 25px auto;
-
-  max-width: 500px;
-
-  padding: 18px;
-
-  border-left: 3px solid #c4a747;
-
-  background: rgba(180,150,60,.08);
-
-  color: #e6d68f;
-
-  font-style: italic;
-
-  line-height: 1.6;
-}
-
-#chapter2Button {
-  padding: 14px 25px;
-
-  border: 2px solid #c8a949;
-  border-radius: 10px;
-
-  background: #594617;
-
-  color: white;
-
+.hidden-message {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 9px 15px;
+  border-radius: 8px;
+  background: rgba(0,0,0,.85);
   font-weight: bold;
 }
 
+.close-house {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 50;
+  padding: 9px 14px;
+  border: 1px solid #8c7436;
+  border-radius: 8px;
+  background: #211b10;
+  color: white;
+}
 
-/* =====================================================
-   CHAPTER 2 PLACEHOLDER
-===================================================== */
 
-.chapter-screen {
+/* =========================================================
+   SHADOW CASTLE
+========================================================= */
+
+.shadow-castle-screen {
   position: fixed;
-
   inset: 0;
-
-  z-index: 12000;
-
+  z-index: 5000;
   display: flex;
-
-  justify-content: center;
   align-items: center;
-
+  justify-content: center;
   background:
     radial-gradient(
       circle,
-      #304832,
-      #07100a
+      #27203a,
+      #09070f 60%,
+      #020102
     );
 }
 
-.chapter-placeholder {
-  width: min(600px, 90vw);
-
-  padding: 35px;
-
+.shadow-castle-content {
   text-align: center;
-
-  border: 2px solid #a98a3d;
-  border-radius: 20px;
-
-  background: rgba(5,10,6,.95);
 }
 
-.chapter-placeholder h1 {
-  color: #e3c96b;
-}
-
-.chapter-placeholder h2 {
-  color: #ddd;
-}
-
-.chapter-placeholder p {
-  color: #bfc9bf;
-}
-
-#backToChapter1 {
-  margin-top: 20px;
-
-  padding: 11px 20px;
-
-  border-radius: 9px;
-
-  background: #685522;
-
-  color: white;
+.shadow-castle-content h1 {
+  color: #b99cff;
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
 @media (max-width: 768px) {
 
   .hud {
-    height: 54px;
+    height: 52px;
     font-size: 12px;
   }
 
-  .world {
-    top: 54px;
+  #forest {
+    top: 52px;
+    height: calc(100vh - 52px);
   }
 
   .quest-panel {
-    top: 62px;
-    left: 7px;
-
-    width: 155px;
+    width: 180px;
   }
 
-  #questContent {
-    padding: 0 8px 7px;
+  #questPanel {
+    top: 62px;
+    left: 7px;
+    width: 185px;
+    padding: 8px;
+  }
+
+  #questTitle {
+    font-size: 12px;
   }
 
   .quest-main {
@@ -1501,41 +1218,33 @@ button:focus {
   }
 
   .quest-item {
-    font-size: 9px;
+    font-size: 10px;
   }
 
-  .chapter-banner {
-    top: 62px;
-    font-size: 8px;
+  #player {
+    font-size: 43px;
   }
 
-  .player {
-    font-size: 38px;
-  }
-
-  .investigate-object {
+  .enemy {
     font-size: 40px;
   }
 
-  #watchtower {
-    font-size: 55px;
+  #ancientGate {
+    font-size: 52px;
   }
 
-  .guardian {
-    font-size: 47px;
-  }
-
-  .ancient-gate {
-    font-size: 55px;
+  #message {
+    bottom: 105px;
+    font-size: 12px;
   }
 
   .controls-wrapper {
-    width: 96vw;
-    bottom: 6px;
+    bottom: 8px;
+    width: 97vw;
   }
 
   .dpad {
-    transform: scale(.75);
+    transform: scale(.76);
     transform-origin: bottom left;
   }
 
@@ -1545,87 +1254,130 @@ button:focus {
   }
 
   .mobile-inventory-button {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
   }
 
-  .hidden-object-scene {
-    height: 300px;
-  }
-
-  .mechanism-buttons,
   .symbol-buttons {
-    grid-template-columns:
-      repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sequence-display span {
+    width: 48px;
+    height: 48px;
+    font-size: 25px;
+  }
+
+  .puzzle-box {
+    padding: 22px 15px;
   }
 
   .inventory-grid {
     grid-template-columns: 1fr;
   }
 
-  .mini-game-box,
-  .dialogue-box,
-  .inventory-box {
-    padding: 22px 15px;
+  .village-title {
+    font-size: 18px;
+  }
+
+  .village-quest-box {
+    width: 170px;
+    top: 62px;
+    left: 7px;
+    font-size: 10px;
+  }
+
+  .village-house {
+    font-size: 55px;
+  }
+
+  .dialogue-text {
+    font-size: 14px;
+  }
+
+  .hidden-house-title {
+    font-size: 15px;
+  }
+
+  .hidden-object {
+    font-size: 42px;
+  }
+
+  .hidden-target {
+    font-size: 12px;
   }
 }
 
 
-/* =====================================================
-   SMALL MOBILE
-===================================================== */
+/* =========================================================
+   SMALL PHONES
+========================================================= */
 
 @media (max-width: 420px) {
 
-  .title-screen {
-    padding: 30px 17px;
+  .hud {
+    gap: 3px;
+    padding: 0 5px;
+    font-size: 10px;
   }
 
-  .kingdom-title {
-    font-size: 12px;
-    letter-spacing: 4px;
+  .inventory-button {
+    padding: 5px 8px;
+    font-size: 17px;
   }
 
-  .story {
-    font-size: 14px;
+  #questPanel {
+    width: 165px;
   }
 
-  .quest-panel {
-    width: 140px;
-  }
-
-  .quest-item {
-    font-size: 8px;
-  }
-
-  .chapter-banner {
-    display: none;
+  .controls-wrapper {
+    bottom: 4px;
   }
 
   .dpad {
-    transform: scale(.65);
+    transform: scale(.68);
   }
 
   .attack-button {
     width: 62px;
     height: 62px;
-    font-size: 22px;
   }
 
   .mobile-inventory-button {
-    width: 46px;
-    height: 46px;
-    font-size: 20px;
+    width: 44px;
+    height: 44px;
+    font-size: 19px;
   }
 
-  .sequence-display span,
-  .mechanism-sequence span {
-    width: 46px;
-    height: 46px;
-    font-size: 24px;
+  .puzzle-box h1 {
+    font-size: 28px;
   }
 
-  .hidden-object-scene {
-    height: 260px;
+  .symbol-buttons button {
+    min-height: 58px;
+    font-size: 28px;
   }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 769px) {
+
+  .controls-wrapper {
+    bottom: 18px;
+  }
+
+  .dpad {
+    transform: scale(.9);
+  }
+
+  .attack-button {
+    width: 82px;
+    height: 82px;
+  }
+
 }
