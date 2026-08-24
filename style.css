@@ -2800,3 +2800,142 @@ h2 {
   }
 
 }
+/* =====================================================
+   CHAPTER 2 QUEST BOX — COMPACT
+===================================================== */
+
+.village-quest-box {
+
+  width: 185px !important;
+
+  padding: 9px 11px !important;
+
+  top: 72px !important;
+
+  left: 8px !important;
+
+  border-radius: 9px !important;
+
+  font-size: 11px !important;
+
+  line-height: 1.25 !important;
+
+  z-index: 30;
+
+  background:
+    rgba(5, 10, 6, 0.82) !important;
+
+}
+
+
+/* QUEST TITLE */
+
+.village-quest-box strong {
+
+  display: block;
+
+  font-size: 13px;
+
+  margin-bottom: 5px;
+
+  white-space: nowrap;
+
+}
+
+
+/* QUEST ITEMS */
+
+.village-quest-box p {
+
+  margin: 4px 0 !important;
+
+  font-size: 10px !important;
+
+  line-height: 1.25 !important;
+
+  color: #c8d0c8;
+
+}
+
+
+/* COMPLETED */
+
+.village-quest-box p.completed {
+
+  color: #7dff9c;
+
+}
+
+
+/* =====================================================
+   MOBILE — EVEN SMALLER
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .village-quest-box {
+
+    width: 150px !important;
+
+    padding: 7px 8px !important;
+
+    top: 62px !important;
+
+    left: 6px !important;
+
+    border-radius: 8px !important;
+
+  }
+
+
+  .village-quest-box strong {
+
+    font-size: 11px;
+
+    margin-bottom: 3px;
+
+  }
+
+
+  .village-quest-box p {
+
+    font-size: 8.5px !important;
+
+    margin: 3px 0 !important;
+
+    line-height: 1.2 !important;
+
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media (max-width: 420px) {
+
+  .village-quest-box {
+
+    width: 138px !important;
+
+    padding: 6px 7px !important;
+
+  }
+
+
+  .village-quest-box strong {
+
+    font-size: 10px;
+
+  }
+
+
+  .village-quest-box p {
+
+    font-size: 8px !important;
+
+  }
+
+}
